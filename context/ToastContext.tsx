@@ -133,14 +133,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
               {/* Toast Header */}
               <div className="flex items-center justify-between px-4 py-2.5 bg-slate-50/90 border-b border-slate-100 gap-3">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="relative w-6 h-6 rounded-lg overflow-hidden border border-slate-200 bg-white shrink-0 shadow-2xs flex items-center justify-center">
-                    <img
-                      src="/logo.jpg"
-                      alt="PT Food Quality"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                <div className="flex items-center gap-2 min-w-0">
                   <strong className={`text-xs font-bold font-heading truncate ${typeStyles.titleColor}`}>
                     {toast.title}
                   </strong>
