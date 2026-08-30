@@ -33,8 +33,7 @@ export default function Home() {
     picName: "",
     phone: "",
     email: "",
-    industry: "Jasa Boga / SPPG",
-    haccpStatus: "Belum Diterapkan",
+    industry: "Jasa Boga / Katering / Restoran / SPPG",
     message: "",
   });
   const [formLoading, setFormLoading] = useState(false);
@@ -182,7 +181,7 @@ export default function Home() {
         phone: formData.phone,
         email: formData.email,
         industry: formData.industry,
-        haccpStatus: formData.haccpStatus,
+        haccpStatus: "Permohonan Baru",
         message: formData.message,
         ticketNumber: ticket
       });
@@ -203,8 +202,7 @@ export default function Home() {
       picName: "",
       phone: "",
       email: "",
-      industry: "Jasa Boga / SPPG",
-      haccpStatus: "Belum Diterapkan",
+      industry: "Jasa Boga / Katering / Restoran / SPPG",
       message: "",
     });
     setFormSubmitted(false);
@@ -1181,6 +1179,20 @@ export default function Home() {
                   </div>
                 </div>
 
+                <div className="space-y-1.5">
+                  <label htmlFor="companyAddress" className="text-xs font-bold text-slate-700">{t.form.companyAddress}</label>
+                  <input
+                    required
+                    type="text"
+                    id="companyAddress"
+                    name="companyAddress"
+                    value={formData.companyAddress}
+                    onChange={handleInputChange}
+                    placeholder={t.form.companyAddressPlaceholder}
+                    className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-colors rounded-lg"
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label htmlFor="phone" className="text-xs font-bold text-slate-700">{t.form.picPhone}</label>
@@ -1225,21 +1237,6 @@ export default function Home() {
                     <option>{t.form.industryOptions.slaughterhouse}</option>
                     <option>{t.form.industryOptions.storage}</option>
                     <option>{t.form.industryOptions.other}</option>
-                  </select>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label htmlFor="haccpStatus" className="text-xs font-bold text-slate-700">{t.form.haccpStatus}</label>
-                  <select
-                    id="haccpStatus"
-                    name="haccpStatus"
-                    value={formData.haccpStatus}
-                    onChange={handleInputChange}
-                    className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-colors cursor-pointer rounded-lg"
-                  >
-                    <option>{t.form.haccpOptions.notImplemented}</option>
-                    <option>{t.form.haccpOptions.implementedNotCertified}</option>
-                    <option>{t.form.haccpOptions.recertification}</option>
                   </select>
                 </div>
 
