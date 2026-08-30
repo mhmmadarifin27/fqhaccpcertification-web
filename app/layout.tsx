@@ -19,8 +19,13 @@ export const metadata: Metadata = {
     "PT FOOD QUALITY CERTIFICATION"
   ].join(", "),
   icons: {
-    icon: "/logo.jpg",
-  }
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo2.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/logo2.png",
+  },
 };
 
 export default function RootLayout({
@@ -34,6 +39,9 @@ export default function RootLayout({
       className="h-full scroll-smooth antialiased"
     >
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/logo2.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
