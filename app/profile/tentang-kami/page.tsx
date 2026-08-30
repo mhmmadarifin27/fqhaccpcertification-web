@@ -31,7 +31,7 @@ export default function TentangKamiPage() {
           {/* Centered Image Frame */}
           <div className="max-w-3xl mx-auto flex items-center justify-center p-4 sm:p-6 bg-white border border-slate-200 shadow-sm relative overflow-hidden rounded-2xl">
             <img
-              src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+              src="/hero1.jpg"
               alt="Food Quality team working together"
               className="w-full h-auto max-h-[480px] object-cover filter drop-shadow-sm transition-transform duration-300 hover:scale-102 rounded-xl"
             />

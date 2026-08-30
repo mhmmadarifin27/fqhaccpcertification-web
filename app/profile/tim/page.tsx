@@ -14,7 +14,7 @@ const TEAM_MEMBERS = [
     role: "Lead Auditor & Ahli Teknologi Pangan",
     category: "tphp-ugm",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero1.jpg",
     education: [
       "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Gadjah Mada (UGM)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM) & Kyoto University",
@@ -37,7 +37,7 @@ const TEAM_MEMBERS = [
     role: "Spesialis Manajemen Keamanan Pangan & Peneliti",
     category: "tphp-ugm",
     isLead: false,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero2.jpg",
     education: [
       "S1 Teknologi Pangan, Universitas Jenderal Soedirman (UNSOED)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -59,7 +59,7 @@ const TEAM_MEMBERS = [
     role: "Auditor Halal & Akademisi Biologi",
     category: "uin-suka",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero1.jpg",
     education: [
       "S1 Biologi, Institut Pertanian Bogor (IPB University)",
       "S2 Mikrobiologi, Institut Pertanian Bogor (IPB University)"
@@ -80,7 +80,7 @@ const TEAM_MEMBERS = [
     role: "Ahli HACCP & GMP",
     category: "tphp-ugm",
     isLead: false,
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero2.jpg",
     education: [
       "S1 Teknologi Pangan, Universitas Pasundan (UNPAS)",
       "S2 Ilmu Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -102,7 +102,7 @@ const TEAM_MEMBERS = [
     role: "Auditor Halal & Dosen Biomedis",
     category: "uin-suka",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/iso.jpg",
     education: [
       "S1 Farmasi, Universitas Ahmad Dahlan (UAD) Yogyakarta",
       "Pendidikan Profesi Apoteker, Universitas Ahmad Dahlan (UAD) Yogyakarta",
@@ -125,7 +125,7 @@ const TEAM_MEMBERS = [
     role: "Spesialis Pengolahan & Pengendalian Mutu Perikanan",
     category: "tphp-ugm",
     isLead: false,
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero1.jpg",
     education: [
       "S1 Teknologi Hasil Perikanan, Universitas Gadjah Mada (UGM)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -147,7 +147,7 @@ const TEAM_MEMBERS = [
     role: "Auditor Halal & Spesialis ISO 22000 / 17065",
     category: "uin-suka",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero2.jpg",
     education: [
       "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Brawijaya (UB) Malang",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)",

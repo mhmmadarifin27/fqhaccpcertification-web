@@ -7,11 +7,10 @@ import { createInquiry, getGallery, getProjects, GalleryItem, ProjectItem } from
 import { useLanguage } from "../context/LanguageContext";
 import { autoTranslateText } from "../lib/autoTranslator";
 
-// Image URLs for hero slides
+// Image URLs for hero slides (Local optimized web assets)
 const HERO_IMAGES = [
   "/hero1.jpg",
   "/hero2.jpg",
-  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80",
 ];
 
 export default function Home() {
@@ -351,7 +350,7 @@ export default function Home() {
         {/* Centered Image Frame */}
         <div className="max-w-3xl mx-auto flex items-center justify-center p-4 sm:p-6 bg-white border border-slate-200 shadow-sm relative overflow-hidden rounded-2xl">
           <img
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+            src="/hero1.jpg"
             alt="Food Quality team working together"
             className="w-full h-auto max-h-[440px] object-cover filter drop-shadow-sm transition-transform duration-300 hover:scale-102 rounded-xl"
           />
@@ -448,7 +447,7 @@ export default function Home() {
             {/* Big Card on Left */}
             <div className="md:col-span-7 relative group min-h-[380px] flex flex-col justify-end p-6 border border-white/10 overflow-hidden bg-slate-900 rounded-2xl">
               <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
+                src="/hero2.jpg"
                 alt="Terakreditasi KAN"
                 className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-500"
               />
@@ -484,7 +483,7 @@ export default function Home() {
               {/* Small Card 2 */}
               <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-900 rounded-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80"
+                  src="/hero1.jpg"
                   alt="Independensi"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-40 group-hover:scale-105 transition-transform duration-500"
                 />

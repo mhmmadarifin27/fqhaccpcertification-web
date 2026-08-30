@@ -19,10 +19,10 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
   const [imageUrl, setImageUrl] = useState("");
 
   const sampleImages = [
-    { label: "Pabrik Susu", url: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=600&q=80" },
-    { label: "Auditor Training", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" },
-    { label: "Serah Terima", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" },
-    { label: "Piagam/Sertifikat", url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" }
+    { label: "Pabrik Susu", url: "/hero1.jpg" },
+    { label: "Auditor Training", url: "/hero2.jpg" },
+    { label: "Serah Terima", url: "/iso.jpg" },
+    { label: "Piagam/Sertifikat", url: "/kan-logo.png" }
   ];
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

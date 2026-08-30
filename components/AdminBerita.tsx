@@ -19,9 +19,9 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
   const [content, setContent] = useState("");
 
   const sampleImages = [
-    { label: "Lab / Industri", url: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80" },
-    { label: "Bahan Pangan", url: "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=600&q=80" },
-    { label: "Event / Kantor", url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" }
+    { label: "Lab / Industri", url: "/hero1.jpg" },
+    { label: "Bahan Pangan", url: "/hero2.jpg" },
+    { label: "Event / Kantor", url: "/iso.jpg" }
   ];
 
   const handleOpenModal = () => {

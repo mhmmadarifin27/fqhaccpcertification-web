@@ -132,7 +132,7 @@ const SEED_NEWS: NewsItem[] = [
     title: "PT Food Quality Certification Dapatkan Akreditasi Penuh dari KAN",
     content: "Kami dengan bangga mengumumkan bahwa PT FOOD QUALITY CERTIFICATION secara resmi telah terakreditasi penuh oleh Komite Akreditasi Nasional (KAN) dengan nomor registrasi LSHACCP-009-IDN. Dengan pencapaian akreditasi ini, kami siap menerbitkan sertifikat HACCP yang diakui secara nasional maupun internasional guna meningkatkan standar keamanan pangan produk Anda di kancah pasar global.",
     category: "Pengumuman",
-    imageUrl: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/hero1.jpg",
     date: "12 Jul 2026"
   },
   {
@@ -140,7 +140,7 @@ const SEED_NEWS: NewsItem[] = [
     title: "Pentingnya Penerapan HACCP pada UMKM Kuliner Modern",
     content: "Sistem Hazard Analysis and Critical Control Points (HACCP) kini tidak lagi hanya diperuntukkan bagi industri skala besar. UMKM kuliner modern juga didorong kuat untuk mengadopsi sistem ini demi meminimalkan bahaya kontaminasi fisik, kimia, dan biologi. Hal ini juga membantu memperkuat branding produk di mata pasar modern ritel yang menerapkan standar kelayakan higienitas tinggi.",
     category: "Edukasi",
-    imageUrl: "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/hero2.jpg",
     date: "10 Jul 2026"
   },
   {
@@ -148,7 +148,7 @@ const SEED_NEWS: NewsItem[] = [
     title: "Workshop Keamanan Pangan Sukses Diselenggarakan di Yogyakarta",
     content: "PT FOOD QUALITY CERTIFICATION menyelenggarakan workshop intensif keamanan pangan yang dihadiri oleh lebih dari 40 perwakilan pelaku usaha kuliner dan catering se-Provinsi DIY. Workshop membahas tentang penyusunan manual HACCP, cara identifikasi titik kendali kritis (CCP), dan sosialisasi alur sertifikasi resmi terakreditasi KAN.",
     category: "Kegiatan",
-    imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/iso.jpg",
     date: "05 Jul 2026"
   }
 ];
@@ -159,7 +159,7 @@ const SEED_GALLERY: GalleryItem[] = [
     title: "Audit Lapangan di Pabrik Pengolahan Susu Yogyakarta",
     description: "Auditor PT Food Quality Certification mengecek tangki pasteurisasi dan titik kendali kritis suhu susu.",
     category: "Audit",
-    imageUrl: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/hero1.jpg",
     date: "08 Jul 2026"
   },
   {
@@ -167,7 +167,7 @@ const SEED_GALLERY: GalleryItem[] = [
     title: "Penyerahan Sertifikat HACCP PT Segar Minuman Nusantara",
     description: "Prosesi penyerahan sertifikat kelayakan sistem HACCP pasca pemenuhan audit kesesuaian.",
     category: "Event",
-    imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/hero2.jpg",
     date: "07 Jul 2026"
   },
   {
@@ -175,7 +175,7 @@ const SEED_GALLERY: GalleryItem[] = [
     title: "Pelatihan Internal Calon Auditor Angkatan IV",
     description: "Kegiatan peningkatan kompetensi teknis bagi para auditor internal keamanan pangan.",
     category: "Pelatihan",
-    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80",
+    imageUrl: "/iso.jpg",
     date: "04 Jul 2026"
   },
   {
@@ -183,7 +183,7 @@ const SEED_GALLERY: GalleryItem[] = [
     title: "Piagam Akreditasi Lembaga Sertifikasi KAN Resmi",
     description: "Sertifikat akreditasi LSHACCP-009-IDN yang diserahkan oleh ketua KAN pusat.",
     category: "Penghargaan",
-    imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80",
+    imageUrl: "/kan-logo.png",
     date: "01 Jul 2026"
   }
 ];
@@ -194,7 +194,7 @@ const SEED_PROJECTS: ProjectItem[] = [
     name: "PT Ritel Pangan Nusantara",
     category: "LOGISTIK & RITEL MODERN",
     desc: "Sertifikasi sistem HACCP untuk fasilitas gudang penyimpanan rantai dingin dan jaringan 45 gerai ritel modern di Indonesia.",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80",
+    image: "/hero1.jpg",
     year: "2025"
   },
   {
@@ -202,7 +202,7 @@ const SEED_PROJECTS: ProjectItem[] = [
     name: "PT Samudra Frozen Foods",
     category: "INDUSTRI OLAHAN SEAFOOD",
     desc: "Audit sertifikasi fasilitas pabrik pemrosesan dan pembekuan udang ekspor standar kualifikasi internasional.",
-    image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?auto=format&fit=crop&w=600&q=80",
+    image: "/hero2.jpg",
     year: "2025"
   },
   {
@@ -210,7 +210,7 @@ const SEED_PROJECTS: ProjectItem[] = [
     name: "PT Boga Katering Utama",
     category: "JASA BOGA IN-FLIGHT & INDUSTRI",
     desc: "Sertifikasi HACCP dapur pusat penyedia katering penerbangan dengan kapasitas produksi 10.000 porsi per hari.",
-    image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=600&q=80",
+    image: "/iso.jpg",
     year: "2026"
   },
   {
@@ -218,7 +218,7 @@ const SEED_PROJECTS: ProjectItem[] = [
     name: "PT Nusa Dairy Premium",
     category: "INDUSTRI OLAHAN SUSU",
     desc: "Penerbitan sertifikat kesesuaian HACCP untuk unit pengolahan dan pasteurisasi susu segar serta yogurt kemasan.",
-    image: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=600&q=80",
+    image: "/hero1.jpg",
     year: "2026"
   }
 ];
@@ -230,7 +230,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Lead Auditor & Ahli Teknologi Pangan",
     category: "tphp-ugm",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero1.jpg",
     education: [
       "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Gadjah Mada (UGM)",
       "S2 Ilmu dan Teknologi Pangan, UGM & Kyoto University",
@@ -251,7 +251,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Spesialis Manajemen Keamanan Pangan & Peneliti",
     category: "tphp-ugm",
     isLead: false,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero2.jpg",
     education: [
       "S1 Teknologi Pangan, Universitas Jenderal Soedirman (UNSOED)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -268,7 +268,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Auditor Halal & Akademisi Biologi",
     category: "uin-suka",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero1.jpg",
     education: [
       "S1 Biologi, IPB University",
       "S2 Mikrobiologi, IPB University"
@@ -285,7 +285,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Ahli HACCP & GMP",
     category: "tphp-ugm",
     isLead: false,
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero2.jpg",
     education: [
       "S1 Teknologi Pangan, Universitas Pasundan (UNPAS)",
       "S2 Ilmu Teknologi Pangan, UGM"
@@ -302,7 +302,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Auditor Halal & Dosen Biomedis",
     category: "uin-suka",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/iso.jpg",
     education: [
       "S1 Farmasi & Profesi Apoteker UAD",
       "S2 Farmasi, UGM"
@@ -319,7 +319,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Spesialis Pengolahan & Pengendalian Mutu Perikanan",
     category: "tphp-ugm",
     isLead: false,
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero1.jpg",
     education: [
       "S1 Teknologi Hasil Perikanan UGM",
       "S2 Ilmu dan Teknologi Pangan UGM"
@@ -336,7 +336,7 @@ const SEED_TEAM: TeamMember[] = [
     role: "Auditor Halal & Spesialis ISO 22000 / 17065",
     category: "uin-suka",
     isLead: true,
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&h=600&q=80",
+    image: "/hero2.jpg",
     education: [
       "S1 Teknologi Pangan UB",
       "S2 Ilmu Pangan UGM",
@@ -727,7 +727,7 @@ export const getTeamMembers = async (): Promise<TeamMember[]> => {
           role: item.role,
           category: item.category || "tphp-ugm",
           isLead: item.is_lead || false,
-          image: item.image_url || item.image || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&h=600&q=80",
+          image: item.image_url || item.image || "/hero1.jpg",
           education: Array.isArray(item.education) ? item.education : [item.experience || "S1 Teknologi Pangan"],
           experience: item.experience || "-",
           standards: Array.isArray(item.standards) ? item.standards : ["-"],
