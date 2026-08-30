@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { NewsItem, createNews, deleteNews } from "../lib/db";
-import { useAlert } from "../context/AlertContext";
+import { useToast } from "../context/ToastContext";
+import ConfirmModal from "./ConfirmModal";
 
 interface AdminBeritaProps {
   news: NewsItem[];
@@ -10,9 +11,20 @@ interface AdminBeritaProps {
 }
 
 export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
-  const { toast, confirm } = useAlert();
+  const { showToast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Custom Delete Confirm Modal State
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    id: string;
+    title: string;
+  }>({
+    isOpen: false,
+    id: "",
+    title: "",
+  });
 
   // Form states
   const [title, setTitle] = useState("");
@@ -37,10 +49,10 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim() || !imageUrl.trim()) {
-      toast({
-        title: "Form Belum Lengkap",
-        message: "Harap lengkapi judul, isi, dan foto berita!",
-        variant: "warning"
+      showToast({
+        title: "Data Belum Lengkap",
+        message: "Harap lengkapi semua bidang form!",
+        type: "warning",
       });
       return;
     }
@@ -53,52 +65,51 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
         category,
         imageUrl
       });
-      toast({
-        title: "Berita Diterbitkan",
-        message: "Artikel berita berhasil diterbitkan.",
-        variant: "success"
-      });
       setIsModalOpen(false);
+      showToast({
+        title: "Berita Diterbitkan",
+        message: `Artikel "${title}" berhasil diterbitkan!`,
+        type: "success",
+      });
       onRefresh(); // Refresh news parent state list
     } catch (err) {
       console.error(err);
-      toast({
+      showToast({
         title: "Gagal Menerbitkan",
         message: "Terjadi kesalahan saat mengunggah berita.",
-        variant: "destructive"
+        type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: string, itemTitle?: string) => {
-    const isConfirmed = await confirm({
-      title: "Hapus Artikel Berita?",
-      message: `Apakah Anda yakin ingin menghapus artikel ${itemTitle ? `"${itemTitle}"` : "ini"} secara permanen?`,
-      confirmText: "Ya, Hapus Berita",
-      cancelText: "Batal",
-      variant: "destructive"
+  const handlePromptDelete = (id: string, itemTitle: string) => {
+    setDeleteModal({
+      isOpen: true,
+      id,
+      title: itemTitle,
     });
+  };
 
-    if (!isConfirmed) {
-      return;
-    }
+  const handleConfirmDelete = async () => {
+    const { id, title: itemTitle } = deleteModal;
+    setDeleteModal({ isOpen: false, id: "", title: "" });
 
     try {
       await deleteNews(id);
-      toast({
+      showToast({
         title: "Berita Dihapus",
-        message: "Artikel berita telah dihapus.",
-        variant: "success"
+        message: `Artikel "${itemTitle}" berhasil dihapus.`,
+        type: "success",
       });
       onRefresh();
     } catch (err) {
       console.error(err);
-      toast({
+      showToast({
         title: "Gagal Menghapus",
         message: "Gagal menghapus berita.",
-        variant: "destructive"
+        type: "error",
       });
     }
   };
@@ -164,7 +175,7 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
               {/* Action Bar */}
               <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-250/30 flex justify-end">
                 <button
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handlePromptDelete(item.id, item.title)}
                   className="px-3 py-1.5 border border-red-200 text-red-700 bg-red-50/40 hover:bg-red-50 hover:text-red-800 transition-colors text-[10px] font-extrabold uppercase tracking-wider cursor-pointer rounded-none"
                 >
                   🗑️ Hapus Artikel
@@ -296,6 +307,18 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
           </div>
         </div>
       )}
+
+      {/* CUSTOM CONFIRMATION MODAL (REPLACES BROWSER CONFIRM) */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title="Hapus Berita?"
+        message={`Apakah Anda yakin ingin menghapus artikel "${deleteModal.title}" secara permanen?`}
+        confirmText="Ya, Hapus Artikel"
+        cancelText="Batal"
+        type="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteModal({ isOpen: false, id: "", title: "" })}
+      />
 
     </div>
   );

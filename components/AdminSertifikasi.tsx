@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { SertifikasiInquiry } from "../lib/db";
+import { useToast } from "../context/ToastContext";
 
 interface AdminSertifikasiProps {
   inquiries: SertifikasiInquiry[];
@@ -9,6 +10,7 @@ interface AdminSertifikasiProps {
 }
 
 export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSertifikasiProps) {
+  const { showToast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -114,6 +116,12 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSer
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    showToast({
+      title: "Ekspor Berhasil",
+      message: `File laporan Excel dengan ${filteredInquiries.length} data berhasil diunduh.`,
+      type: "success",
+    });
   };
 
   // PRINT / EXPORT TO PDF

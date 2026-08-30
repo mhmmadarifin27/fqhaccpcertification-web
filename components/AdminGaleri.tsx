@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { GalleryItem, createGallery, deleteGallery } from "../lib/db";
-import { useAlert } from "../context/AlertContext";
+import { GalleryItem, createGallery, deleteGallery, compressImage } from "../lib/db";
+import { useToast } from "../context/ToastContext";
+import ConfirmModal from "./ConfirmModal";
 
 interface AdminGaleriProps {
   gallery: GalleryItem[];
@@ -10,9 +11,20 @@ interface AdminGaleriProps {
 }
 
 export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
-  const { toast, confirm } = useAlert();
+  const { showToast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Custom Delete Confirm Modal State
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    id: string;
+    title: string;
+  }>({
+    isOpen: false,
+    id: "",
+    title: "",
+  });
 
   // Form states
   const [title, setTitle] = useState("");
@@ -20,16 +32,32 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
   const [category, setCategory] = useState("Audit");
   const [imageUrl, setImageUrl] = useState("");
 
+  const sampleImages = [
+    { label: "Pabrik Susu", url: "/hero1.jpg" },
+    { label: "Auditor Training", url: "/hero2.jpg" },
+    { label: "Serah Terima", url: "/iso.jpg" },
+    { label: "Piagam/Sertifikat", url: "/kan-logo.png" }
+  ];
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setImageUrl(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressedBase64 = await compressImage(file, 800, 0.75);
+        setImageUrl(compressedBase64);
+        showToast({
+          title: "Foto Terpilih",
+          message: "Foto dokumentasi siap untuk diunggah.",
+          type: "info",
+        });
+      } catch (err) {
+        console.error("Error compressing image:", err);
+        showToast({
+          title: "Gagal Memproses Gambar",
+          message: "Format gambar tidak didukung atau terjadi kesalahan.",
+          type: "error",
+        });
+      }
     }
   };
 
@@ -44,10 +72,10 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !description.trim() || !imageUrl.trim()) {
-      toast({
-        title: "Form Belum Lengkap",
-        message: "Harap lengkapi judul, deskripsi, dan foto galeri!",
-        variant: "warning"
+      showToast({
+        title: "Data Belum Lengkap",
+        message: "Harap lengkapi semua bidang wajib dan pilih foto!",
+        type: "warning",
       });
       return;
     }
@@ -60,52 +88,51 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
         category,
         imageUrl
       });
-      toast({
-        title: "Foto Berhasil Ditambahkan",
-        message: "Dokumentasi foto baru telah terbit di galeri landing page.",
-        variant: "success"
-      });
       setIsModalOpen(false);
+      showToast({
+        title: "Dokumentasi Diunggah",
+        message: `Foto "${title}" berhasil ditambahkan ke Galeri!`,
+        type: "success",
+      });
       onRefresh(); // Refresh gallery parent state list
     } catch (err) {
       console.error(err);
-      toast({
+      showToast({
         title: "Gagal Mengunggah",
         message: "Terjadi kesalahan saat mengunggah foto galeri.",
-        variant: "destructive"
+        type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: string, itemTitle?: string) => {
-    const isConfirmed = await confirm({
-      title: "Hapus Foto Galeri?",
-      message: `Apakah Anda yakin ingin menghapus dokumentasi foto ${itemTitle ? `"${itemTitle}"` : "ini"}?`,
-      confirmText: "Ya, Hapus Foto",
-      cancelText: "Batal",
-      variant: "destructive"
+  const handlePromptDelete = (id: string, itemTitle: string) => {
+    setDeleteModal({
+      isOpen: true,
+      id,
+      title: itemTitle,
     });
+  };
 
-    if (!isConfirmed) {
-      return;
-    }
+  const handleConfirmDelete = async () => {
+    const { id, title: itemTitle } = deleteModal;
+    setDeleteModal({ isOpen: false, id: "", title: "" });
 
     try {
       await deleteGallery(id);
-      toast({
+      showToast({
         title: "Foto Dihapus",
-        message: "Dokumentasi foto berhasil dihapus dari galeri.",
-        variant: "success"
+        message: `Dokumentasi "${itemTitle}" berhasil dihapus dari Galeri.`,
+        type: "success",
       });
       onRefresh();
     } catch (err) {
       console.error(err);
-      toast({
+      showToast({
         title: "Gagal Menghapus",
-        message: "Gagal menghapus item galeri.",
-        variant: "destructive"
+        message: "Terjadi kendala saat menghapus item galeri.",
+        type: "error",
       });
     }
   };
@@ -171,7 +198,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
               {/* Action buttons */}
               <div className="px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex justify-end">
                 <button
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handlePromptDelete(item.id, item.title)}
                   className="px-3 py-1.5 border border-red-200 text-red-700 bg-red-50/60 hover:bg-red-50 hover:text-red-800 transition-colors text-[10px] font-extrabold uppercase tracking-wider cursor-pointer rounded-xl"
                 >
                   🗑️ Hapus Dokumentasi
@@ -288,6 +315,18 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
           </div>
         </div>
       )}
+
+      {/* CUSTOM CONFIRMATION MODAL (REPLACES BROWSER CONFIRM) */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title="Hapus Foto Galeri?"
+        message={`Apakah Anda yakin ingin menghapus dokumentasi "${deleteModal.title}"? Foto yang dihapus tidak dapat dikembalikan.`}
+        confirmText="Ya, Hapus Foto"
+        cancelText="Batal"
+        type="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteModal({ isOpen: false, id: "", title: "" })}
+      />
 
     </div>
   );

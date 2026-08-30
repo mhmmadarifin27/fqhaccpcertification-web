@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { ProjectItem, createProject, updateProject, deleteProject, compressImage } from "../lib/db";
-import { useAlert } from "../context/AlertContext";
+import { useToast } from "../context/ToastContext";
+import ConfirmModal from "./ConfirmModal";
 
 interface AdminProyekProps {
   projects: ProjectItem[];
@@ -10,13 +11,24 @@ interface AdminProyekProps {
 }
 
 export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
-  const { toast, confirm } = useAlert();
+  const { showToast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Custom Delete Confirm Modal State
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    id: string;
+    name: string;
+  }>({
+    isOpen: false,
+    id: "",
+    name: "",
+  });
 
   // Form states
   const [formData, setFormData] = useState({
@@ -37,8 +49,18 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
       try {
         const compressedBase64 = await compressImage(file, 800, 0.75);
         setFormData((prev) => ({ ...prev, image: compressedBase64 }));
+        showToast({
+          title: "Foto Berhasil Dimuat",
+          message: "Foto proyek siap untuk disimpan.",
+          type: "info",
+        });
       } catch (err) {
         console.error("Error compressing project image:", err);
+        showToast({
+          title: "Gagal Memproses Gambar",
+          message: "Format gambar tidak didukung atau terjadi kesalahan.",
+          type: "error",
+        });
       }
     }
   };
@@ -68,10 +90,10 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.desc.trim() || !formData.image.trim()) {
-      toast({
-        title: "Form Belum Lengkap",
+      showToast({
+        title: "Data Belum Lengkap",
         message: "Harap lengkapi nama proyek, deskripsi, dan foto!",
-        variant: "warning"
+        type: "warning",
       });
       return;
     }
@@ -80,60 +102,59 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
     try {
       if (editingId) {
         await updateProject(editingId, formData);
-        toast({
+        showToast({
           title: "Proyek Diperbarui",
-          message: `Proyek "${formData.name}" berhasil diperbarui.`,
-          variant: "success"
+          message: `Data proyek "${formData.name}" berhasil diperbarui.`,
+          type: "success",
         });
       } else {
         await createProject(formData);
-        toast({
+        showToast({
           title: "Proyek Ditambahkan",
-          message: `Proyek "${formData.name}" berhasil ditambahkan ke landing page.`,
-          variant: "success"
+          message: `Proyek baru "${formData.name}" berhasil ditambahkan.`,
+          type: "success",
         });
       }
       setIsModalOpen(false);
       onRefresh();
     } catch (err) {
       console.error(err);
-      toast({
+      showToast({
         title: "Gagal Menyimpan",
         message: "Terjadi kesalahan saat menyimpan data proyek.",
-        variant: "destructive"
+        type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    const isConfirmed = await confirm({
-      title: "Hapus Proyek Sektor?",
-      message: `Apakah Anda yakin ingin menghapus proyek sektor "${name}"? Data akan terhapus dari tampilan website.`,
-      confirmText: "Ya, Hapus Proyek",
-      cancelText: "Batal",
-      variant: "destructive"
+  const handlePromptDelete = (id: string, name: string) => {
+    setDeleteModal({
+      isOpen: true,
+      id,
+      name,
     });
+  };
 
-    if (!isConfirmed) {
-      return;
-    }
+  const handleConfirmDelete = async () => {
+    const { id, name } = deleteModal;
+    setDeleteModal({ isOpen: false, id: "", name: "" });
 
     try {
       await deleteProject(id);
-      toast({
+      showToast({
         title: "Proyek Dihapus",
-        message: `Proyek "${name}" berhasil dihapus.`,
-        variant: "success"
+        message: `Proyek sektor "${name}" berhasil dihapus.`,
+        type: "success",
       });
       onRefresh();
     } catch (err) {
       console.error(err);
-      toast({
+      showToast({
         title: "Gagal Menghapus",
-        message: "Gagal menghapus data proyek.",
-        variant: "destructive"
+        message: "Terjadi kendala saat menghapus data proyek.",
+        type: "error",
       });
     }
   };
@@ -212,7 +233,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
                   ✏️ Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(p.id, p.name)}
+                  onClick={() => handlePromptDelete(p.id, p.name)}
                   className="flex-1 py-2 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[11px] uppercase tracking-wider cursor-pointer border-none rounded-xl text-center shadow-xs active:scale-95"
                 >
                   🗑️ Hapus
@@ -273,7 +294,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
                       ✏️ Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(p.id, p.name)}
+                      onClick={() => handlePromptDelete(p.id, p.name)}
                       className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-[10px] uppercase tracking-wider cursor-pointer border-none rounded-lg transition-all shadow-xs"
                     >
                       🗑️ Hapus
@@ -309,7 +330,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
                 <input
                   type="text"
                   required
-                  placeholder="Contoh: PT Boga Katering Utama..."
+                  placeholder="Contoh: PT Boga Katering Utama"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2.5 border border-slate-200/80 bg-slate-50 text-xs focus:bg-white focus:outline-brand-blue rounded-xl font-medium"
@@ -317,42 +338,33 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-extrabold text-slate-800 block">Kategori Sektor *</label>
+                <label className="font-extrabold text-slate-800 block">Kategori Sektor Industri *</label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-slate-200/80 bg-slate-50 text-xs font-bold focus:bg-white focus:outline-brand-blue rounded-xl"
+                  className="w-full px-4 py-2.5 border border-slate-200/80 bg-slate-50 text-xs focus:bg-white focus:outline-brand-blue rounded-xl font-medium cursor-pointer"
                 >
-                  <option value="INDUSTRI PANGAN">INDUSTRI PANGAN</option>
-                  <option value="JASA BOGA">JASA BOGA / SPPG</option>
-                  <option value="HORECA">HORECA (Hotel, Resto, Kafe)</option>
-                  <option value="MINUMAN">INDUSTRI MINUMAN & AMDK</option>
-                  <option value="OLAHAN SUSU">OLAHAN SUSU / DAIRY</option>
-                  <option value="INDUSTRI PERIKANAN">INDUSTRI PERIKANAN / SEAFOOD</option>
-                  <option value="INDUSTRI PETERNAKAN">INDUSTRI PETERNAKAN / DAGING</option>
-                  <option value="LOGISTIK PANGAN">LOGISTIK & COLD STORAGE</option>
+                  <option>LOGISTIK & RITEL MODERN</option>
+                  <option>INDUSTRI OLAHAN SEAFOOD</option>
+                  <option>JASA BOGA IN-FLIGHT & INDUSTRI</option>
+                  <option>INDUSTRI OLAHAN SUSU</option>
+                  <option>INDUSTRI PANGAN OLAHAN</option>
+                  <option>RUMAH POTONG HEWAN</option>
+                  <option>RESTORAN & HORECA</option>
                 </select>
               </div>
 
-              {/* Direct File Manager Upload Box */}
-              <div className="space-y-2 border-2 border-dashed border-brand-navy/30 p-5 bg-blue-50/40 text-center rounded-2xl">
-                <label className="font-extrabold text-brand-navy text-xs uppercase tracking-wider block">
-                  📁 Unggah Foto Proyek dari File Manager / Laptop / HP *
-                </label>
-                <p className="text-[11px] text-slate-500 font-medium">
-                  Klik di bawah ini untuk memilih berkas foto proyek dari komputer Anda:
-                </p>
+              <div className="space-y-2">
+                <label className="font-extrabold text-slate-800 block">Upload Pas Foto / Dokumen Proyek *</label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleImageUpload}
-                  className="block w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:font-extrabold file:bg-brand-navy file:text-white hover:file:bg-brand-navy-dark file:rounded-xl cursor-pointer"
+                  className="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-extrabold file:bg-brand-blue/10 file:text-brand-blue hover:file:bg-brand-blue/20 cursor-pointer"
                 />
-
                 {formData.image && (
-                  <div className="pt-3 border-t border-slate-200 mt-2 flex flex-col items-center gap-1.5">
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Preview Foto Proyek:</span>
-                    <img src={formData.image} alt="Preview Foto Proyek" className="h-28 w-auto object-cover border border-slate-300 rounded-xl shadow-md" />
+                  <div className="mt-2 w-24 h-20 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden">
+                    <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                 )}
               </div>
@@ -390,6 +402,18 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
 
         </div>
       )}
+
+      {/* CUSTOM CONFIRMATION MODAL (REPLACES BROWSER CONFIRM) */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title="Hapus Data Proyek?"
+        message={`Apakah Anda yakin ingin menghapus proyek sektor "${deleteModal.name}"? Data yang telah dihapus tidak dapat dipulihkan.`}
+        confirmText="Ya, Hapus Proyek"
+        cancelText="Batal"
+        type="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteModal({ isOpen: false, id: "", name: "" })}
+      />
 
     </div>
   );

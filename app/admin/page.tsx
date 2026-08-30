@@ -6,6 +6,8 @@ import AdminSertifikasi from "../../components/AdminSertifikasi";
 import AdminGaleri from "../../components/AdminGaleri";
 import AdminTim from "../../components/AdminTim";
 import AdminProyek from "../../components/AdminProyek";
+import { useToast } from "../../context/ToastContext";
+import ConfirmModal from "../../components/ConfirmModal";
 import {
   SertifikasiInquiry,
   GalleryItem,
@@ -17,14 +19,14 @@ import {
   getProjects,
   updateInquiryStatus
 } from "../../lib/db";
-import { useAlert } from "../../context/AlertContext";
 
 export default function AdminPage() {
-  const { toast, confirm } = useAlert();
+  const { showToast } = useToast();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   // Content states
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -67,18 +69,18 @@ export default function AdminPage() {
   const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
       await updateInquiryStatus(id, newStatus);
-      toast({
+      showToast({
         title: "Status Diperbarui",
-        message: `Status permohonan berhasil diubah menjadi "${newStatus}".`,
-        variant: "success"
+        message: `Status permohonan berhasil diperbarui menjadi "${newStatus}".`,
+        type: "success",
       });
       await fetchData();
     } catch (err) {
       console.error("Failed to update status:", err);
-      toast({
-        title: "Gagal Memperbarui",
+      showToast({
+        title: "Gagal Update",
         message: "Gagal memperbarui status pengajuan.",
-        variant: "destructive"
+        type: "error",
       });
     }
   };
@@ -96,47 +98,42 @@ export default function AdminPage() {
 
     if (username === "admin" && password === "haccp2026") {
       setIsLoggedIn(true);
-      toast({
-        title: "Login Berhasil",
-        message: "Selamat datang kembali di Panel Administrator.",
-        variant: "success"
-      });
       if (typeof window !== "undefined") {
         sessionStorage.setItem("fq_admin_session", "true");
       }
+      showToast({
+        title: "Login Berhasil",
+        message: "Selamat datang kembali di Admin Portal PT Food Quality Certification.",
+        type: "success",
+      });
     } else {
       setLoginError("Kombinasi Username atau Password salah.");
-      toast({
-        title: "Login Gagal",
-        message: "Kombinasi Username atau Password salah.",
-        variant: "destructive"
+      showToast({
+        title: "Autentikasi Gagal",
+        message: "Username atau Password yang Anda masukkan tidak valid.",
+        type: "error",
       });
     }
   };
 
   // Handle Session Termination
-  const handleLogout = async () => {
-    const isConfirmed = await confirm({
-      title: "Keluar dari Panel Admin?",
-      message: "Apakah Anda yakin ingin mengakhiri sesi administrator ini?",
-      confirmText: "Ya, Keluar",
-      cancelText: "Batal",
-      variant: "warning"
-    });
+  const handleLogoutPrompt = () => {
+    setIsLogoutModalOpen(true);
+  };
 
-    if (isConfirmed) {
-      setIsLoggedIn(false);
-      setUsername("");
-      setPassword("");
-      if (typeof window !== "undefined") {
-        sessionStorage.removeItem("fq_admin_session");
-      }
-      toast({
-        title: "Berhasil Keluar",
-        message: "Sesi admin telah ditutup.",
-        variant: "info"
-      });
+  const handleConfirmLogout = () => {
+    setIsLogoutModalOpen(false);
+    setIsLoggedIn(false);
+    setUsername("");
+    setPassword("");
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("fq_admin_session");
     }
+    showToast({
+      title: "Sesi Berakhir",
+      message: "Anda telah berhasil keluar dari panel admin.",
+      type: "info",
+    });
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -259,10 +256,11 @@ export default function AdminPage() {
                   href="#hint"
                   onClick={(e) => {
                     e.preventDefault();
-                    toast({
-                      title: "Kredensial Default",
+                    showToast({
+                      title: "Kredensial Pengujian Administrator",
                       message: "Username: admin | Password: haccp2026",
-                      variant: "info"
+                      type: "info",
+                      duration: 6000,
                     });
                   }}
                   className="font-bold text-slate-500 hover:text-brand-blue transition-colors"
@@ -351,7 +349,7 @@ export default function AdminPage() {
     <AdminLayout
       activeTab={activeTab}
       setActiveTab={setActiveTab}
-      onLogout={handleLogout}
+      onLogout={handleLogoutPrompt}
     >
       {loading ? (
         <div className="py-24 text-center space-y-4">
@@ -405,175 +403,108 @@ export default function AdminPage() {
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
                       👥
                     </div>
-                    <span className="bg-blue-50 text-blue-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-blue-200/50">
-                      Tim Auditor
+                    <span className="bg-indigo-50 text-indigo-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-indigo-200/50">
+                      Expert Team
                     </span>
                   </div>
                   <div>
                     <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
-                      Auditor &amp; Tim Ahli
+                      Auditor &amp; Personel
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
-                      {teamMembers.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Personel</span>
+                      {teamMembers.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Orang</span>
                     </h3>
                   </div>
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-brand-blue group-hover:translate-x-1 transition-transform">
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">
                     <span className="truncate">Kelola Tim</span>
                     <span>&rarr;</span>
                   </div>
                 </div>
 
-                {/* Stats 3: Gallery - Full width on mobile row 2 */}
+                {/* Stats 3: Proyek & Sektor */}
                 <div
-                  onClick={() => setActiveTab("galeri")}
-                  className="col-span-2 sm:col-span-1 bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
+                  onClick={() => setActiveTab("proyek")}
+                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4 col-span-2 sm:col-span-1"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
-                      🖼️
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                      🏗️
                     </div>
-                    <span className="bg-cyan-50 text-cyan-700 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-cyan-200/50">
-                      Dokumentasi Foto
+                    <span className="bg-amber-50 text-amber-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-amber-200/50">
+                      Live Projects
                     </span>
                   </div>
                   <div>
                     <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
-                      Album Foto Kegiatan
+                      Kategori Sektor
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
-                      {gallery.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Foto</span>
+                      {projects.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Proyek</span>
                     </h3>
                   </div>
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-brand-blue group-hover:translate-x-1 transition-transform">
-                    <span className="truncate">Kelola Galeri Foto</span>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-amber-600 group-hover:translate-x-1 transition-transform">
+                    <span className="truncate">Kelola Sektor</span>
                     <span>&rarr;</span>
                   </div>
                 </div>
 
               </div>
 
-              {/* Two Column details dashboard: Recent submissions and Quick Operations */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+              {/* Bottom Quick Action Grid */}
+              <div className="bg-white border border-slate-200/80 p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-xs space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h4 className="text-sm font-extrabold text-slate-900 uppercase font-heading">
+                    Aksi Pintar Administrator
+                  </h4>
+                  <span className="text-[11px] text-slate-400 font-medium">Pintasan Cepat</span>
+                </div>
                 
-                {/* Column Left: Recent submittal list (Span 8) */}
-                <div className="lg:col-span-8 bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 shadow-xs">
-                  <div className="flex justify-between items-center pb-4 border-b border-slate-100">
-                    <div>
-                      <h4 className="text-sm sm:text-base font-extrabold text-slate-900 font-heading tracking-tight">
-                        Pengajuan Sertifikasi Terbaru
-                      </h4>
-                      <p className="text-xs text-slate-400 font-medium mt-0.5">
-                        Permohonan sertifikasi HACCP yang baru saja dikirimkan klien.
-                      </p>
+                {/* 2-Column Grid on Mobile, Single Column on Desktop */}
+                <div className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3">
+                  <button
+                    onClick={() => setActiveTab("sertifikasi")}
+                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                  >
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-sm shrink-0">📊</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Ekspor Data</span>
                     </div>
-                    <span className="bg-brand-blue/10 text-brand-blue text-[9px] sm:text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full shrink-0">
-                      Recent Entry
-                    </span>
-                  </div>
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                  </button>
 
-                  {inquiries.length === 0 ? (
-                    <p className="text-slate-400 text-xs py-8 text-center font-medium">Belum ada pengajuan masuk saat ini.</p>
-                  ) : (
-                    <div className="divide-y divide-slate-100">
-                      {inquiries.slice(0, 4).map((inq) => (
-                        <div key={inq.id} className="py-3.5 sm:py-4 flex items-center justify-between text-xs gap-3 sm:gap-4 hover:bg-slate-50/60 p-2 sm:p-2.5 rounded-2xl transition-colors">
-                          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-700 font-black flex items-center justify-center text-xs sm:text-sm shrink-0 border border-slate-200">
-                              {inq.companyName.charAt(0)}
-                            </div>
-                            <div className="space-y-0.5 sm:space-y-1 min-w-0">
-                              <h5 className="font-extrabold text-slate-900 truncate text-xs sm:text-sm">{inq.companyName}</h5>
-                              <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate">
-                                PIC: {inq.picName} | {inq.phone}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="text-right shrink-0">
-                            <span className="font-mono font-extrabold text-slate-700 block text-[10px] sm:text-xs bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200">
-                              {inq.ticketNumber}
-                            </span>
-                            <span className="text-[9px] sm:text-[10px] text-slate-400 block mt-0.5 sm:mt-1">
-                              {new Date(inq.createdAt).toLocaleDateString("id-ID", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric"
-                              })}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
+                  <button
+                    onClick={() => setActiveTab("proyek")}
+                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                  >
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <span className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-sm shrink-0">🏗️</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Kelola Proyek</span>
                     </div>
-                  )}
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                  </button>
 
-                  <div className="pt-2">
-                    <button
-                      onClick={() => setActiveTab("sertifikasi")}
-                      className="w-full py-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-extrabold text-xs uppercase tracking-wider transition-all duration-200 cursor-pointer border border-slate-200 rounded-xl sm:rounded-2xl text-center shadow-xs"
-                    >
-                      Buka Semua Pengajuan Sertifikasi &rarr;
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => setActiveTab("pegawai")}
+                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                  >
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <span className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm shrink-0">👥</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Kelola Auditor</span>
+                    </div>
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("galeri")}
+                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                  >
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <span className="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-sm shrink-0">📸</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Foto Galeri</span>
+                    </div>
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                  </button>
                 </div>
-
-                {/* Column Right: Fast operations (Span 4) - 2x2 Grid on Mobile */}
-                <div className="lg:col-span-4 bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl p-5 sm:p-6 space-y-4 sm:space-y-6 shadow-xs">
-                  <div className="pb-3 sm:pb-4 border-b border-slate-100">
-                    <h4 className="text-sm sm:text-base font-extrabold text-slate-900 font-heading tracking-tight">
-                      Aksi Cepat Admin
-                    </h4>
-                    <p className="text-xs text-slate-400 font-medium mt-0.5">
-                      Navigasi kilat ke modul manajemen.
-                    </p>
-                  </div>
-                  
-                  {/* 2-Column Grid on Mobile, Single Column on Desktop */}
-                  <div className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3">
-                    <button
-                      onClick={() => setActiveTab("sertifikasi")}
-                      className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
-                    >
-                      <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-sm shrink-0">📊</span>
-                        <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Ekspor Data</span>
-                      </div>
-                      <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab("proyek")}
-                      className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
-                    >
-                      <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-sm shrink-0">🏗️</span>
-                        <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Kelola Proyek</span>
-                      </div>
-                      <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab("pegawai")}
-                      className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
-                    >
-                      <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm shrink-0">👥</span>
-                        <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Kelola Auditor</span>
-                      </div>
-                      <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab("galeri")}
-                      className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
-                    >
-                      <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-sm shrink-0">📸</span>
-                        <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Foto Galeri</span>
-                      </div>
-                      <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
-                    </button>
-                  </div>
-                </div>
-
               </div>
 
             </div>
@@ -598,6 +529,18 @@ export default function AdminPage() {
           {activeTab === "galeri" && <AdminGaleri gallery={gallery} onRefresh={fetchData} />}
         </>
       )}
+
+      {/* CONFIRMATION MODAL FOR LOGOUT */}
+      <ConfirmModal
+        isOpen={isLogoutModalOpen}
+        title="Keluar dari Panel Admin?"
+        message="Sesi aktif administrator Anda akan ditutup. Anda harus memasukkan kredensial lagi untuk masuk."
+        confirmText="Ya, Keluar"
+        cancelText="Batal"
+        type="warning"
+        onConfirm={handleConfirmLogout}
+        onCancel={() => setIsLogoutModalOpen(false)}
+      />
     </AdminLayout>
   );
 }

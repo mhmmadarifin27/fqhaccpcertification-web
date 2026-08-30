@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { TeamMember, createTeamMember, updateTeamMember, deleteTeamMember, compressImage } from "../lib/db";
-import { useAlert } from "../context/AlertContext";
+import { useToast } from "../context/ToastContext";
+import ConfirmModal from "./ConfirmModal";
 
 interface AdminTimProps {
   teamMembers: TeamMember[];
@@ -10,7 +11,7 @@ interface AdminTimProps {
 }
 
 export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
-  const { toast, confirm } = useAlert();
+  const { showToast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   
@@ -18,6 +19,17 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Custom Delete Confirm Modal State
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    id: string;
+    name: string;
+  }>({
+    isOpen: false,
+    id: "",
+    name: "",
+  });
 
   // Form states
   const [formData, setFormData] = useState({
@@ -47,8 +59,18 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
       try {
         const compressedBase64 = await compressImage(file, 800, 0.75);
         setFormData((prev) => ({ ...prev, image: compressedBase64 }));
+        showToast({
+          title: "Pas Foto Terpilih",
+          message: "Pas foto siap disimpan bersama profil tim.",
+          type: "info",
+        });
       } catch (err) {
         console.error("Error compressing team photo:", err);
+        showToast({
+          title: "Gagal Memproses Pas Foto",
+          message: "Format file tidak valid atau terjadi kendala.",
+          type: "error",
+        });
       }
     }
   };
@@ -88,10 +110,10 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.role) {
-      toast({
-        title: "Form Belum Lengkap",
+      showToast({
+        title: "Data Belum Lengkap",
         message: "Nama Lengkap dan Jabatan wajib diisi.",
-        variant: "warning"
+        type: "warning",
       });
       return;
     }
@@ -119,17 +141,17 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
 
       if (editingId) {
         await updateTeamMember(editingId, payload);
-        toast({
-          title: "Data Pegawai Diperbarui",
-          message: `Profil "${formData.name}" berhasil diperbarui.`,
-          variant: "success"
+        showToast({
+          title: "Profil Diperbarui",
+          message: `Data pegawai "${formData.name}" berhasil diperbarui.`,
+          type: "success",
         });
       } else {
         await createTeamMember(payload);
-        toast({
+        showToast({
           title: "Pegawai Ditambahkan",
-          message: `Pegawai "${formData.name}" berhasil ditambahkan ke daftar tim.`,
-          variant: "success"
+          message: `Data pegawai "${formData.name}" berhasil ditambahkan.`,
+          type: "success",
         });
       }
 
@@ -137,42 +159,43 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
       await onRefresh();
     } catch (err) {
       console.error("Error saving team member:", err);
-      toast({
+      showToast({
         title: "Gagal Menyimpan",
-        message: "Gagal menyimpan data pegawai.",
-        variant: "destructive"
+        message: "Terjadi kesalahan saat menyimpan data pegawai.",
+        type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    const isConfirmed = await confirm({
-      title: "Hapus Anggota Tim?",
-      message: `Apakah Anda yakin ingin menghapus "${name}" dari daftar pegawai & tim auditor?`,
-      confirmText: "Ya, Hapus Pegawai",
-      cancelText: "Batal",
-      variant: "destructive"
+  const handlePromptDelete = (id: string, name: string) => {
+    setDeleteModal({
+      isOpen: true,
+      id,
+      name,
     });
+  };
 
-    if (!isConfirmed) return;
+  const handleConfirmDelete = async () => {
+    const { id, name } = deleteModal;
+    setDeleteModal({ isOpen: false, id: "", name: "" });
 
     setLoading(true);
     try {
       await deleteTeamMember(id);
-      toast({
+      showToast({
         title: "Pegawai Dihapus",
-        message: `Data "${name}" berhasil dihapus.`,
-        variant: "success"
+        message: `"${name}" berhasil dihapus dari daftar pegawai & tim.`,
+        type: "success",
       });
       await onRefresh();
     } catch (err) {
       console.error("Error deleting team member:", err);
-      toast({
+      showToast({
         title: "Gagal Menghapus",
-        message: "Gagal menghapus data pegawai.",
-        variant: "destructive"
+        message: "Terjadi kesalahan saat menghapus pegawai.",
+        type: "error",
       });
     } finally {
       setLoading(false);
@@ -283,7 +306,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                   ✏️ Edit Profile
                 </button>
                 <button
-                  onClick={() => handleDelete(member.id, member.name)}
+                  onClick={() => handlePromptDelete(member.id, member.name)}
                   className="flex-1 py-2 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[11px] uppercase tracking-wider cursor-pointer border-none rounded-xl text-center shadow-xs active:scale-95"
                 >
                   🗑️ Hapus
@@ -357,7 +380,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                       ✏️ Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(member.id, member.name)}
+                      onClick={() => handlePromptDelete(member.id, member.name)}
                       className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-[10px] uppercase tracking-wider cursor-pointer border-none rounded-lg shadow-xs"
                     >
                       🗑️ Hapus
@@ -375,41 +398,39 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
           <div className="bg-white border border-slate-200/80 shadow-2xl w-full max-w-2xl overflow-hidden my-8 rounded-3xl">
             
-            <div className="bg-brand-navy text-white px-6 py-5 flex items-center justify-between border-b border-white/10">
-              <h3 className="text-xs sm:text-sm font-extrabold uppercase font-heading tracking-wider">
-                {editingId ? "✏️ Edit Profile Pegawai" : "➕ Tambah Pegawai / Auditor Baru"}
+            <div className="bg-brand-navy text-white py-5 px-6 flex items-center justify-between border-b border-white/10">
+              <h3 className="font-extrabold tracking-wide text-xs sm:text-sm font-heading">
+                {editingId ? "Edit Profil Pegawai" : "Tambah Pegawai / Auditor Baru"}
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-white hover:text-slate-300 font-bold text-lg cursor-pointer bg-transparent border-none"
+                className="text-white hover:text-brand-cyan border-none bg-transparent cursor-pointer text-lg font-bold"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleFormSubmit} className="p-6 space-y-4 text-xs sm:text-sm">
-              
+            <form onSubmit={handleFormSubmit} className="p-6 space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Nama &amp; Gelar Lengkap *</label>
+                  <label className="font-extrabold text-slate-700 block">Nama Lengkap &amp; Gelar *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Contoh: Dr. Ir. Ahmad Sudrajat, M.Sc."
+                    placeholder="Contoh: Prof. Dr. Ir. H. Ahmad..."
                     className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
                   />
                 </div>
-
                 <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Jabatan / Spesialisasi *</label>
+                  <label className="font-extrabold text-slate-700 block">Jabatan / Role *</label>
                   <input
                     type="text"
                     required
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    placeholder="Contoh: Lead Auditor HACCP & Mikrobiologi"
+                    placeholder="Contoh: Dewan Pengarah / Lead Auditor"
                     className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
                   />
                 </div>
@@ -417,97 +438,86 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Kategori Affiliasi</label>
+                  <label className="font-extrabold text-slate-700 block">Kategori Affiliasi *</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
+                    className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs font-bold focus:bg-white focus:outline-[#0a5c36]"
                   >
-                    <option value="tphp-ugm">Tenaga Ahli TPHP UGM</option>
-                    <option value="uin-suka">Auditor Halal UIN Sunan Kalijaga</option>
+                    <option value="tphp-ugm">Departemen TPHP UGM</option>
+                    <option value="uin-sunan-kalijaga">Halal Center UIN Sunan Kalijaga</option>
                   </select>
                 </div>
 
-                <div className="space-y-1 flex flex-col justify-end">
-                  <label className="flex items-center gap-2 cursor-pointer pt-2">
+                <div className="space-y-1">
+                  <label className="font-extrabold text-slate-700 block">Status Lead Professional</label>
+                  <label className="flex items-center gap-2 pt-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={formData.isLead}
                       onChange={(e) => setFormData({ ...formData, isLead: e.target.checked })}
-                      className="w-4 h-4 accent-brand-blue"
+                      className="w-4 h-4 text-[#0a5c36] rounded"
                     />
-                    <span className="font-extrabold text-slate-800 text-xs">Set sebagai Lead Professional / Auditor</span>
+                    <span className="text-xs font-bold text-slate-700">Tampilkan Badge ★ Lead Professional</span>
                   </label>
                 </div>
               </div>
 
               {/* Direct File Manager Upload Box */}
-              <div className="space-y-2 border-2 border-dashed border-brand-navy/30 p-4 bg-blue-50/40 text-center">
+              <div className="space-y-2 border-2 border-dashed border-brand-navy/30 p-4 bg-blue-50/40 text-center rounded-2xl">
                 <label className="font-extrabold text-brand-navy text-xs uppercase tracking-wider block">
                   📁 Unggah Pas Foto dari File Manager / Laptop / HP *
                 </label>
-                <p className="text-[11px] text-slate-500 font-normal">
-                  Klik di bawah ini untuk memilih berkas foto pegawai dari perangkat Anda:
+                <p className="text-[11px] text-slate-500 font-medium">
+                  Pilih file pas foto resmi (.jpg, .png, .jpeg) dari perangkat Anda:
                 </p>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleImageUpload}
-                  className="block w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:font-extrabold file:bg-brand-navy file:text-white hover:file:bg-brand-navy-dark cursor-pointer"
+                  className="block w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:font-extrabold file:bg-brand-navy file:text-white hover:file:bg-brand-navy-dark file:rounded-xl cursor-pointer"
                 />
 
                 {formData.image && (
-                  <div className="pt-3 border-t border-slate-200 mt-2 flex flex-col items-center gap-1.5">
+                  <div className="pt-2 border-t border-slate-200 mt-2 flex flex-col items-center gap-1.5">
                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Preview Pas Foto:</span>
-                    <img src={formData.image} alt="Preview Pas Foto" className="h-24 w-24 object-cover border border-slate-300 shadow-md" />
+                    <img src={formData.image} alt="Preview Pas Foto" className="h-20 w-20 rounded-full object-cover border-2 border-brand-navy shadow-md" />
                   </div>
                 )}
               </div>
 
               <div className="space-y-1">
-                <label className="font-extrabold text-slate-700 block">Riwayat Pendidikan (Satu per baris)</label>
+                <label className="font-extrabold text-slate-700 block">Riwayat Pendidikan (Pisahkan per baris baru)</label>
                 <textarea
                   rows={2}
                   value={formData.educationText}
                   onChange={(e) => setFormData({ ...formData, educationText: e.target.value })}
-                  placeholder="S1 Teknologi Pangan UGM&#10;S2 Ilmu Pangan UGM"
-                  className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36] resize-none"
+                  placeholder="S1 Teknologi Pangan, UGM&#10;S2 Ilmu Pangan, UGM"
+                  className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Pengalaman Kerja</label>
+                  <label className="font-extrabold text-slate-700 block">Pengalaman Akademik / Kerja</label>
                   <input
                     type="text"
                     value={formData.experience}
                     onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-                    placeholder="Dosen Teknologi Pangan &amp; Auditor Mutu"
+                    placeholder="Dosen & Peneliti Keamanan Pangan"
                     className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
                   />
                 </div>
-
                 <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Kualifikasi Auditor</label>
+                  <label className="font-extrabold text-slate-700 block">Kualifikasi Auditor / Asesor</label>
                   <input
                     type="text"
                     value={formData.auditorExp}
                     onChange={(e) => setFormData({ ...formData, auditorExp: e.target.value })}
-                    placeholder="Auditor AMI &amp; Konsultan HACCP Terdaftar"
+                    placeholder="Auditor Mutu Internal & Konsultan HACCP"
                     className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
                   />
                 </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="font-extrabold text-slate-700 block">Motto / Prinsip Kerja</label>
-                <input
-                  type="text"
-                  value={formData.motto}
-                  onChange={(e) => setFormData({ ...formData, motto: e.target.value })}
-                  placeholder="Penjaminan mutu pangan publik adalah prioritas utama..."
-                  className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
-                />
               </div>
 
               <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
@@ -532,6 +542,18 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
           </div>
         </div>
       )}
+
+      {/* CUSTOM CONFIRMATION MODAL (REPLACES BROWSER CONFIRM) */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title="Hapus Data Pegawai?"
+        message={`Apakah Anda yakin ingin menghapus "${deleteModal.name}" dari daftar pegawai & tim auditor? Tindakan ini tidak dapat dibatalkan.`}
+        confirmText="Ya, Hapus Pegawai"
+        cancelText="Batal"
+        type="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteModal({ isOpen: false, id: "", name: "" })}
+      />
 
     </div>
   );
