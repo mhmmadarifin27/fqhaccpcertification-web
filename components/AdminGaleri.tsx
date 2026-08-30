@@ -2,15 +2,19 @@
 
 import React, { useState } from "react";
 import { GalleryItem, createGallery, deleteGallery, compressImage } from "../lib/db";
+import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
+import { CheckCircle2, AlertCircle, Info, ShieldCheck } from "lucide-react";
 
 interface AdminGaleriProps {
   gallery: GalleryItem[];
   onRefresh: () => void;
+  triggerAlert?: (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => void;
 }
 
-export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
+export default function AdminGaleri({ gallery, onRefresh, triggerAlert }: AdminGaleriProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState("");
 
   // Form states
   const [title, setTitle] = useState("");
@@ -31,6 +35,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
       try {
         const compressedBase64 = await compressImage(file, 800, 0.75);
         setImageUrl(compressedBase64);
+        setFormError("");
       } catch (err) {
         console.error("Error compressing image:", err);
       }
@@ -42,13 +47,14 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
     setDescription("");
     setCategory("Audit");
     setImageUrl("");
+    setFormError("");
     setIsModalOpen(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !description.trim() || !imageUrl.trim()) {
-      alert("Harap lengkapi semua bidang wajib!");
+      setFormError("Harap lengkapi semua bidang wajib dan pilih/unggah foto.");
       return;
     }
 
@@ -61,26 +67,36 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
         imageUrl
       });
       setIsModalOpen(false);
-      onRefresh(); // Refresh gallery parent state list
+      onRefresh();
+      if (triggerAlert) {
+        triggerAlert("success", "Foto Berhasil Ditambahkan", `Dokumentasi "${title}" telah disimpan ke galeri.`);
+      }
     } catch (err) {
       console.error(err);
-      alert("Terjadi kesalahan saat mengunggah foto galeri.");
+      if (triggerAlert) {
+        triggerAlert("destructive", "Gagal Mengunggah", "Terjadi kesalahan saat mengunggah foto galeri.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus dokumentasi galeri ini?")) {
+  const handleDelete = async (id: string, itemTitle: string) => {
+    if (!confirm(`Apakah Anda yakin ingin menghapus dokumentasi "${itemTitle}"?`)) {
       return;
     }
 
     try {
       await deleteGallery(id);
       onRefresh();
+      if (triggerAlert) {
+        triggerAlert("warning", "Foto Telah Dihapus", `Dokumentasi "${itemTitle}" telah dihapus dari galeri.`);
+      }
     } catch (err) {
       console.error(err);
-      alert("Gagal menghapus item galeri.");
+      if (triggerAlert) {
+        triggerAlert("destructive", "Gagal Menghapus", "Terjadi kesalahan saat menghapus foto galeri.");
+      }
     }
   };
 
@@ -145,7 +161,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
               {/* Action buttons */}
               <div className="px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex justify-end">
                 <button
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item.id, item.title)}
                   className="px-3 py-1.5 border border-red-200 text-red-700 bg-red-50/60 hover:bg-red-50 hover:text-red-800 transition-colors text-[10px] font-extrabold uppercase tracking-wider cursor-pointer rounded-xl"
                 >
                   🗑️ Hapus Dokumentasi
@@ -176,6 +192,14 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
 
             {/* Modal Form */}
             <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-5 text-xs sm:text-sm">
+              {formError && (
+                <Alert variant="destructive" className="bg-rose-50 border-rose-200">
+                  <AlertCircle className="h-4 w-4 text-rose-600" />
+                  <AlertTitle className="text-rose-900 font-bold">Validasi Form</AlertTitle>
+                  <AlertDescription className="text-rose-700 text-xs">{formError}</AlertDescription>
+                </Alert>
+              )}
+
               {/* Photo Title */}
               <div className="space-y-1.5">
                 <label className="font-extrabold text-slate-800 block">Judul Dokumentasi *</label>

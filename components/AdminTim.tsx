@@ -2,13 +2,16 @@
 
 import React, { useState } from "react";
 import { TeamMember, createTeamMember, updateTeamMember, deleteTeamMember, compressImage } from "../lib/db";
+import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
+import { CheckCircle2, AlertCircle, Info } from "lucide-react";
 
 interface AdminTimProps {
   teamMembers: TeamMember[];
   onRefresh: () => void;
+  triggerAlert?: (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => void;
 }
 
-export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
+export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: AdminTimProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   
@@ -16,6 +19,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState("");
 
   // Form states
   const [formData, setFormData] = useState({
@@ -53,6 +57,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
 
   const handleOpenAddModal = () => {
     setEditingId(null);
+    setFormError("");
     setFormData({
       name: "",
       role: "",
@@ -69,6 +74,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
 
   const handleOpenEditModal = (member: TeamMember) => {
     setEditingId(member.id);
+    setFormError("");
     setFormData({
       name: member.name,
       role: member.role,
@@ -86,7 +92,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.role) {
-      alert("Nama Lengkap dan Jabatan wajib diisi.");
+      setFormError("Nama Lengkap dan Jabatan wajib diisi.");
       return;
     }
 
@@ -113,15 +119,23 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
 
       if (editingId) {
         await updateTeamMember(editingId, payload);
+        if (triggerAlert) {
+          triggerAlert("info", "Profil Diperbarui", `Data pegawai "${formData.name}" berhasil diperbarui.`);
+        }
       } else {
         await createTeamMember(payload);
+        if (triggerAlert) {
+          triggerAlert("success", "Pegawai Ditambahkan", `Pegawai baru "${formData.name}" berhasil didaftarkan.`);
+        }
       }
 
       setIsModalOpen(false);
       await onRefresh();
     } catch (err) {
       console.error("Error saving team member:", err);
-      alert("Gagal menyimpan data pegawai.");
+      if (triggerAlert) {
+        triggerAlert("destructive", "Gagal Menyimpan", "Terjadi kesalahan saat menyimpan data pegawai.");
+      }
     } finally {
       setLoading(false);
     }
@@ -133,9 +147,14 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
       try {
         await deleteTeamMember(id);
         await onRefresh();
+        if (triggerAlert) {
+          triggerAlert("warning", "Pegawai Dihapus", `Pegawai "${name}" telah dihapus dari sistem.`);
+        }
       } catch (err) {
         console.error("Error deleting team member:", err);
-        alert("Gagal menghapus pegawai.");
+        if (triggerAlert) {
+          triggerAlert("destructive", "Gagal Menghapus", "Terjadi kesalahan saat menghapus pegawai.");
+        }
       } finally {
         setLoading(false);
       }
@@ -351,6 +370,13 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
             </div>
 
             <form onSubmit={handleFormSubmit} className="p-6 space-y-4 text-xs sm:text-sm">
+              {formError && (
+                <Alert variant="destructive" className="bg-rose-50 border-rose-200">
+                  <AlertCircle className="h-4 w-4 text-rose-600" />
+                  <AlertTitle className="text-rose-900 font-bold">Validasi Data</AlertTitle>
+                  <AlertDescription className="text-rose-700 text-xs">{formError}</AlertDescription>
+                </Alert>
+              )}
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">

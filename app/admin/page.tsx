@@ -6,6 +6,8 @@ import AdminSertifikasi from "../../components/AdminSertifikasi";
 import AdminGaleri from "../../components/AdminGaleri";
 import AdminTim from "../../components/AdminTim";
 import AdminProyek from "../../components/AdminProyek";
+import { Alert, AlertTitle, AlertDescription } from "../../components/ui/alert";
+import { CheckCircle2, AlertCircle, Info, AlertTriangle, Database, ShieldCheck } from "lucide-react";
 import {
   SertifikasiInquiry,
   GalleryItem,
@@ -23,6 +25,20 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+
+  // Global Alert Notification Toast state
+  const [adminAlert, setAdminAlert] = useState<{
+    type: "success" | "destructive" | "info" | "warning";
+    title: string;
+    message: string;
+  } | null>(null);
+
+  const triggerAlert = (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => {
+    setAdminAlert({ type, title, message });
+    setTimeout(() => {
+      setAdminAlert(null);
+    }, 4500);
+  };
 
   // Content states
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -66,9 +82,10 @@ export default function AdminPage() {
     try {
       await updateInquiryStatus(id, newStatus);
       await fetchData();
+      triggerAlert("success", "Status Berhasil Diperbarui", `Status pengajuan telah diubah menjadi "${newStatus}".`);
     } catch (err) {
       console.error("Failed to update status:", err);
-      alert("Gagal memperbarui status pengajuan.");
+      triggerAlert("destructive", "Gagal Memperbarui Status", "Terjadi kesalahan koneksi saat menyimpan status.");
     }
   };
 
@@ -88,6 +105,7 @@ export default function AdminPage() {
       if (typeof window !== "undefined") {
         sessionStorage.setItem("fq_admin_session", "true");
       }
+      triggerAlert("success", "Login Berhasil", "Selamat datang kembali di Panel Admin.");
     } else {
       setLoginError("Kombinasi Username atau Password salah.");
     }
@@ -156,12 +174,14 @@ export default function AdminPage() {
               </p>
             </div>
 
-            {/* Login Form */}
+            {/* Login Form with Shadcn Alert on Error */}
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               {loginError && (
-                <div className="bg-rose-50 border border-rose-200 text-rose-700 p-3 rounded-2xl font-bold text-xs text-center animate-fade-in">
-                  ⚠ {loginError}
-                </div>
+                <Alert variant="destructive" className="animate-fade-in bg-rose-50 border-rose-200">
+                  <AlertCircle className="h-4 w-4 text-rose-600" />
+                  <AlertTitle className="text-rose-900 font-bold">Autentikasi Gagal</AlertTitle>
+                  <AlertDescription className="text-rose-700 text-xs">{loginError}</AlertDescription>
+                </Alert>
               )}
 
               {/* Username Input with Mail Icon */}
@@ -315,6 +335,30 @@ export default function AdminPage() {
       setActiveTab={setActiveTab}
       onLogout={handleLogout}
     >
+      {/* FLOATING SHADCN ALERT NOTIFICATION TOAST */}
+      {adminAlert && (
+        <div className="fixed top-20 right-6 z-50 max-w-md w-full animate-fade-in shadow-2xl">
+          <Alert variant={adminAlert.type} className="border shadow-lg bg-white/95 backdrop-blur-md">
+            {adminAlert.type === "success" && <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />}
+            {adminAlert.type === "destructive" && <AlertCircle className="h-5 w-5 text-rose-600 shrink-0" />}
+            {adminAlert.type === "info" && <Info className="h-5 w-5 text-blue-600 shrink-0" />}
+            {adminAlert.type === "warning" && <AlertTriangle className="h-5 w-5 text-amber-600 shrink-0" />}
+            <div className="flex justify-between items-start w-full ml-1">
+              <div>
+                <AlertTitle className="font-bold text-sm leading-tight">{adminAlert.title}</AlertTitle>
+                <AlertDescription className="text-xs text-slate-600 mt-0.5 leading-relaxed">{adminAlert.message}</AlertDescription>
+              </div>
+              <button
+                onClick={() => setAdminAlert(null)}
+                className="text-slate-400 hover:text-slate-700 text-xs font-bold ml-2 p-1 cursor-pointer bg-transparent border-none"
+              >
+                ✕
+              </button>
+            </div>
+          </Alert>
+        </div>
+      )}
+
       {loading ? (
         <div className="py-24 text-center space-y-4">
           <div className="w-12 h-12 border-4 border-brand-navy/30 border-t-brand-navy animate-spin mx-auto rounded-full"></div>
@@ -328,6 +372,15 @@ export default function AdminPage() {
           {activeTab === "dashboard" && (
             <div className="space-y-6 sm:space-y-8">
               
+              {/* SYSTEM STATUS SHADCN ALERT */}
+              <Alert variant="info" className="bg-blue-50/80 border-blue-200">
+                <Database className="h-4 w-4 text-brand-blue" />
+                <AlertTitle className="text-blue-900 font-bold">Sinkronisasi Database Cloud Terhubung</AlertTitle>
+                <AlertDescription className="text-blue-700 text-xs">
+                  Semua data pengajuan sertifikasi, galeri foto, proyek client, dan tim auditor tersinkronisasi secara real-time ke Supabase & LocalStorage.
+                </AlertDescription>
+              </Alert>
+
               {/* Statistic widgets grid - Responsive 2-Column Mobile & 3-Column Desktop Layout */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-6">
                 
@@ -543,21 +596,23 @@ export default function AdminPage() {
 
           {/* TAB 2: CERTIFICATION MANAGEMENTS */}
           {activeTab === "sertifikasi" && (
-            <AdminSertifikasi inquiries={inquiries} onUpdateStatus={handleUpdateStatus} />
+            <AdminSertifikasi inquiries={inquiries} onUpdateStatus={handleUpdateStatus} triggerAlert={triggerAlert} />
           )}
 
           {/* TAB 3: PROJECT MANAGEMENTS */}
           {activeTab === "proyek" && (
-            <AdminProyek projects={projects} onRefresh={fetchData} />
+            <AdminProyek projects={projects} onRefresh={fetchData} triggerAlert={triggerAlert} />
           )}
 
           {/* TAB 4: TEAM / PEGAWAI MANAGEMENTS */}
           {activeTab === "pegawai" && (
-            <AdminTim teamMembers={teamMembers} onRefresh={fetchData} />
+            <AdminTim teamMembers={teamMembers} onRefresh={fetchData} triggerAlert={triggerAlert} />
           )}
 
           {/* TAB 5: GALLERY MANAGEMENTS */}
-          {activeTab === "galeri" && <AdminGaleri gallery={gallery} onRefresh={fetchData} />}
+          {activeTab === "galeri" && (
+            <AdminGaleri gallery={gallery} onRefresh={fetchData} triggerAlert={triggerAlert} />
+          )}
         </>
       )}
     </AdminLayout>

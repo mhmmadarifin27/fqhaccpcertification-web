@@ -2,19 +2,23 @@
 
 import React, { useState } from "react";
 import { ProjectItem, createProject, updateProject, deleteProject, compressImage } from "../lib/db";
+import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
+import { CheckCircle2, AlertCircle, Info } from "lucide-react";
 
 interface AdminProyekProps {
   projects: ProjectItem[];
   onRefresh: () => void;
+  triggerAlert?: (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => void;
 }
 
-export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
+export default function AdminProyek({ projects, onRefresh, triggerAlert }: AdminProyekProps) {
   const [searchTerm, setSearchTerm] = useState("");
   
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState("");
 
   // Form states
   const [formData, setFormData] = useState({
@@ -35,6 +39,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
       try {
         const compressedBase64 = await compressImage(file, 800, 0.75);
         setFormData((prev) => ({ ...prev, image: compressedBase64 }));
+        setFormError("");
       } catch (err) {
         console.error("Error compressing project image:", err);
       }
@@ -43,6 +48,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
 
   const handleOpenAddModal = () => {
     setEditingId(null);
+    setFormError("");
     setFormData({
       name: "",
       category: "LOGISTIK & RITEL MODERN",
@@ -54,6 +60,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
 
   const handleOpenEditModal = (project: ProjectItem) => {
     setEditingId(project.id);
+    setFormError("");
     setFormData({
       name: project.name,
       category: project.category,
@@ -66,7 +73,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.desc.trim() || !formData.image.trim()) {
-      alert("Harap lengkapi nama proyek, deskripsi, dan foto!");
+      setFormError("Harap lengkapi nama proyek, deskripsi, dan foto!");
       return;
     }
 
@@ -74,14 +81,22 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
     try {
       if (editingId) {
         await updateProject(editingId, formData);
+        if (triggerAlert) {
+          triggerAlert("info", "Proyek Diperbarui", `Data proyek "${formData.name}" berhasil diperbarui.`);
+        }
       } else {
         await createProject(formData);
+        if (triggerAlert) {
+          triggerAlert("success", "Proyek Ditambahkan", `Proyek "${formData.name}" berhasil ditambahkan.`);
+        }
       }
       setIsModalOpen(false);
       onRefresh();
     } catch (err) {
       console.error(err);
-      alert("Terjadi kesalahan saat menyimpan data proyek.");
+      if (triggerAlert) {
+        triggerAlert("destructive", "Gagal Menyimpan", "Terjadi kesalahan saat menyimpan data proyek.");
+      }
     } finally {
       setLoading(false);
     }
@@ -95,9 +110,14 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
     try {
       await deleteProject(id);
       onRefresh();
+      if (triggerAlert) {
+        triggerAlert("warning", "Proyek Dihapus", `Proyek "${name}" telah dihapus.`);
+      }
     } catch (err) {
       console.error(err);
-      alert("Gagal menghapus data proyek.");
+      if (triggerAlert) {
+        triggerAlert("destructive", "Gagal Menghapus", "Terjadi kesalahan saat menghapus data proyek.");
+      }
     }
   };
 
@@ -267,6 +287,13 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-5 text-xs sm:text-sm">
+              {formError && (
+                <Alert variant="destructive" className="bg-rose-50 border-rose-200">
+                  <AlertCircle className="h-4 w-4 text-rose-600" />
+                  <AlertTitle className="text-rose-900 font-bold">Validasi Form</AlertTitle>
+                  <AlertDescription className="text-rose-700 text-xs">{formError}</AlertDescription>
+                </Alert>
+              )}
               <div className="space-y-1.5">
                 <label className="font-extrabold text-slate-800 block">Nama Perusahaan / Client *</label>
                 <input
