@@ -6,6 +6,8 @@ import Footer from "../components/Footer";
 import { createInquiry, getGallery, getProjects, GalleryItem, ProjectItem } from "../lib/db";
 import { useLanguage } from "../context/LanguageContext";
 import { autoTranslateText } from "../lib/autoTranslator";
+import { Alert, AlertTitle, AlertDescription } from "../components/ui/alert";
+import { CheckCircle2, ShieldCheck, Info } from "lucide-react";
 
 // Image URLs for hero slides (Local optimized web assets)
 const HERO_IMAGES = [
@@ -1091,19 +1093,17 @@ export default function Home() {
             <div className="absolute top-0 left-0 right-0 h-2 bg-brand-blue animate-pulse" />
 
             {formSubmitted ? (
-              // Success Screen after Simulated Submit
-              <div className="text-center py-12 space-y-6">
-                <div className="w-16 h-16 bg-emerald-100 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto text-3xl shadow-sm rounded-full">
-                  ✓
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-extrabold text-slate-900 font-heading">
+              // Success Screen after Simulated Submit with Shadcn Alert
+              <div className="text-center py-8 space-y-6">
+                <Alert variant="success" className="text-left bg-emerald-50/80 border-emerald-200">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                  <AlertTitle className="text-emerald-900 font-bold">
                     {t.form.successTitle}
-                  </h3>
-                  <p className="text-slate-500 text-sm max-w-md mx-auto font-normal">
+                  </AlertTitle>
+                  <AlertDescription className="text-emerald-700 text-xs">
                     {t.form.successDesc}
-                  </p>
-                </div>
+                  </AlertDescription>
+                </Alert>
 
                 {/* Generated Voucher Card */}
                 <div className="max-w-md mx-auto bg-slate-50 p-5 border border-slate-100 space-y-3.5 text-left rounded-xl">
@@ -1116,10 +1116,18 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="pt-6">
+                <Alert variant="info" className="text-left bg-blue-50/70 border-blue-200">
+                  <Info className="h-4 w-4 text-blue-600" />
+                  <AlertTitle className="text-blue-900 font-bold">Konfirmasi Tim Auditor</AlertTitle>
+                  <AlertDescription className="text-blue-700 text-xs">
+                    Silakan simpan nomor tiket voucher di atas. Tim kami akan menghubungi kontak PIC yang didaftarkan dalam 1x24 jam kerja.
+                  </AlertDescription>
+                </Alert>
+
+                <div className="pt-2">
                   <button
                     onClick={resetForm}
-                    className="bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-extrabold uppercase tracking-widest py-3 px-6 transition-all duration-200 cursor-pointer rounded-full shadow-md"
+                    className="bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-extrabold uppercase tracking-widest py-3.5 px-8 transition-all duration-200 cursor-pointer rounded-full shadow-md hover:shadow-lg"
                   >
                     {t.form.newSubmissionButton}
                   </button>
@@ -1128,6 +1136,17 @@ export default function Home() {
             ) : (
               // Inquiry Form
               <form onSubmit={handleFormSubmit} className="space-y-6">
+                <Alert variant="default" className="bg-slate-50/80 border-slate-200">
+                  <ShieldCheck className="h-4 w-4 text-brand-blue" />
+                  <AlertTitle className="text-slate-900 font-bold text-xs uppercase tracking-wider">
+                    {lang === "en" ? "Official Application Portal" : "Portal Pendaftaran Resmi"}
+                  </AlertTitle>
+                  <AlertDescription className="text-slate-500 text-[11px]">
+                    {lang === "en" 
+                      ? "Direct application to KAN-accredited certification body LSHACCP-009-IDN."
+                      : "Pendaftaran langsung ke Lembaga Sertifikasi terakreditasi KAN No. LSHACCP-009-IDN."}
+                  </AlertDescription>
+                </Alert>
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold text-slate-900 font-heading">{t.form.title}</h3>
                   <p className="text-slate-400 text-xs font-normal">{t.form.description}</p>
