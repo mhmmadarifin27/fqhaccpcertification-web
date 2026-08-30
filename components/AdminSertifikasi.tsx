@@ -2,16 +2,13 @@
 
 import React, { useState } from "react";
 import { SertifikasiInquiry } from "../lib/db";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-import { CheckCircle2, AlertCircle, Info, ShieldCheck, FileSpreadsheet, Printer } from "lucide-react";
 
 interface AdminSertifikasiProps {
   inquiries: SertifikasiInquiry[];
   onUpdateStatus: (id: string, newStatus: string) => void;
-  triggerAlert?: (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => void;
 }
 
-export default function AdminSertifikasi({ inquiries, onUpdateStatus, triggerAlert }: AdminSertifikasiProps) {
+export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSertifikasiProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -117,33 +114,16 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus, triggerAle
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    if (triggerAlert) {
-      triggerAlert("info", "Ekspor Excel Berhasil", "File laporan pengajuan sertifikasi (.xls) telah diunduh.");
-    }
   };
 
   // PRINT / EXPORT TO PDF
   const triggerPrint = () => {
-    if (triggerAlert) {
-      triggerAlert("info", "Menyiapkan Dokumen Cetak", "Membuka jendela cetak / PDF browser.");
-    }
     window.print();
   };
 
   return (
     <div className="space-y-6">
       
-      {/* INFO ALERT BANNER */}
-      <Alert variant="default" className="bg-slate-50 border-slate-200 print-hide">
-        <ShieldCheck className="h-4 w-4 text-brand-blue" />
-        <AlertTitle className="text-slate-900 font-bold text-xs uppercase tracking-wider">
-          Pengelolaan Pengajuan Sertifikasi HACCP KAN (LSHACCP-009-IDN)
-        </AlertTitle>
-        <AlertDescription className="text-slate-600 text-xs">
-          Perbarui status tindak lanjut (Permohonan Baru, Dokumen Ditinjau, Jadwal Audit Lapangan, Sertifikat Diterbitkan). Admin dapat langsung menghubungi PIC via tombol WhatsApp.
-        </AlertDescription>
-      </Alert>
-
       {/* CSS STYLES FOR LANDSCAPE PRINT LAYOUT */}
       <style jsx global>{`
         @media print {

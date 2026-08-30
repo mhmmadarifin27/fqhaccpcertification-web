@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "../context/LanguageContext";
+import { AlertProvider } from "../context/AlertContext";
 
 export const metadata: Metadata = {
   title: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Terakreditasi KAN",
@@ -42,7 +43,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-slate-900">
         <LanguageProvider>
-          {children}
+          <AlertProvider>
+            {children}
+          </AlertProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -2,16 +2,15 @@
 
 import React, { useState } from "react";
 import { TeamMember, createTeamMember, updateTeamMember, deleteTeamMember, compressImage } from "../lib/db";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-import { CheckCircle2, AlertCircle, Info } from "lucide-react";
+import { useAlert } from "../context/AlertContext";
 
 interface AdminTimProps {
   teamMembers: TeamMember[];
   onRefresh: () => void;
-  triggerAlert?: (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => void;
 }
 
-export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: AdminTimProps) {
+export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
+  const { toast, confirm } = useAlert();
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   
@@ -19,7 +18,6 @@ export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: Admin
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [formError, setFormError] = useState("");
 
   // Form states
   const [formData, setFormData] = useState({
@@ -57,7 +55,6 @@ export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: Admin
 
   const handleOpenAddModal = () => {
     setEditingId(null);
-    setFormError("");
     setFormData({
       name: "",
       role: "",
@@ -74,7 +71,6 @@ export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: Admin
 
   const handleOpenEditModal = (member: TeamMember) => {
     setEditingId(member.id);
-    setFormError("");
     setFormData({
       name: member.name,
       role: member.role,
@@ -92,7 +88,11 @@ export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: Admin
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.role) {
-      setFormError("Nama Lengkap dan Jabatan wajib diisi.");
+      toast({
+        title: "Form Belum Lengkap",
+        message: "Nama Lengkap dan Jabatan wajib diisi.",
+        variant: "warning"
+      });
       return;
     }
 
@@ -119,45 +119,63 @@ export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: Admin
 
       if (editingId) {
         await updateTeamMember(editingId, payload);
-        if (triggerAlert) {
-          triggerAlert("info", "Profil Diperbarui", `Data pegawai "${formData.name}" berhasil diperbarui.`);
-        }
+        toast({
+          title: "Data Pegawai Diperbarui",
+          message: `Profil "${formData.name}" berhasil diperbarui.`,
+          variant: "success"
+        });
       } else {
         await createTeamMember(payload);
-        if (triggerAlert) {
-          triggerAlert("success", "Pegawai Ditambahkan", `Pegawai baru "${formData.name}" berhasil didaftarkan.`);
-        }
+        toast({
+          title: "Pegawai Ditambahkan",
+          message: `Pegawai "${formData.name}" berhasil ditambahkan ke daftar tim.`,
+          variant: "success"
+        });
       }
 
       setIsModalOpen(false);
       await onRefresh();
     } catch (err) {
       console.error("Error saving team member:", err);
-      if (triggerAlert) {
-        triggerAlert("destructive", "Gagal Menyimpan", "Terjadi kesalahan saat menyimpan data pegawai.");
-      }
+      toast({
+        title: "Gagal Menyimpan",
+        message: "Gagal menyimpan data pegawai.",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (confirm(`Apakah Anda yakin ingin menghapus "${name}" dari daftar pegawai & tim auditor?`)) {
-      setLoading(true);
-      try {
-        await deleteTeamMember(id);
-        await onRefresh();
-        if (triggerAlert) {
-          triggerAlert("warning", "Pegawai Dihapus", `Pegawai "${name}" telah dihapus dari sistem.`);
-        }
-      } catch (err) {
-        console.error("Error deleting team member:", err);
-        if (triggerAlert) {
-          triggerAlert("destructive", "Gagal Menghapus", "Terjadi kesalahan saat menghapus pegawai.");
-        }
-      } finally {
-        setLoading(false);
-      }
+    const isConfirmed = await confirm({
+      title: "Hapus Anggota Tim?",
+      message: `Apakah Anda yakin ingin menghapus "${name}" dari daftar pegawai & tim auditor?`,
+      confirmText: "Ya, Hapus Pegawai",
+      cancelText: "Batal",
+      variant: "destructive"
+    });
+
+    if (!isConfirmed) return;
+
+    setLoading(true);
+    try {
+      await deleteTeamMember(id);
+      toast({
+        title: "Pegawai Dihapus",
+        message: `Data "${name}" berhasil dihapus.`,
+        variant: "success"
+      });
+      await onRefresh();
+    } catch (err) {
+      console.error("Error deleting team member:", err);
+      toast({
+        title: "Gagal Menghapus",
+        message: "Gagal menghapus data pegawai.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -370,13 +388,6 @@ export default function AdminTim({ teamMembers, onRefresh, triggerAlert }: Admin
             </div>
 
             <form onSubmit={handleFormSubmit} className="p-6 space-y-4 text-xs sm:text-sm">
-              {formError && (
-                <Alert variant="destructive" className="bg-rose-50 border-rose-200">
-                  <AlertCircle className="h-4 w-4 text-rose-600" />
-                  <AlertTitle className="text-rose-900 font-bold">Validasi Data</AlertTitle>
-                  <AlertDescription className="text-rose-700 text-xs">{formError}</AlertDescription>
-                </Alert>
-              )}
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">

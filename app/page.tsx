@@ -8,6 +8,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { autoTranslateText } from "../lib/autoTranslator";
 import { Alert, AlertTitle, AlertDescription } from "../components/ui/alert";
 import { CheckCircle2, ShieldCheck, Info } from "lucide-react";
+import { useAlert } from "../context/AlertContext";
 
 // Image URLs for hero slides (Local optimized web assets)
 const HERO_IMAGES = [
@@ -17,6 +18,7 @@ const HERO_IMAGES = [
 
 export default function Home() {
   const { lang, t } = useLanguage();
+  const { toast } = useAlert();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [carouselPlaying, setCarouselPlaying] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
@@ -163,7 +165,11 @@ export default function Home() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.companyName || !formData.companyAddress || !formData.picName || !formData.phone || !formData.email) {
-      alert("Harap lengkapi semua bidang wajib (*)");
+      toast({
+        title: "Bidang Wajib Belum Lengkap",
+        message: "Harap lengkapi semua bidang yang bertanda bintang (*)",
+        variant: "warning"
+      });
       return;
     }
     setFormLoading(true);
@@ -188,9 +194,18 @@ export default function Home() {
 
       setFormLoading(false);
       setFormSubmitted(true);
+      toast({
+        title: "Permohonan Terkirim",
+        message: `Tiket registrasi ${ticket} berhasil dibuat.`,
+        variant: "success"
+      });
     } catch (err) {
       console.error("Form submission error:", err);
-      alert("Gagal mengirim pengajuan. Silakan coba lagi.");
+      toast({
+        title: "Gagal Mengirim",
+        message: "Gagal mengirim permohonan. Silakan coba lagi.",
+        variant: "destructive"
+      });
       setFormLoading(false);
     }
   };

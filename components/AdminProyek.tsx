@@ -2,23 +2,21 @@
 
 import React, { useState } from "react";
 import { ProjectItem, createProject, updateProject, deleteProject, compressImage } from "../lib/db";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-import { CheckCircle2, AlertCircle, Info } from "lucide-react";
+import { useAlert } from "../context/AlertContext";
 
 interface AdminProyekProps {
   projects: ProjectItem[];
   onRefresh: () => void;
-  triggerAlert?: (type: "success" | "destructive" | "info" | "warning", title: string, message: string) => void;
 }
 
-export default function AdminProyek({ projects, onRefresh, triggerAlert }: AdminProyekProps) {
+export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
+  const { toast, confirm } = useAlert();
   const [searchTerm, setSearchTerm] = useState("");
   
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [formError, setFormError] = useState("");
 
   // Form states
   const [formData, setFormData] = useState({
@@ -39,7 +37,6 @@ export default function AdminProyek({ projects, onRefresh, triggerAlert }: Admin
       try {
         const compressedBase64 = await compressImage(file, 800, 0.75);
         setFormData((prev) => ({ ...prev, image: compressedBase64 }));
-        setFormError("");
       } catch (err) {
         console.error("Error compressing project image:", err);
       }
@@ -48,7 +45,6 @@ export default function AdminProyek({ projects, onRefresh, triggerAlert }: Admin
 
   const handleOpenAddModal = () => {
     setEditingId(null);
-    setFormError("");
     setFormData({
       name: "",
       category: "LOGISTIK & RITEL MODERN",
@@ -60,7 +56,6 @@ export default function AdminProyek({ projects, onRefresh, triggerAlert }: Admin
 
   const handleOpenEditModal = (project: ProjectItem) => {
     setEditingId(project.id);
-    setFormError("");
     setFormData({
       name: project.name,
       category: project.category,
@@ -73,7 +68,11 @@ export default function AdminProyek({ projects, onRefresh, triggerAlert }: Admin
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.desc.trim() || !formData.image.trim()) {
-      setFormError("Harap lengkapi nama proyek, deskripsi, dan foto!");
+      toast({
+        title: "Form Belum Lengkap",
+        message: "Harap lengkapi nama proyek, deskripsi, dan foto!",
+        variant: "warning"
+      });
       return;
     }
 
@@ -81,43 +80,61 @@ export default function AdminProyek({ projects, onRefresh, triggerAlert }: Admin
     try {
       if (editingId) {
         await updateProject(editingId, formData);
-        if (triggerAlert) {
-          triggerAlert("info", "Proyek Diperbarui", `Data proyek "${formData.name}" berhasil diperbarui.`);
-        }
+        toast({
+          title: "Proyek Diperbarui",
+          message: `Proyek "${formData.name}" berhasil diperbarui.`,
+          variant: "success"
+        });
       } else {
         await createProject(formData);
-        if (triggerAlert) {
-          triggerAlert("success", "Proyek Ditambahkan", `Proyek "${formData.name}" berhasil ditambahkan.`);
-        }
+        toast({
+          title: "Proyek Ditambahkan",
+          message: `Proyek "${formData.name}" berhasil ditambahkan ke landing page.`,
+          variant: "success"
+        });
       }
       setIsModalOpen(false);
       onRefresh();
     } catch (err) {
       console.error(err);
-      if (triggerAlert) {
-        triggerAlert("destructive", "Gagal Menyimpan", "Terjadi kesalahan saat menyimpan data proyek.");
-      }
+      toast({
+        title: "Gagal Menyimpan",
+        message: "Terjadi kesalahan saat menyimpan data proyek.",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus proyek sektor "${name}"?`)) {
+    const isConfirmed = await confirm({
+      title: "Hapus Proyek Sektor?",
+      message: `Apakah Anda yakin ingin menghapus proyek sektor "${name}"? Data akan terhapus dari tampilan website.`,
+      confirmText: "Ya, Hapus Proyek",
+      cancelText: "Batal",
+      variant: "destructive"
+    });
+
+    if (!isConfirmed) {
       return;
     }
 
     try {
       await deleteProject(id);
+      toast({
+        title: "Proyek Dihapus",
+        message: `Proyek "${name}" berhasil dihapus.`,
+        variant: "success"
+      });
       onRefresh();
-      if (triggerAlert) {
-        triggerAlert("warning", "Proyek Dihapus", `Proyek "${name}" telah dihapus.`);
-      }
     } catch (err) {
       console.error(err);
-      if (triggerAlert) {
-        triggerAlert("destructive", "Gagal Menghapus", "Terjadi kesalahan saat menghapus data proyek.");
-      }
+      toast({
+        title: "Gagal Menghapus",
+        message: "Gagal menghapus data proyek.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -287,13 +304,6 @@ export default function AdminProyek({ projects, onRefresh, triggerAlert }: Admin
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-5 text-xs sm:text-sm">
-              {formError && (
-                <Alert variant="destructive" className="bg-rose-50 border-rose-200">
-                  <AlertCircle className="h-4 w-4 text-rose-600" />
-                  <AlertTitle className="text-rose-900 font-bold">Validasi Form</AlertTitle>
-                  <AlertDescription className="text-rose-700 text-xs">{formError}</AlertDescription>
-                </Alert>
-              )}
               <div className="space-y-1.5">
                 <label className="font-extrabold text-slate-800 block">Nama Perusahaan / Client *</label>
                 <input

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { NewsItem, createNews, deleteNews } from "../lib/db";
+import { useAlert } from "../context/AlertContext";
 
 interface AdminBeritaProps {
   news: NewsItem[];
@@ -9,6 +10,7 @@ interface AdminBeritaProps {
 }
 
 export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
+  const { toast, confirm } = useAlert();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +37,11 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim() || !imageUrl.trim()) {
-      alert("Harap lengkapi semua bidang form!");
+      toast({
+        title: "Form Belum Lengkap",
+        message: "Harap lengkapi judul, isi, dan foto berita!",
+        variant: "warning"
+      });
       return;
     }
 
@@ -47,27 +53,53 @@ export default function AdminBerita({ news, onRefresh }: AdminBeritaProps) {
         category,
         imageUrl
       });
+      toast({
+        title: "Berita Diterbitkan",
+        message: "Artikel berita berhasil diterbitkan.",
+        variant: "success"
+      });
       setIsModalOpen(false);
       onRefresh(); // Refresh news parent state list
     } catch (err) {
       console.error(err);
-      alert("Terjadi kesalahan saat mengunggah berita.");
+      toast({
+        title: "Gagal Menerbitkan",
+        message: "Terjadi kesalahan saat mengunggah berita.",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus berita ini secara permanen?")) {
+  const handleDelete = async (id: string, itemTitle?: string) => {
+    const isConfirmed = await confirm({
+      title: "Hapus Artikel Berita?",
+      message: `Apakah Anda yakin ingin menghapus artikel ${itemTitle ? `"${itemTitle}"` : "ini"} secara permanen?`,
+      confirmText: "Ya, Hapus Berita",
+      cancelText: "Batal",
+      variant: "destructive"
+    });
+
+    if (!isConfirmed) {
       return;
     }
 
     try {
       await deleteNews(id);
+      toast({
+        title: "Berita Dihapus",
+        message: "Artikel berita telah dihapus.",
+        variant: "success"
+      });
       onRefresh();
     } catch (err) {
       console.error(err);
-      alert("Gagal menghapus berita.");
+      toast({
+        title: "Gagal Menghapus",
+        message: "Gagal menghapus berita.",
+        variant: "destructive"
+      });
     }
   };
 
