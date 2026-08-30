@@ -200,8 +200,8 @@ export default function Home() {
       setFormSubmitted(true);
 
       showToast({
-        title: "Permohonan Berhasil Dikirim!",
-        message: `Nomor Tiket: ${ticket}. Tim auditor kami akan menghubungi Anda dalam 1x24 jam kerja.`,
+        title: "Terima Kasih!",
+        message: "Permohonan Anda telah kami terima. Tim kami akan segera menghubungi Anda dalam 1x24 jam kerja.",
         type: "success",
         duration: 6000,
       });
@@ -1112,43 +1112,29 @@ export default function Home() {
             <div className="absolute top-0 left-0 right-0 h-2 bg-brand-blue animate-pulse" />
 
             {formSubmitted ? (
-              // Success Screen after Simulated Submit with Shadcn Alert
-              <div className="text-center py-8 space-y-6">
-                <Alert variant="success" className="text-left bg-emerald-50/80 border-emerald-200">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-                  <AlertTitle className="text-emerald-900 font-bold">
-                    {t.form.successTitle}
-                  </AlertTitle>
-                  <AlertDescription className="text-emerald-700 text-xs">
-                    {t.form.successDesc}
-                  </AlertDescription>
-                </Alert>
-
-                {/* Generated Voucher Card */}
-                <div className="max-w-md mx-auto bg-slate-50 p-5 border border-slate-100 space-y-3.5 text-left rounded-xl">
-                  <div className="flex justify-between items-center text-xs font-semibold text-slate-400">
-                    <span>{t.form.ticketNumberLabel}</span>
-                    <span className="text-brand-blue font-bold">PT FQHC</span>
-                  </div>
-                  <div className="text-lg font-mono font-bold text-slate-800 select-all border border-dashed border-slate-200 bg-white px-3.5 py-2 text-center tracking-wider rounded-lg">
-                    {ticketNumber}
-                  </div>
+              // Simple Clean Thank You Screen
+              <div className="text-center py-12 px-4 space-y-6">
+                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl font-black shadow-inner">
+                  ✓
                 </div>
 
-                <Alert variant="info" className="text-left bg-blue-50/70 border-blue-200">
-                  <Info className="h-4 w-4 text-blue-600" />
-                  <AlertTitle className="text-blue-900 font-bold">Konfirmasi Tim Auditor</AlertTitle>
-                  <AlertDescription className="text-blue-700 text-xs">
-                    Silakan simpan nomor tiket voucher di atas. Tim kami akan menghubungi kontak PIC yang didaftarkan dalam 1x24 jam kerja.
-                  </AlertDescription>
-                </Alert>
+                <div className="space-y-2">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading">
+                    {lang === "en" ? "Thank You!" : "Terima Kasih!"}
+                  </h3>
+                  <p className="text-slate-600 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+                    {lang === "en"
+                      ? "Your application has been received. Our team will contact you within 24 business hours."
+                      : "Permohonan Anda telah kami terima. Tim kami akan segera menghubungi Anda dalam 1x24 jam kerja."}
+                  </p>
+                </div>
 
-                <div className="pt-2">
+                <div className="pt-4">
                   <button
                     onClick={resetForm}
-                    className="bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-extrabold uppercase tracking-widest py-3.5 px-8 transition-all duration-200 cursor-pointer rounded-full shadow-md hover:shadow-lg"
+                    className="bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-extrabold uppercase tracking-widest py-3.5 px-8 transition-all duration-200 cursor-pointer rounded-full shadow-md hover:shadow-lg active:scale-98"
                   >
-                    {t.form.newSubmissionButton}
+                    {lang === "en" ? "Submit Another Application" : "Kirim Permohonan Baru"}
                   </button>
                 </div>
               </div>
