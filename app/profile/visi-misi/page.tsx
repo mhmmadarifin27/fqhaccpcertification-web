@@ -19,8 +19,8 @@ export default function VisiMisiPage() {
           {/* Left Column: Image / Logo Frame with preserved natural aspect ratio */}
           <div className="lg:col-span-5 flex items-center justify-center p-6 sm:p-8 bg-white border border-slate-200 shadow-sm min-h-[350px] lg:min-h-[480px] relative overflow-hidden rounded-2xl">
             <img
-              src="/hero1.jpg"
-              alt="Auditor working in laboratory checking food safety"
+              src="/hccp1.jpg"
+              alt="Visi Misi PT Food Quality Certification"
               className="w-auto h-auto max-h-[420px] max-w-full object-contain filter drop-shadow-sm transition-transform duration-300 hover:scale-105 rounded-xl"
             />
           </div>

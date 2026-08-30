@@ -14,6 +14,10 @@ import { CheckCircle2, ShieldCheck, Info } from "lucide-react";
 const HERO_IMAGES = [
   "/hero1.jpg",
   "/hero2.jpg",
+  "/hccp1.jpg",
+  "/hccp2.jpg",
+  "/hccp3.jpg",
+  "/hccp4.jpg",
 ];
 
 export default function Home() {
@@ -464,7 +468,7 @@ export default function Home() {
             {/* Big Card on Left */}
             <div className="md:col-span-7 relative group min-h-[380px] flex flex-col justify-end p-6 border border-white/10 overflow-hidden bg-slate-900 rounded-2xl">
               <img
-                src="/hero2.jpg"
+                src="/hccp1.jpg"
                 alt="Terakreditasi KAN"
                 className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-500"
               />
@@ -483,7 +487,7 @@ export default function Home() {
               {/* Small Card 1 */}
               <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-900 rounded-xl">
                 <img
-                  src="/hero2.jpg"
+                  src="/hccp2.jpg"
                   alt="Auditor Kompeten"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-40 group-hover:scale-105 transition-transform duration-500"
                 />
@@ -500,7 +504,7 @@ export default function Home() {
               {/* Small Card 2 */}
               <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-900 rounded-xl">
                 <img
-                  src="/hero1.jpg"
+                  src="/hccp3.jpg"
                   alt="Independensi"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-40 group-hover:scale-105 transition-transform duration-500"
                 />
@@ -517,7 +521,7 @@ export default function Home() {
               {/* Small Card 3 */}
               <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-900 rounded-xl">
                 <img
-                  src="/hero1.jpg"
+                  src="/hccp4.jpg"
                   alt="Pelayanan Profesional"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-40 group-hover:scale-105 transition-transform duration-500"
                 />
