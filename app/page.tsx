@@ -1354,8 +1354,8 @@ export default function Home() {
                     <span className="text-base shrink-0">✉️</span>
                     <div>
                       <strong className="font-bold text-slate-900 block mb-0.5">{t.location.emailTitle}</strong>
-                      <a href="mailto:fqhaccpconsulting@gmail.com" className="text-brand-blue hover:underline font-bold">
-                        fqhaccpconsulting@gmail.com
+                      <a href="mailto:fqhaccpcertification@gmail.com" className="text-brand-blue hover:underline font-bold">
+                        fqhaccpcertification@gmail.com
                       </a>
                     </div>
                   </div>
