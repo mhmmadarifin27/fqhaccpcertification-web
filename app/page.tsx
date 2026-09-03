@@ -792,56 +792,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Interactive FAQ Section */}
-      <section id="faq" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="space-y-16">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
-              {t.faq.title}
-            </h2>
-            <p className="text-slate-500 text-sm">
-              {t.faq.description}
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {t.faq.items.map((faqItem, idx) => (
-              <div
-                key={idx}
-                className="bg-white border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 rounded-xl"
-              >
-                <button
-                  onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                  className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 hover:text-brand-blue transition-colors focus:outline-none cursor-pointer"
-                >
-                  <span className="text-sm sm:text-base">{faqItem.q}</span>
-                  <span className="ml-4 shrink-0 bg-slate-50 w-7 h-7 border border-slate-100 flex items-center justify-center rounded-full transition-transform duration-350">
-                    <svg
-                      className={`w-4 h-4 text-slate-500 transition-transform duration-300 ${faqOpen === idx ? "rotate-180 text-brand-blue" : "rotate-0"
-                        }`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </button>
-
-                <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${faqOpen === idx ? "max-h-[300px] border-t border-slate-100" : "max-h-0"
-                    }`}
-                >
-                  <p className="p-5 text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50/50 font-normal">
-                    {faqItem.a}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Dynamic Non-Monotonous Interactive Gallery Showcase (Connected to Admin Portal) */}
       <section id="galeri" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-900 text-white relative overflow-hidden">
         {/* Subtle mesh background grid */}

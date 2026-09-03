@@ -256,16 +256,9 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                   />
                 </div>
                 <div className="min-w-0 flex-1 space-y-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <h4 className="font-extrabold text-slate-900 text-sm leading-snug truncate">
-                      {member.name}
-                    </h4>
-                    {member.isLead && (
-                      <span className="bg-brand-navy text-white text-[8px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0">
-                        ★ Lead
-                      </span>
-                    )}
-                  </div>
+                  <h4 className="font-extrabold text-slate-900 text-sm leading-snug truncate">
+                    {member.name}
+                  </h4>
                   <p className="text-xs font-bold text-brand-blue truncate">{member.role}</p>
                 </div>
               </div>
@@ -303,14 +296,13 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
               <th className="px-6 py-4">Foto</th>
               <th className="px-6 py-4">Nama &amp; Gelar Lengkap</th>
               <th className="px-6 py-4">Jabatan / Role</th>
-              <th className="px-6 py-4">Status Professional</th>
               <th className="px-6 py-4 text-right">Aksi Kelola</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
             {filteredMembers.length === 0 ? (
               <tr>
-                <td colSpan={5} className="py-12 text-center text-slate-400 font-normal">
+                <td colSpan={4} className="py-12 text-center text-slate-400 font-normal">
                   Tidak ada data pegawai yang sesuai dengan pencarian Anda.
                 </td>
               </tr>
@@ -331,15 +323,6 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                     <p className="text-[11px] text-slate-400 italic mt-0.5 line-clamp-1">&ldquo;{member.motto}&rdquo;</p>
                   </td>
                   <td className="px-6 py-4 font-bold text-brand-blue">{member.role}</td>
-                  <td className="px-6 py-4">
-                    {member.isLead ? (
-                      <span className="bg-brand-navy text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                        ★ Lead Professional
-                      </span>
-                    ) : (
-                      <span className="text-slate-400 text-[10px] font-medium">Anggota Tim</span>
-                    )}
-                  </td>
                   <td className="px-6 py-4 text-right space-x-2">
                     <button
                       onClick={() => handleOpenEditModal(member)}
@@ -402,18 +385,6 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                     className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs focus:bg-white focus:outline-[#0a5c36]"
                   />
                 </div>
-              </div>
-
-              <div className="space-y-1 pt-1">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={formData.isLead}
-                    onChange={(e) => setFormData({ ...formData, isLead: e.target.checked })}
-                    className="w-4 h-4 text-brand-navy rounded"
-                  />
-                  <span className="text-xs font-bold text-slate-700">Tampilkan Badge ★ Lead Professional</span>
-                </label>
               </div>
 
               {/* Direct File Manager Upload Box */}

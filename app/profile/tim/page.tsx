@@ -221,11 +221,6 @@ export default function TimPage() {
                     alt={member.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {member.isLead && (
-                    <div className="absolute top-3 left-3 bg-brand-navy text-white text-[9px] font-extrabold px-2.5 py-1 tracking-wider uppercase rounded-full">
-                      {t.teamUI.leadBadge}
-                    </div>
-                  )}
                 </div>
 
                 {/* Body Details */}
