@@ -7,37 +7,6 @@ import { useLanguage } from "../../../context/LanguageContext";
 import { useToast } from "../../../context/ToastContext";
 import { createHaccpDocSubmission, getInquiries, SertifikasiInquiry } from "../../../lib/db";
 
-export const DOC_CATEGORIES = [
-  { 
-    id: "bundle-sni-cxc-1", 
-    label: "Bundel Lengkap Seluruh Dokumen SNI CXC 1:1969 (GHP/GMP + Rencana HACCP + Legalitas) - ZIP/PDF" 
-  },
-  { 
-    id: "ghp-gmp-section1", 
-    label: "Bagian 1: Cara Higiene yang Baik (Good Hygiene Practices / GHP / GMP & SSOP)" 
-  },
-  { 
-    id: "haccp-plan-section2", 
-    label: "Bagian 2: Rencana HACCP & 7 Prinsip (Tabel Analisis Bahaya, Penetapan CCP, & Batas Kritis)" 
-  },
-  { 
-    id: "flow-diagram-layout", 
-    label: "Diagram Alir Proses Produksi Terverifikasi & Denah / Layout Fasilitas Pabrik" 
-  },
-  { 
-    id: "sk-tim-kompetensi", 
-    label: "Surat Keputusan (SK) Tim HACCP & Sertifikat Pelatihan Keamanan Pangan Personel" 
-  },
-  { 
-    id: "legalitas-lab-test", 
-    label: "Dokumen Legalitas Usaha (NIB) & Hasil Pengujian Laboratorium Produk Pangan" 
-  },
-  { 
-    id: "internal-audit-monev", 
-    label: "Laporan Audit Internal, Rekaman Verifikasi, & Tinjauan Manajemen Terakhir" 
-  }
-];
-
 function BerkasHaccpContent() {
   const { t, lang } = useLanguage();
   const { showToast } = useToast();
@@ -47,17 +16,14 @@ function BerkasHaccpContent() {
   const [lookupLoading, setLookupLoading] = useState(false);
   const [matchedInquiry, setMatchedInquiry] = useState<SertifikasiInquiry | null>(null);
   const [lookupSearched, setLookupSearched] = useState(false);
-  const [showManualForm, setShowManualForm] = useState(false);
 
   // Form states
   const [formData, setFormData] = useState({
-    ticketNumber: "",
     companyName: "",
     picName: "",
     picPhone: "",
     picEmail: "",
     productScope: "",
-    documentCategory: "bundle-sni-cxc-1",
     notes: ""
   });
 
@@ -70,14 +36,14 @@ function BerkasHaccpContent() {
   const [submitting, setSubmitting] = useState(false);
   const [submittedTicket, setSubmittedTicket] = useState<string | null>(null);
 
-  // Auto lookup if ticket query parameter is present in URL
+  // Auto lookup if query parameter is present in URL
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      const ticketParam = params.get("ticket") || params.get("key") || params.get("email");
-      if (ticketParam) {
-        setLookupQuery(ticketParam);
-        executeLookup(ticketParam);
+      const queryParam = params.get("email") || params.get("phone") || params.get("ticket") || params.get("key");
+      if (queryParam) {
+        setLookupQuery(queryParam);
+        executeLookup(queryParam);
       }
     }
   }, []);
@@ -88,8 +54,8 @@ function BerkasHaccpContent() {
       showToast({
         title: lang === "en" ? "Empty Search" : "Kata Kunci Kosong",
         message: lang === "en" 
-          ? "Please enter your Ticket Number, Company Email, or Phone." 
-          : "Masukkan Nomor Tiket, Email Resmi, atau Nomor WhatsApp untuk mencari data.",
+          ? "Please enter your Company Email, WhatsApp Number, or Company Name." 
+          : "Masukkan Email Resmi Perusahaan, Nomor WhatsApp PIC, atau Nama Perusahaan.",
         type: "warning"
       });
       return;
@@ -100,32 +66,30 @@ function BerkasHaccpContent() {
 
     try {
       const inquiries = await getInquiries();
-      // Look for ticket match, email match, phone match, or company name match
       const found = inquiries.find((inq) => {
-        const tMatch = inq.ticketNumber && inq.ticketNumber.toLowerCase().includes(q);
         const eMatch = inq.email && inq.email.toLowerCase().includes(q);
         const pMatch = inq.phone && inq.phone.replace(/\D/g, "").includes(q.replace(/\D/g, ""));
         const cMatch = inq.companyName && inq.companyName.toLowerCase().includes(q);
-        return tMatch || eMatch || (q.length >= 4 && pMatch) || (q.length >= 4 && cMatch);
+        const tMatch = inq.ticketNumber && inq.ticketNumber.toLowerCase().includes(q);
+        return eMatch || tMatch || (q.length >= 4 && pMatch) || (q.length >= 3 && cMatch);
       });
 
       if (found) {
         setMatchedInquiry(found);
-        setFormData((prev) => ({
-          ...prev,
-          ticketNumber: found.ticketNumber || "",
+        setFormData({
           companyName: found.companyName || "",
           picName: found.picName || "",
           picPhone: found.phone || "",
           picEmail: found.email || "",
           productScope: found.industry || "",
-        }));
+          notes: ""
+        });
 
         showToast({
           title: lang === "en" ? "Application Data Found!" : "Data Permohonan Ditemukan!",
           message: lang === "en"
-            ? `Loaded details for ${found.companyName} (${found.ticketNumber}).`
-            : `Data perusahaan ${found.companyName} (${found.ticketNumber}) berhasil dimuat otomatis.`,
+            ? `Loaded details for ${found.companyName}.`
+            : `Data perusahaan ${found.companyName} berhasil dimuat otomatis.`,
           type: "success"
         });
       } else {
@@ -133,8 +97,8 @@ function BerkasHaccpContent() {
         showToast({
           title: lang === "en" ? "Data Not Found" : "Data Tidak Ditemukan",
           message: lang === "en"
-            ? "No matching application found. Please verify your search key or fill the form manually."
-            : "Data permohonan tidak ditemukan. Silakan periksa kembali atau isi formulir secara manual.",
+            ? "No matching application found. Please check your registered email/phone."
+            : "Data permohonan tidak ditemukan. Pastikan email atau kontak sesuai yang didaftarkan.",
           type: "warning"
         });
       }
@@ -154,24 +118,24 @@ function BerkasHaccpContent() {
     setMatchedInquiry(null);
     setLookupSearched(false);
     setLookupQuery("");
-    setFormData((prev) => ({
-      ...prev,
-      ticketNumber: "",
+    setFormData({
       companyName: "",
       picName: "",
       picPhone: "",
       picEmail: "",
       productScope: "",
-    }));
+      notes: ""
+    });
+    setSelectedFile(null);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 20 * 1024 * 1024) {
+      if (file.size > 25 * 1024 * 1024) {
         showToast({
           title: lang === "en" ? "File Too Large" : "Ukuran File Terlalu Besar",
-          message: lang === "en" ? "Maximum file size is 20MB." : "Batas maksimal ukuran file adalah 20MB.",
+          message: lang === "en" ? "Maximum file size is 25MB." : "Batas maksimal ukuran file adalah 25MB.",
           type: "warning"
         });
         return;
@@ -197,12 +161,13 @@ function BerkasHaccpContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.companyName || !formData.picName || !formData.picPhone || !formData.picEmail || !formData.productScope) {
+
+    if (!formData.companyName || !formData.picName || !formData.picPhone || !formData.picEmail) {
       showToast({
-        title: lang === "en" ? "Incomplete Form" : "Data Belum Lengkap",
+        title: lang === "en" ? "Data Required" : "Data Pemohon Diperlukan",
         message: lang === "en" 
-          ? "Please fill in all mandatory fields or search your registered application data." 
-          : "Mohon lengkapi seluruh kolom wajib bertanda (*) atau muat data permohonan Anda terlebih dahulu.",
+          ? "Please search and load your application data above first." 
+          : "Mohon muat data permohonan sertifikasi Anda terlebih dahulu melalui pencarian di atas.",
         type: "warning"
       });
       return;
@@ -210,8 +175,10 @@ function BerkasHaccpContent() {
 
     if (!selectedFile) {
       showToast({
-        title: lang === "en" ? "No File Attached" : "File Belum Dipilih",
-        message: lang === "en" ? "Please select a document file (.pdf, .docx, or .zip) to upload." : "Mohon pilih file berkas (.pdf, .docx, atau .zip) yang akan diunggah.",
+        title: lang === "en" ? "No File Attached" : "File Belum Dilampirkan",
+        message: lang === "en" 
+          ? "Please attach your SNI CXC 1:1969 (2024) document file (.pdf, .docx, or .zip)." 
+          : "Mohon pilih file berkas dokumen SNI CXC 1:1969 (2024) (.pdf, .docx, atau .zip) yang akan diunggah.",
         type: "warning"
       });
       return;
@@ -219,31 +186,32 @@ function BerkasHaccpContent() {
 
     setSubmitting(true);
     try {
-      const categoryObj = DOC_CATEGORIES.find((c) => c.id === formData.documentCategory) || DOC_CATEGORIES[0];
       const result = await createHaccpDocSubmission({
         companyName: formData.companyName,
         picName: formData.picName,
         picPhone: formData.picPhone,
         picEmail: formData.picEmail,
-        productScope: formData.productScope,
-        documentCategory: formData.documentCategory,
-        documentCategoryLabel: categoryObj.label,
+        productScope: formData.productScope || "SNI CXC 1:1969 (2024)",
+        documentCategory: "sni-cxc-1-2024",
+        documentCategoryLabel: "Dokumen SNI CXC 1:1969 (2024)",
         fileName: selectedFile.name,
         fileSize: selectedFile.size,
         fileData: selectedFile.data,
-        notes: formData.ticketNumber ? `[Tiket Registrasi: ${formData.ticketNumber}] ${formData.notes}` : formData.notes
+        notes: matchedInquiry?.ticketNumber 
+          ? `[Ref Tiket: ${matchedInquiry.ticketNumber}] ${formData.notes}` 
+          : formData.notes
       });
 
       setSubmittedTicket(result.ticketNumber);
       showToast({
         title: lang === "en" ? "Documents Uploaded" : "Berkas Berhasil Diunggah",
         message: lang === "en" 
-          ? `Documents submitted under ticket ${result.ticketNumber}.` 
-          : `Berkas audit tercatat resmi dengan tiket ${result.ticketNumber}. Tim verifikator akan segera memeriksa dokumen Anda.`,
+          ? `SNI CXC 1:1969 document submitted with ticket ${result.ticketNumber}.` 
+          : `Dokumen SNI CXC 1:1969 tercatat resmi dengan tiket ${result.ticketNumber}. Tim verifikator akan segera memeriksa dokumen Anda.`,
         type: "success"
       });
     } catch (err) {
-      console.error("HACCP document upload error:", err);
+      console.error("SNI CXC 1:1969 document upload error:", err);
       showToast({
         title: "Gagal Mengunggah Berkas",
         message: "Terjadi kendala teknis saat memproses berkas.",
@@ -301,7 +269,7 @@ function BerkasHaccpContent() {
                   </p>
                 </div>
                 <div className="pt-2 border-t border-slate-200/60 text-[11px] text-slate-500 font-medium">
-                  Contoh: Manual SSOP, SOP Sanitasi & Kebersihan, Catatan Pest Control, Layout Bangunan.
+                  Cakupan: Persyaratan fasilitas, sanitasi, kebersihan personel, pemeliharaan, serta pengendalian operasional rantai pangan.
                 </div>
               </div>
 
@@ -319,7 +287,7 @@ function BerkasHaccpContent() {
                   </p>
                 </div>
                 <div className="pt-2 border-t border-slate-200/60 text-[11px] text-slate-500 font-medium">
-                  Contoh: Diagram Alir Terverifikasi, Tabel Analisis Bahaya, Batas Kritis CCP, Form Monitoring.
+                  Cakupan: 7 Prinsip sistem HACCP untuk identifikasi, evaluasi, dan pengendalian bahaya (biologis, kimia, fisik) secara preventif.
                 </div>
               </div>
 
@@ -337,7 +305,7 @@ function BerkasHaccpContent() {
                   </p>
                 </div>
                 <div className="pt-2 border-t border-slate-200/60 text-[11px] text-slate-500 font-medium">
-                  Contoh: NIB/Izin Usaha, SK Tim HACCP, Hasil Uji Lab Produk, Kalibrasi Thermometer/Timbangan.
+                  Cakupan: Legalitas Izin Usaha / NIB, SK Tim HACCP, Hasil Pengujian Laboratorium, dan Kalibrasi Alat Ukur.
                 </div>
               </div>
             </div>
@@ -364,7 +332,7 @@ function BerkasHaccpContent() {
                   ✓
                 </div>
                 <h3 className="text-2xl font-extrabold text-emerald-950 font-heading">
-                  {lang === "en" ? "Documents Successfully Received!" : "Dokumen Berhasil Diterima!"}
+                  {lang === "en" ? "SNI CXC 1:1969 Document Received!" : "Dokumen SNI CXC 1:1969 Berhasil Diterima!"}
                 </h3>
                 <p className="text-sm text-emerald-800 max-w-md mx-auto leading-relaxed">
                   {lang === "en" 
@@ -384,7 +352,7 @@ function BerkasHaccpContent() {
                     }}
                     className="px-6 py-2.5 bg-brand-navy text-white text-xs font-bold rounded-xl cursor-pointer hover:bg-brand-navy-dark transition-all border-none"
                   >
-                    {lang === "en" ? "Upload Additional Documents" : "Unggah Dokumen Lainnya"}
+                    {lang === "en" ? "Upload Another File" : "Unggah Berkas Lainnya"}
                   </button>
                 </div>
               </div>
@@ -400,8 +368,8 @@ function BerkasHaccpContent() {
                       </h3>
                       <p className="text-xs text-slate-500 font-normal mt-0.5">
                         {lang === "en"
-                          ? "Enter your registration ticket (e.g. HACCP-2026-xxxx) or registered company email."
-                          : "Cukup masukkan Nomor Tiket (cth: HACCP-2026-1024) atau Email Perusahaan yang didaftarkan."}
+                          ? "Enter your registered company email or PIC phone number to automatically load your details."
+                          : "Cukup masukkan Email Perusahaan atau Nomor WhatsApp PIC yang terdaftar saat mengajukan sertifikasi."}
                       </p>
                     </div>
 
@@ -452,9 +420,11 @@ function BerkasHaccpContent() {
                             {t.haccpDocsPage.lookupFound}
                           </span>
                         </div>
-                        <span className="bg-white border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-brand-navy font-mono">
-                          {matchedInquiry.ticketNumber}
-                        </span>
+                        {matchedInquiry.ticketNumber && (
+                          <span className="bg-white border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-brand-navy font-mono">
+                            {matchedInquiry.ticketNumber}
+                          </span>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -480,38 +450,15 @@ function BerkasHaccpContent() {
                     </div>
                   )}
 
-                  {/* NOT FOUND NOTIFICATION & MANUAL TOGGLE */}
+                  {/* NOT FOUND NOTIFICATION */}
                   {!matchedInquiry && lookupSearched && (
                     <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 space-y-2">
                       <p className="font-medium">{t.haccpDocsPage.lookupNotFound}</p>
-                      <div className="flex flex-wrap items-center gap-4 pt-1">
-                        <button
-                          type="button"
-                          onClick={() => setShowManualForm(!showManualForm)}
-                          className="font-extrabold text-brand-navy underline cursor-pointer bg-transparent border-none p-0"
-                        >
-                          {showManualForm ? "Sembunyikan Formulir Manual" : t.haccpDocsPage.manualToggle}
-                        </button>
-                        <span className="text-amber-300">•</span>
+                      <div className="pt-1">
                         <a href="/#daftar-online" className="font-extrabold text-brand-blue hover:underline">
                           {t.haccpDocsPage.applyLink}
                         </a>
                       </div>
-                    </div>
-                  )}
-
-                  {!matchedInquiry && !lookupSearched && (
-                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/60">
-                      <button
-                        type="button"
-                        onClick={() => setShowManualForm(!showManualForm)}
-                        className="text-slate-500 hover:text-brand-navy font-bold cursor-pointer bg-transparent border-none p-0"
-                      >
-                        {showManualForm ? "Tutup Input Manual" : "Atau isi data secara manual →"}
-                      </button>
-                      <a href="/#daftar-online" className="text-brand-blue font-bold hover:underline">
-                        {t.haccpDocsPage.applyLink}
-                      </a>
                     </div>
                   )}
                 </div>
@@ -519,124 +466,12 @@ function BerkasHaccpContent() {
                 {/* UPLOAD FORM */}
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
-                  {/* MANUAL FORM FIELDS (Visible if matched, or if manual form toggled) */}
-                  {(showManualForm || matchedInquiry) && (
-                    <div className="space-y-4 pt-2 border-t border-slate-100">
-                      <div className="space-y-1">
-                        <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                          {lang === "en" ? "Application Ticket Number (Optional)" : "Nomor Tiket Permohonan Sertifikasi"}
-                        </label>
-                        <input
-                          type="text"
-                          value={formData.ticketNumber}
-                          onChange={(e) => setFormData({ ...formData, ticketNumber: e.target.value })}
-                          placeholder={lang === "en" ? "e.g. HACCP-2026-3538" : "Contoh: HACCP-2026-3538"}
-                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue"
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                            {lang === "en" ? "Company / Facility Name *" : "Nama Perusahaan / Fasilitas Produksi *"}
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={formData.companyName}
-                            onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                            placeholder={lang === "en" ? "e.g. PT Roti Prima Sejahtera" : "Contoh: PT Roti Prima Sejahtera"}
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue"
-                          />
-                        </div>
-
-                        <div className="space-y-1">
-                          <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                            {lang === "en" ? "PIC / Food Safety Team Leader Name *" : "Nama PIC / Ketua Tim HACCP *"}
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={formData.picName}
-                            onChange={(e) => setFormData({ ...formData, picName: e.target.value })}
-                            placeholder={lang === "en" ? "e.g. Ahmad Fauzi" : "Contoh: Ahmad Fauzi"}
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                            {lang === "en" ? "WhatsApp / Phone Number *" : "Nomor WhatsApp / HP PIC *"}
-                          </label>
-                          <input
-                            type="tel"
-                            required
-                            value={formData.picPhone}
-                            onChange={(e) => setFormData({ ...formData, picPhone: e.target.value })}
-                            placeholder="Contoh: 0812-3456-7890"
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue"
-                          />
-                        </div>
-
-                        <div className="space-y-1">
-                          <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                            {lang === "en" ? "Official Company Email *" : "Email Resmi Perusahaan *"}
-                          </label>
-                          <input
-                            type="email"
-                            required
-                            value={formData.picEmail}
-                            onChange={(e) => setFormData({ ...formData, picEmail: e.target.value })}
-                            placeholder="Contoh: fauzi@rotiprima.com"
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                          {lang === "en" ? "Product Scope / Sector Category *" : "Kategori Sektor Ruang Lingkup Produk *"}
-                        </label>
-                        <select
-                          value={formData.productScope}
-                          onChange={(e) => setFormData({ ...formData, productScope: e.target.value })}
-                          required
-                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-800 focus:bg-white focus:outline-brand-blue"
-                        >
-                          <option value="">-- Pilih Sektor Ruang Lingkup --</option>
-                          <option value="Produk Bakeri">Produk Bakeri</option>
-                          <option value="Daging dan Produk Daging">Daging dan Produk Daging</option>
-                          <option value="Pangan Olahan untuk Keperluan Gizi Khusus">Pangan Olahan untuk Keperluan Gizi Khusus</option>
-                          <option value="Jasa Boga / Pelayanan Pangan / SPPG">Jasa Boga / Pelayanan Pangan / SPPG</option>
-                        </select>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* DOCUMENT CATEGORY SELECTION */}
-                  <div className="space-y-1.5 pt-2">
-                    <label className="text-xs font-extrabold text-slate-700 block uppercase tracking-wider">
-                      {lang === "en" ? "SNI CXC 1:1969 Document Category *" : "Kategori Dokumen Standar SNI CXC 1:1969 (2024) *"}
-                    </label>
-                    <select
-                      value={formData.documentCategory}
-                      onChange={(e) => setFormData({ ...formData, documentCategory: e.target.value })}
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 focus:bg-white focus:outline-brand-blue cursor-pointer"
-                    >
-                      {DOC_CATEGORIES.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
                   {/* File Upload Box */}
                   <div className="space-y-2 border-2 border-dashed border-brand-navy/30 p-6 bg-blue-50/40 text-center rounded-3xl">
                     <label className="font-extrabold text-brand-navy text-xs uppercase tracking-wider block">
-                      {lang === "en" ? "Attach Document File (PDF, DOCX, ZIP - Max 20MB) *" : "Lampirkan File Dokumen (PDF, DOCX, ZIP - Maks 20MB) *"}
+                      {lang === "en" 
+                        ? "Attach SNI CXC 1:1969 (2024) Document File (PDF, DOCX, ZIP - Max 25MB) *" 
+                        : "Lampirkan Berkas Dokumen SNI CXC 1:1969 (2024) (PDF, DOCX, ZIP - Maks 25MB) *"}
                     </label>
                     <p className="text-[11px] text-slate-500 font-medium">
                       {lang === "en" ? "Choose file from your device:" : "Pilih file dokumen dari komputer / HP Anda:"}
@@ -665,7 +500,7 @@ function BerkasHaccpContent() {
                       rows={3}
                       value={formData.notes}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                      placeholder={lang === "en" ? "e.g. Section 1 GHP manual and HACCP Plan revision v2..." : "Contoh: Dokumen Bagian 1 GHP dan Rencana HACCP versi revisi 2.0..."}
+                      placeholder={lang === "en" ? "e.g. SNI CXC 1:1969 GHP & HACCP Plan document package version 2024..." : "Contoh: Paket dokumen SNI CXC 1:1969 (GHP, HACCP Plan, dan lampiran legalitas)..."}
                       className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue resize-none"
                     />
                   </div>
@@ -681,7 +516,7 @@ function BerkasHaccpContent() {
                         <span>{lang === "en" ? "Uploading Document..." : "Mengunggah Dokumen..."}</span>
                       </>
                     ) : (
-                      <span>{lang === "en" ? "Submit Pre-Audit Documents →" : "Kirim Berkas Persiapan Audit SNI CXC 1:1969 →"}</span>
+                      <span>{lang === "en" ? "Submit SNI CXC 1:1969 (2024) Document →" : "Kirim Berkas Dokumen SNI CXC 1:1969 (2024) →"}</span>
                     )}
                   </button>
                 </form>
