@@ -569,28 +569,48 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     faq: {
       tagline: "TANYA JAWAB",
-      title: "FAQ (Frequently Asked Questions)",
-      description: "Temukan jawaban atas pertanyaan mendasar mengenai proses sertifikasi HACCP.",
+      title: "FAQ untuk Sertifikasi HACCP",
+      description: "Temukan jawaban atas pertanyaan seputar persyaratan, proses, dan manfaat sertifikasi HACCP.",
       items: [
         {
-          q: "Apa itu HACCP?",
-          a: "Hazard Analysis and Critical Control Points (HACCP) adalah sistem manajemen keamanan pangan yang digunakan untuk mengidentifikasi, mengevaluasi, dan mengendalikan bahaya yang signifikan terhadap keamanan pangan.",
+          q: "1. Apa itu HACCP?",
+          a: "HACCP (Hazard Analysis and Critical Control Point) adalah sistem untuk mengidentifikasi, mengevaluasi, dan mengendalikan bahaya yang dapat memengaruhi keamanan pangan.",
         },
         {
-          q: "Mengapa Perusahaan Perlu Sertifikasi HACCP KAN?",
-          a: "Sertifikasi HACCP berakreditasi KAN memberikan bukti resmi independen bahwa produk Anda diproduksi dengan standar higienis ketat, membuka akses ekspor, serta membangun kepercayaan ritel modern dan konsumen.",
+          q: "2. Mengapa perusahaan perlu sertifikasi HACCP?",
+          a: "Sertifikasi HACCP membantu memastikan sistem pengendalian keamanan pangan diterapkan secara sistematis serta meningkatkan kepercayaan pelanggan dan mitra bisnis.",
         },
         {
-          q: "Berapa Lama Masa Berlaku Sertifikat HACCP?",
-          a: "Sertifikat HACCP resmi terakreditasi KAN berlaku selama 3 (tiga) tahun dengan pelaksanaan audit surveilans berkala setiap 12 bulan untuk memastikan konsistensi penerapan.",
+          q: "3. Siapa yang dapat mengajukan sertifikasi HACCP?",
+          a: "Sertifikasi HACCP dapat diajukan oleh organisasi yang bergerak dalam rantai pangan, seperti industri pangan, katering, restoran, jasa boga, penyimpanan, distribusi, dan bidang terkait lainnya.",
         },
         {
-          q: "Sektor Industri Apa Saja Yang Dapat Mengajukan Sertifikasi?",
-          a: "PT Food Quality Certification melayani industri pengolahan makanan/minuman kemasan, jasa boga/katering, rumah potong hewan, ritel modern, pergudangan cold chain, hingga produsen bahan baku pangan.",
+          q: "4. Apa saja yang perlu disiapkan untuk sertifikasi HACCP?",
+          a: "Perusahaan perlu menyiapkan sistem HACCP, termasuk analisis bahaya, pengendalian CCP, prosedur monitoring, tindakan koreksi, verifikasi, serta dokumentasi dan rekaman yang diperlukan.",
         },
         {
-          q: "Bagaimana Alur Pendaftaran Sertifikasi HACCP?",
-          a: "Anda cukup mengisi Formulir Permohonan Online di website ini. Tim teknis kami akan menghubungi Anda dalam 1x24 jam untuk melakukan tinjauan dokumen dan penjadwalan audit.",
+          q: "5. Bagaimana proses sertifikasi HACCP?",
+          a: "Prosesnya meliputi pengajuan permohonan, kajian, audit, penyelesaian ketidaksesuaian (jika ada), keputusan sertifikasi, dan penerbitan sertifikat.",
+        },
+        {
+          q: "6. Berapa lama proses sertifikasi HACCP?",
+          a: "Waktu proses bergantung pada ukuran organisasi, kompleksitas proses, jumlah produk atau lokasi, serta kesiapan perusahaan sebelum audit.",
+        },
+        {
+          q: "7. Berapa lama sertifikat HACCP berlaku?",
+          a: "Masa berlaku sertifikat mengikuti skema sertifikasi dan ketentuan yang berlaku. Selama masa berlaku, dapat dilakukan audit atau surveilans sesuai ketentuan.",
+        },
+        {
+          q: "8. Apakah setelah mendapatkan sertifikat masih dilakukan audit?",
+          a: "Ya. Audit atau surveilans dilakukan sesuai skema sertifikasi untuk memastikan sistem HACCP tetap diterapkan dan dipelihara secara konsisten.",
+        },
+        {
+          q: "9. Apakah UMKM dapat mengajukan sertifikasi HACCP?",
+          a: "Ya. UMKM dapat mengajukan sertifikasi sepanjang memenuhi persyaratan dan ruang lingkup sertifikasi yang berlaku.",
+        },
+        {
+          q: "10. Bagaimana cara mengajukan sertifikasi HACCP?",
+          a: "Hubungi Lembaga Sertifikasi HACCP kami untuk mengajukan permohonan dan mendapatkan informasi mengenai persyaratan, proses, jadwal, dan biaya sertifikasi.",
         },
       ],
     },
@@ -988,28 +1008,48 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     faq: {
       tagline: "FREQUENTLY ASKED QUESTIONS",
-      title: "FAQ (Frequently Asked Questions)",
-      description: "Find clear answers to essential questions regarding the HACCP certification process.",
+      title: "FAQ for HACCP Certification",
+      description: "Find clear answers to essential questions regarding the HACCP certification requirements and process.",
       items: [
         {
-          q: "What is HACCP?",
-          a: "Hazard Analysis and Critical Control Points (HACCP) is a systematic food safety management system designed to identify, evaluate, and control hazards significant to food safety.",
+          q: "1. What is HACCP?",
+          a: "HACCP (Hazard Analysis and Critical Control Point) is a system used to identify, evaluate, and control hazards that can affect food safety.",
         },
         {
-          q: "Why Do Companies Need KAN Accredited HACCP Certification?",
-          a: "KAN accredited HACCP certification provides independent official proof that your food products are manufactured under strict hygienic standards, enabling export market entry and building retail and consumer trust.",
+          q: "2. Why do companies need HACCP certification?",
+          a: "HACCP certification helps ensure that food safety control systems are implemented systematically, while enhancing customer and business partner confidence.",
         },
         {
-          q: "How Long is the HACCP Certificate Valid?",
-          a: "Official KAN accredited HACCP certificates are valid for 3 (three) years with annual surveillance audits conducted every 12 months to verify ongoing compliance.",
+          q: "3. Who can apply for HACCP certification?",
+          a: "HACCP certification can be applied for by organizations operating across the food chain, such as food processing industries, catering, restaurants, food services, storage, distribution, and other related sectors.",
         },
         {
-          q: "Which Industry Sectors Can Apply for Certification?",
-          a: "PT Food Quality Certification services packaged food and beverage processors, catering services, slaughterhouses, modern retail, cold storage logistics, and food raw material producers.",
+          q: "4. What needs to be prepared for HACCP certification?",
+          a: "Companies need to establish a HACCP system, including hazard analysis, CCP controls, monitoring procedures, corrective actions, verification, as well as required documentation and records.",
         },
         {
-          q: "What is the Process for Applying for HACCP Certification?",
-          a: "Simply fill in the Online Application Form on this website. Our technical team will contact you within 1x24 hours for document review and audit scheduling.",
+          q: "5. How is the HACCP certification process conducted?",
+          a: "The process includes application submission, document review, audit, non-conformity resolution (if any), certification decision, and certificate issuance.",
+        },
+        {
+          q: "6. How long does the HACCP certification process take?",
+          a: "The timeline depends on the organization's size, process complexity, number of products or locations, and the company's readiness prior to the audit.",
+        },
+        {
+          q: "7. How long is a HACCP certificate valid?",
+          a: "The validity period follows the applicable certification scheme and regulations. During the validity period, periodic surveillance audits may be conducted as required.",
+        },
+        {
+          q: "8. Are audits still conducted after obtaining the certificate?",
+          a: "Yes. Surveillance audits are performed according to the certification scheme to ensure the HACCP system remains consistently implemented and maintained.",
+        },
+        {
+          q: "9. Can MSMEs (UMKM) apply for HACCP certification?",
+          a: "Yes. MSMEs can apply for certification as long as they meet the applicable requirements and certification scope.",
+        },
+        {
+          q: "10. How to apply for HACCP certification?",
+          a: "Contact our HACCP Certification Body to submit an application and obtain information regarding requirements, process, schedule, and certification fees.",
         },
       ],
     },
