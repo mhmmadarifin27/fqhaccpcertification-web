@@ -783,11 +783,11 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5 space-y-4 text-center order-1 lg:order-2 flex flex-col items-center justify-center bg-white/5 border border-white/10 p-8 sm:p-10 rounded-3xl backdrop-blur-xs">
-              <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 p-2 flex items-center justify-center mb-2 shadow-inner">
+              <div className="w-20 h-20 rounded-2xl bg-white/10 border border-white/20 p-2 flex items-center justify-center mb-2 shadow-inner overflow-hidden">
                 <img
-                  src="/logo2.png"
-                  alt="Logo PT Food Quality Certification"
-                  className="w-full h-full object-contain filter drop-shadow-sm"
+                  src="/logo-haccp.jpg"
+                  alt="Logo HACCP"
+                  className="w-full h-full object-contain filter drop-shadow-sm rounded-xl"
                 />
               </div>
               <h4 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight font-heading">
