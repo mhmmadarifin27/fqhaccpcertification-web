@@ -102,6 +102,7 @@ export interface TranslationDictionary {
     steps: Array<{
       badge: string;
       title: string;
+      subtitle: string;
       description: string;
     }>;
   };
@@ -475,30 +476,35 @@ export const translations: Record<Language, TranslationDictionary> = {
         {
           badge: "Tahapan 1",
           title: "Pengajuan Permohonan",
+          subtitle: "Isi formulir & berkas",
           description:
             "Organisasi mengajukan aplikasi permohonan sertifikasi beserta dokumen pendukung yang dipersyaratkan kepada tim administrasi kami.",
         },
         {
           badge: "Tahapan 2",
           title: "Review Permohonan",
+          subtitle: "Kajian teknis & jadwal",
           description:
             "Tim teknis kami melakukan kajian mendalam terhadap ruang lingkup usaha, kesiapan dokumen, dan kesepakatan jadwal audit.",
         },
         {
           badge: "Tahapan 3",
           title: "Audit Dokumen (Tahap 1)",
+          subtitle: "Evaluasi dokumen HACCP",
           description:
             "Evaluasi dokumentasi Sistem Manajemen Keamanan Pangan HACCP yang telah disusun oleh perusahaan untuk menguji kelayakannya.",
         },
         {
           badge: "Tahapan 4",
           title: "Audit Lapangan (Tahap 2)",
+          subtitle: "Verifikasi lapangan",
           description:
             "Audit verifikasi secara langsung di fasilitas produksi untuk memastikan keselarasan penerapannya di lapangan.",
         },
         {
           badge: "Tahapan 5",
           title: "Penerbitan Sertifikat Resmi",
+          subtitle: "Sertifikat resmi KAN",
           description:
             "Penerbitan Sertifikat HACCP Resmi Berlogo KAN setelah seluruh rekomendasi audit dinyatakan sesuai dan lengkap.",
         },
@@ -914,30 +920,35 @@ export const translations: Record<Language, TranslationDictionary> = {
         {
           badge: "Stage 1",
           title: "Application Submission",
+          subtitle: "Fill form & documents",
           description:
             "Organization submits certification application form and required supporting documentation to our administration team.",
         },
         {
           badge: "Stage 2",
           title: "Application Review",
+          subtitle: "Technical review & schedule",
           description:
             "Our technical team reviews scope of business, document readiness, and agrees on the audit schedule.",
         },
         {
           badge: "Stage 3",
           title: "Document Audit (Stage 1)",
+          subtitle: "HACCP document review",
           description:
             "Evaluation of HACCP Food Safety Management System manual documentation to verify adequacy.",
         },
         {
           badge: "Stage 4",
           title: "On-Site Audit (Stage 2)",
+          subtitle: "On-site verification",
           description:
             "On-site verification audit at production facilities to ensure practical field implementation.",
         },
         {
           badge: "Stage 5",
-          title: "Official Certificate Issuance",
+          title: "Certificate Issuance",
+          subtitle: "Official KAN certificate",
           description:
             "Issuance of Official KAN Accredited HACCP Certificate upon successful resolution of all audit findings.",
         },
