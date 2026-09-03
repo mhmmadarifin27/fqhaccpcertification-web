@@ -153,7 +153,7 @@ export default function BerkasHaccpPage() {
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
             <div className="border-b border-slate-100 pb-4">
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
-                📋 {t.haccpDocsPage.guideTitle}
+                {t.haccpDocsPage.guideTitle}
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-1">
                 {t.haccpDocsPage.guideSubtitle}
@@ -323,7 +323,7 @@ export default function BerkasHaccpPage() {
                     required
                     value={formData.productScope}
                     onChange={(e) => setFormData({ ...formData, productScope: e.target.value })}
-                    placeholder={lang === "en" ? "e.g. Frozen Meat Processing & Packaging" : "Contoh: Pengolahan Daging Beku, Minuman Kemasan, Katering, Bakery, dll."}
+                    placeholder={lang === "en" ? "e.g. Bakery Products / Meat & Meat Products / Special Dietary Food / Food Services & SPPG" : "Contoh: Produk Bakeri / Daging & Olahan Daging / Pangan Gizi Khusus / Jasa Boga & SPPG"}
                     className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue"
                   />
                 </div>
@@ -348,7 +348,7 @@ export default function BerkasHaccpPage() {
                 {/* File Upload Box */}
                 <div className="space-y-2 border-2 border-dashed border-brand-navy/30 p-6 bg-blue-50/40 text-center rounded-3xl">
                   <label className="font-extrabold text-brand-navy text-xs uppercase tracking-wider block">
-                    📁 {lang === "en" ? "Attach Document File (PDF, DOCX, ZIP - Max 20MB) *" : "Lampirkan File Dokumen (PDF, DOCX, ZIP - Maks 20MB) *"}
+                    {lang === "en" ? "Attach Document File (PDF, DOCX, ZIP - Max 20MB) *" : "Lampirkan File Dokumen (PDF, DOCX, ZIP - Maks 20MB) *"}
                   </label>
                   <p className="text-[11px] text-slate-500 font-medium">
                     {lang === "en" ? "Choose file from your device:" : "Pilih file dokumen dari komputer / HP Anda:"}

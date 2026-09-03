@@ -100,22 +100,22 @@ export default function PelatihanPage() {
           {/* Quick Highlight Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-200">
             <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
-              <span className="text-2xl mb-1 block">📜</span>
+              <span className="text-xs font-black text-brand-blue uppercase tracking-wider block mb-1">Akreditasi & Legalitas</span>
               <p className="font-extrabold text-slate-900 text-sm">{lang === "en" ? "Official Certificate" : "Sertifikat Resmi"}</p>
               <p className="text-xs text-slate-500 font-normal">{lang === "en" ? "Barcoded & Verifiable" : "Berbarcode & Terverifikasi"}</p>
             </div>
             <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
-              <span className="text-2xl mb-1 block">👨‍🏫</span>
+              <span className="text-xs font-black text-brand-blue uppercase tracking-wider block mb-1">Tenaga Ahli</span>
               <p className="font-extrabold text-slate-900 text-sm">{lang === "en" ? "Certified Lead Auditors" : "Instruktur Lead Auditor"}</p>
               <p className="text-xs text-slate-500 font-normal">{lang === "en" ? "Experienced Practitioners" : "Praktisi Industri Pangan"}</p>
             </div>
             <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
-              <span className="text-2xl mb-1 block">💻</span>
+              <span className="text-xs font-black text-brand-blue uppercase tracking-wider block mb-1">Pelaksanaan</span>
               <p className="font-extrabold text-slate-900 text-sm">{lang === "en" ? "Hybrid Methods" : "Metode Fleksibel"}</p>
               <p className="text-xs text-slate-500 font-normal">{lang === "en" ? "Online & In-House Training" : "Webinar & In-House Offline"}</p>
             </div>
             <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
-              <span className="text-2xl mb-1 block">📁</span>
+              <span className="text-xs font-black text-brand-blue uppercase tracking-wider block mb-1">Materi & Standar</span>
               <p className="font-extrabold text-slate-900 text-sm">{lang === "en" ? "Document Templates" : "Modul & Template"}</p>
               <p className="text-xs text-slate-500 font-normal">{lang === "en" ? "Ready-to-use HACCP Forms" : "Formulir Standar Siap Pakai"}</p>
             </div>
@@ -145,7 +145,7 @@ export default function PelatihanPage() {
                       {prog.code}
                     </span>
                     <span className="text-xs text-slate-500 font-bold">
-                      ⏱ {prog.duration}
+                      Durasi: {prog.duration}
                     </span>
                   </div>
 
@@ -170,7 +170,7 @@ export default function PelatihanPage() {
                     <ul className="space-y-1.5 text-xs text-slate-600">
                       {prog.syllabus.map((topic, sIdx) => (
                         <li key={sIdx} className="flex items-start gap-2">
-                          <span className="text-brand-blue font-bold">✓</span>
+                          <span className="text-brand-blue font-bold">•</span>
                           <span>{topic}</span>
                         </li>
                       ))}
@@ -185,7 +185,7 @@ export default function PelatihanPage() {
                     <div className="flex flex-wrap gap-2 pt-1">
                       {prog.benefits.map((b, bIdx) => (
                         <span key={bIdx} className="bg-white border border-slate-200/80 text-[11px] text-slate-600 px-2.5 py-1 rounded-lg font-medium shadow-2xs">
-                          🎁 {b}
+                          {b}
                         </span>
                       ))}
                     </div>
@@ -194,7 +194,7 @@ export default function PelatihanPage() {
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
                   <span className="text-xs text-slate-500 font-medium">
-                    🌐 {prog.method}
+                    Metode: {prog.method}
                   </span>
                   <button
                     onClick={() => handleSelectProgramAndScroll(prog.id)}

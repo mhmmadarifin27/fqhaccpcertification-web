@@ -39,7 +39,7 @@ export default function Home() {
     picName: "",
     phone: "",
     email: "",
-    industry: "Jasa Boga / Katering / Restoran / SPPG",
+    industry: "Produk Bakeri",
     message: "",
   });
   const [formLoading, setFormLoading] = useState(false);
@@ -223,7 +223,7 @@ export default function Home() {
       picName: "",
       phone: "",
       email: "",
-      industry: "Jasa Boga / Katering / Restoran / SPPG",
+      industry: "Produk Bakeri",
       message: "",
     });
     setFormSubmitted(false);
@@ -1291,12 +1291,10 @@ export default function Home() {
                     onChange={handleInputChange}
                     className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-colors cursor-pointer rounded-lg"
                   >
-                    <option>{t.form.industryOptions.catering}</option>
-                    <option>{t.form.industryOptions.processing}</option>
-                    <option>{t.form.industryOptions.beverage}</option>
-                    <option>{t.form.industryOptions.slaughterhouse}</option>
-                    <option>{t.form.industryOptions.storage}</option>
-                    <option>{t.form.industryOptions.other}</option>
+                    <option>{t.form.industryOptions.bakery}</option>
+                    <option>{t.form.industryOptions.meat}</option>
+                    <option>{t.form.industryOptions.specialDietary}</option>
+                    <option>{t.form.industryOptions.foodService}</option>
                   </select>
                 </div>
 

@@ -52,8 +52,8 @@ export default function Footer() {
             <nav className="flex flex-col gap-2.5 text-xs text-slate-400">
               <a href="/" className="hover:text-white transition-colors">{t.nav.home}</a>
               <a href="/profile/tentang-kami" className="hover:text-white transition-colors">{t.nav.profile}</a>
-              <a href="/info/pelatihan" className="hover:text-white transition-colors font-medium text-brand-cyan">🎓 {t.nav.trainingList}</a>
-              <a href="/info/berkas-haccp" className="hover:text-white transition-colors font-medium text-brand-cyan">📁 {t.nav.haccpDocs}</a>
+              <a href="/info/pelatihan" className="hover:text-white transition-colors font-medium text-brand-cyan">{t.nav.trainingList}</a>
+              <a href="/info/berkas-haccp" className="hover:text-white transition-colors font-medium text-brand-cyan">{t.nav.haccpDocs}</a>
               <a href="/#tahapan" className="hover:text-white transition-colors">{t.nav.timeline}</a>
               <a href="/#experience" className="hover:text-white transition-colors">{t.nav.projects}</a>
               <a href="/#faq" className="hover:text-white transition-colors">{t.nav.faq}</a>

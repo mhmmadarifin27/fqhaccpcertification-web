@@ -94,68 +94,68 @@ export interface TeamMember {
 const SEED_INQUIRIES: SertifikasiInquiry[] = [
   {
     id: "inq-1",
-    companyName: "CV Maju Jaya Pangan",
-    companyAddress: "Jl. Industri Raya No. 12, Malang, Jawa Timur",
+    companyName: "PT Roti Prima Sejahtera",
+    companyAddress: "Jl. Industri Bakery No. 12, Sleman, D.I. Yogyakarta",
     picName: "Ahmad Fauzi",
     phone: "+62 812-3456-7890",
-    email: "fauzi@majujayapangan.com",
-    industry: "Industri Pengolahan Makanan",
+    email: "fauzi@rotiprima.com",
+    industry: "Produk Bakeri",
     haccpStatus: "Sedang Persiapan",
-    message: "Kami memiliki pabrik pengolahan keripik buah di Malang dan ingin mendapatkan sertifikasi HACCP secepatnya untuk keperluan ekspor.",
+    message: "Pabrik roti dan pastry modern, membutuhkan audit sertifikasi HACCP untuk ekspansi distribusi supermarket.",
     ticketNumber: "HACCP-2026-1024",
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days ago
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "inq-2",
-    companyName: "PT Segar Harum Beverage",
-    companyAddress: "Kawasan Industri Cikarang Blok B5, Bekasi, Jawa Barat",
+    companyName: "PT Daging Segar Nusantara",
+    companyAddress: "Kawasan Industri Boyolali Blok B5, Jawa Tengah",
     picName: "Anita Wijaya",
     phone: "+62 822-3344-5566",
-    email: "anita@segarharum.co.id",
-    industry: "Industri Minuman",
+    email: "anita@dagingsegar.co.id",
+    industry: "Daging dan Produk Daging",
     haccpStatus: "Belum Diterapkan",
-    message: "Ingin berkonsultasi mengenai persyaratan awal dan dokumen untuk pabrik pengisian air minum kemasan.",
+    message: "Fasilitas pemotongan dan pengolahan sosis/bakso beku memerlukan audit kesesuaian sistem HACCP.",
     ticketNumber: "HACCP-2026-3029",
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() // 2 days ago
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "inq-3",
-    companyName: "Resto Lezat Nikmat",
-    companyAddress: "Jl. Malioboro No. 88, Yogyakarta",
+    companyName: "PT Nutrisi Medika Husada",
+    companyAddress: "Jl. Farmasi Gizi No. 88, Semarang, Jawa Tengah",
     picName: "Budi Santoso",
     phone: "+62 855-6677-8899",
-    email: "budi@lezatnikmat.com",
-    industry: "Rumah Makan & Restoran",
+    email: "budi@nutrisimedika.com",
+    industry: "Pangan Olahan untuk Keperluan Gizi Khusus",
     haccpStatus: "Sudah Diterapkan",
-    message: "Kami sudah mengimplementasikan GMP dan HACCP mandiri, sekarang memerlukan audit sertifikasi pihak ketiga.",
+    message: "Kami memproduksi pangan formula diet khusus dan MP-ASI, memerlukan sertifikasi resmi dari LSHACCP terakreditasi KAN.",
     ticketNumber: "HACCP-2026-8812",
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() // 1 day ago
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "inq-4",
-    companyName: "Catering Bunda Utama",
-    companyAddress: "Jl. Solo Km 9 No. 45, Sleman, DIY",
+    companyName: "Sentra Pangan Gizi Sejahtera (SPPG)",
+    companyAddress: "Jl. Maguwoharjo No. 45, Depok, Sleman, DIY",
     picName: "Siti Rahmah",
     phone: "+62 811-9988-7766",
-    email: "siti@cateringbundautama.com",
-    industry: "Jasa Boga / SPPG",
+    email: "siti@sppgsejahtera.com",
+    industry: "Jasa Boga / Pelayanan Pangan / SPPG",
     haccpStatus: "Sedang Persiapan",
-    message: "Mengajukan sertifikasi HACCP untuk pemenuhan syarat katering maskapai penerbangan di Bandara Adisutjipto.",
+    message: "Sentra Pengolahan Pangan Gizi untuk penyedia layanan makanan massal, mengajukan sertifikasi HACCP.",
     ticketNumber: "HACCP-2026-4401",
-    createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString() // 5 hours ago
+    createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "inq-5",
-    companyName: "Koperasi Susu Selo Mulyo",
-    companyAddress: "Jl. Raya Boyolali No. 102, Boyolali, Jawa Tengah",
+    companyName: "CV Surya Bakery & Cake",
+    companyAddress: "Jl. Raya Solo No. 102, Surakarta, Jawa Tengah",
     picName: "Joko Riyadi",
     phone: "+62 877-8899-0011",
-    email: "joko@selomulyo.org",
-    industry: "Dairy Industry",
+    email: "joko@suryabakery.com",
+    industry: "Produk Bakeri",
     haccpStatus: "Sudah Diterapkan",
-    message: "Kami adalah koperasi peternak sapi perah dengan produk susu pasteurisasi kemasan cup. Ingin mendaftar audit sertifikasi KAN resmi.",
+    message: "Unit pengolahan cake dan roti kering kemasan toples untuk pasar ekspor.",
     ticketNumber: "HACCP-2026-9042",
-    createdAt: new Date().toISOString() // Just now
+    createdAt: new Date().toISOString()
   }
 ];
 
@@ -224,34 +224,34 @@ const SEED_GALLERY: GalleryItem[] = [
 const SEED_PROJECTS: ProjectItem[] = [
   {
     id: "proj-1",
-    name: "PT Ritel Pangan Nusantara",
-    category: "LOGISTIK & RITEL MODERN",
-    desc: "Sertifikasi sistem HACCP untuk fasilitas gudang penyimpanan rantai dingin dan jaringan 45 gerai ritel modern di Indonesia.",
+    name: "PT Roti & Pastry Nusantara",
+    category: "PRODUK BAKERI",
+    desc: "Sertifikasi sistem HACCP untuk lini produksi aneka roti tawar, cake, pastry, dan biskuit berstandar industri modern.",
     image: "/hero1.jpg",
     year: "2025"
   },
   {
     id: "proj-2",
-    name: "PT Samudra Frozen Foods",
-    category: "INDUSTRI OLAHAN SEAFOOD",
-    desc: "Audit sertifikasi fasilitas pabrik pemrosesan dan pembekuan udang ekspor standar kualifikasi internasional.",
+    name: "PT Daging Sejahtera Utama",
+    category: "DAGING DAN PRODUK DAGING",
+    desc: "Audit sertifikasi fasilitas pemotongan dan pengolahan daging sapi, daging unggas, sosis, bakso, dan produk olahan daging beku.",
     image: "/hero2.jpg",
     year: "2025"
   },
   {
     id: "proj-3",
-    name: "PT Boga Katering Utama",
-    category: "JASA BOGA IN-FLIGHT & INDUSTRI",
-    desc: "Sertifikasi HACCP dapur pusat penyedia katering penerbangan dengan kapasitas produksi 10.000 porsi per hari.",
+    name: "PT Nutrisi Pangan Khusus",
+    category: "PANGAN OLAHAN GIZI KHUSUS",
+    desc: "Penerbitan sertifikat kesesuaian HACCP untuk unit formulasi pangan formula bayi (MP-ASI), pangan diet medis steril, dan nutrisi khusus.",
     image: "/iso.jpg",
     year: "2026"
   },
   {
     id: "proj-4",
-    name: "PT Nusa Dairy Premium",
-    category: "INDUSTRI OLAHAN SUSU",
-    desc: "Penerbitan sertifikat kesesuaian HACCP untuk unit pengolahan dan pasteurisasi susu segar serta yogurt kemasan.",
-    image: "/hero1.jpg",
+    name: "PT Boga Sentra Pangan (SPPG)",
+    category: "JASA BOGA / PELAYANAN PANGAN / SPPG",
+    desc: "Sertifikasi HACCP Sentra Pengolahan Pangan Gizi (SPPG) dan jasa boga skala besar berkapasitas 15.000 porsi per hari.",
+    image: "/hccp1.jpg",
     year: "2026"
   }
 ];
@@ -1047,7 +1047,7 @@ export const SEED_HACCP_DOCS: HaccpDocSubmission[] = [
     picName: "Hendro Wibowo, S.T.",
     picPhone: "081398765432",
     picEmail: "qa.lead@agromakmur.com",
-    productScope: "Produk Olahan Daging & Unggas Beku",
+    productScope: "Daging dan Produk Daging",
     documentCategory: "manual-haccp",
     documentCategoryLabel: "Manual HACCP & SOP Pengendalian Bahaya",
     fileName: "Manual_Sistem_HACCP_PT_Agro_Makmur_2026.pdf",
@@ -1059,16 +1059,16 @@ export const SEED_HACCP_DOCS: HaccpDocSubmission[] = [
   {
     id: "doc-002",
     ticketNumber: "DOC-2026-2189",
-    companyName: "PT Sari Rempah Nusantara",
+    companyName: "PT Bakery Sejahtera Prima",
     picName: "Siti Rahmawati, S.Farm.",
     picPhone: "081923456789",
-    picEmail: "siti.rahma@sarirempah.co.id",
-    productScope: "Bumbu & Rempah Olahan Kering",
+    picEmail: "siti.rahma@bakerysejahtera.co.id",
+    productScope: "Produk Bakeri",
     documentCategory: "hazard-ccp",
     documentCategoryLabel: "Analisis Bahaya & Critical Control Points (CCP Plan)",
-    fileName: "Tabel_Analisis_Bahaya_CCP_Sari_Rempah_v2.pdf",
+    fileName: "Tabel_Analisis_Bahaya_CCP_Bakery_v2.pdf",
     fileSize: "2.8 MB",
-    notes: "Revisi batas kritis tahap pemanasan oven sesuai rekomendasi.",
+    notes: "Revisi batas kritis tahap pemanggangan oven sesuai rekomendasi.",
     status: "under_review",
     createdAt: "2026-09-02T16:20:00Z"
   }

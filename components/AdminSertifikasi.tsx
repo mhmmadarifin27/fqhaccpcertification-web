@@ -220,21 +220,13 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSer
           <select
             value={selectedIndustry}
             onChange={(e) => setSelectedIndustry(e.target.value)}
-            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-xs font-bold focus:bg-white focus:outline-brand-blue transition-all"
+            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-xs font-bold focus:bg-white focus:outline-brand-blue transition-all cursor-pointer"
           >
             <option value="all">Semua Sektor Industri</option>
-            <option value="Jasa Boga / SPPG">Jasa Boga / SPPG</option>
-            <option value="Industri Pengolahan Makanan">Industri Pengolahan Makanan</option>
-            <option value="Industri Minuman">Industri Minuman</option>
-            <option value="Catering / Jasa Boga">Catering / Jasa Boga</option>
-            <option value="Rumah Makan & Restoran">Rumah Makan &amp; Restoran</option>
-            <option value="Bakery & Pastry">Bakery &amp; Pastry</option>
-            <option value="Dairy Industry">Dairy Industry</option>
-            <option value="Seafood Processing">Seafood Processing</option>
-            <option value="Meat Processing">Meat Processing</option>
-            <option value="Cold Storage">Cold Storage</option>
-            <option value="Distribusi Produk Pangan">Distribusi Produk Pangan</option>
-            <option value="Industri Bahan Baku Pangan">Industri Bahan Baku Pangan</option>
+            <option value="Produk Bakeri">Produk Bakeri</option>
+            <option value="Daging dan Produk Daging">Daging dan Produk Daging</option>
+            <option value="Pangan Olahan untuk Keperluan Gizi Khusus">Pangan Olahan untuk Keperluan Gizi Khusus</option>
+            <option value="Jasa Boga / Pelayanan Pangan / SPPG">Jasa Boga / Pelayanan Pangan / SPPG</option>
           </select>
         </div>
       </div>

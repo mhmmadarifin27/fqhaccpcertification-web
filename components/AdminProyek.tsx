@@ -33,7 +33,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
   // Form states
   const [formData, setFormData] = useState({
     name: "",
-    category: "LOGISTIK & RITEL MODERN",
+    category: "PRODUK BAKERI",
     desc: "",
     image: ""
   });
@@ -69,7 +69,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
     setEditingId(null);
     setFormData({
       name: "",
-      category: "LOGISTIK & RITEL MODERN",
+      category: "PRODUK BAKERI",
       desc: "",
       image: ""
     });
@@ -344,13 +344,10 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   className="w-full px-4 py-2.5 border border-slate-200/80 bg-slate-50 text-xs focus:bg-white focus:outline-brand-blue rounded-xl font-medium cursor-pointer"
                 >
-                  <option>LOGISTIK & RITEL MODERN</option>
-                  <option>INDUSTRI OLAHAN SEAFOOD</option>
-                  <option>JASA BOGA IN-FLIGHT & INDUSTRI</option>
-                  <option>INDUSTRI OLAHAN SUSU</option>
-                  <option>INDUSTRI PANGAN OLAHAN</option>
-                  <option>RUMAH POTONG HEWAN</option>
-                  <option>RESTORAN & HORECA</option>
+                  <option>PRODUK BAKERI</option>
+                  <option>DAGING DAN PRODUK DAGING</option>
+                  <option>PANGAN OLAHAN GIZI KHUSUS</option>
+                  <option>JASA BOGA / PELAYANAN PANGAN / SPPG</option>
                 </select>
               </div>
 

@@ -193,23 +193,21 @@ export default function Header() {
             >
               <a
                 href="/info/pelatihan"
-                className={`px-4 py-3 text-xs font-bold border-b transition-colors flex items-center gap-2.5 ${showSolid
+                className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${showSolid
                   ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
                   : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
                   }`}
               >
-                <span className="text-base">🎓</span>
-                <span>{t.nav.trainingList}</span>
+                {t.nav.trainingList}
               </a>
               <a
                 href="/info/berkas-haccp"
-                className={`px-4 py-3 text-xs font-bold transition-colors flex items-center gap-2.5 ${showSolid
+                className={`px-4 py-2.5 text-xs font-semibold transition-colors ${showSolid
                   ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue"
                   : "text-slate-300 hover:bg-brand-blue/30 hover:text-white"
                   }`}
               >
-                <span className="text-base">📁</span>
-                <span>{t.nav.haccpDocs}</span>
+                {t.nav.haccpDocs}
               </a>
             </div>
           </div>
@@ -395,14 +393,14 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
                 >
-                  🎓 {t.nav.trainingList}
+                  {t.nav.trainingList}
                 </a>
                 <a
                   href="/info/berkas-haccp"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
                 >
-                  📁 {t.nav.haccpDocs}
+                  {t.nav.haccpDocs}
                 </a>
               </div>
             )}
