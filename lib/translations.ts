@@ -16,6 +16,9 @@ export interface TranslationDictionary {
     gallery: string;
     faq: string;
     contact: string;
+    visitorInfo: string;
+    trainingList: string;
+    haccpDocs: string;
     adminPortal: string;
     applyCertification: string;
     accreditationTag: string;
@@ -262,7 +265,41 @@ export interface TranslationDictionary {
       commitments: string[];
     };
   };
-}
+
+  // Training Program Page
+  trainingPage: {
+    tagline: string;
+    title: string;
+    subtitle: string;
+    catalogTitle: string;
+    catalogSubtitle: string;
+    formTitle: string;
+    formSubtitle: string;
+    registeredCount: string;
+    programs: Array<{
+      id: string;
+      code: string;
+      title: string;
+      category: string;
+      duration: string;
+      method: string;
+      description: string;
+      syllabus: string[];
+      benefits: string[];
+    }>;
+  };
+
+  // Pre-Audit HACCP Document Submission Page
+  haccpDocsPage: {
+    tagline: string;
+    title: string;
+    subtitle: string;
+    guideTitle: string;
+    guideSubtitle: string;
+    formTitle: string;
+    formSubtitle: string;
+  };
+};
 
 export const translations: Record<Language, TranslationDictionary> = {
   id: {
@@ -280,6 +317,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       gallery: "Galeri Foto",
       faq: "FAQ",
       contact: "Kontak",
+      visitorInfo: "Info Pengunjung",
+      trainingList: "Daftar Pelatihan",
+      haccpDocs: "Berkas HACCP",
       adminPortal: "Portal Admin",
       applyCertification: "Ajukan Sertifikasi",
       accreditationTag: "Akreditasi KAN • LSHACCP-009-IDN",
@@ -708,6 +748,118 @@ export const translations: Record<Language, TranslationDictionary> = {
         ],
       },
     },
+    trainingPage: {
+      tagline: "PUSAT PENGEMBANGAN KOMPETENSI KEAMANAN PANGAN",
+      title: "Program Pelatihan & Sertifikasi Kompetensi",
+      subtitle:
+        "Tingkatkan pemahaman tim Anda mengenai implementasi sistem HACCP, CPPOB/GMP, dan audit keamanan pangan bersama instruktur ahli bersertifikasi PT Food Quality Certification.",
+      catalogTitle: "Pilihan Program Pelatihan Resmi",
+      catalogSubtitle: "Kurikulum terstruktur berbasis standar SNI CXC 1-1969, regulasi BPOM RI, dan pedoman KAN.",
+      formTitle: "Formulir Pendaftaran Pelatihan Online",
+      formSubtitle: "Lengkapi data peserta atau perusahaan Anda di bawah ini untuk pendaftaran program pelatihan.",
+      registeredCount: "Peserta Terdaftar",
+      programs: [
+        {
+          id: "haccp-awareness",
+          code: "TR-HACCP-01",
+          title: "Pelatihan Awareness & Implementasi Sistem HACCP",
+          category: "Fundamental & Penerapan",
+          duration: "2 Hari (16 Jam Pelajaran)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Memberikan pemahaman mendalam tentang 7 Prinsip dan 12 Langkah Penerapan HACCP sesuai standar Codex Alimentarius (SNI CXC 1-1969) untuk menjamin keamanan produk pangan.",
+          syllabus: [
+            "Pengantar Bahaya Keamanan Pangan (Biologi, Kimia, Fisik, Alergen)",
+            "Program Prasyarat (PRP / CPPOB / GMP)",
+            "12 Langkah Penerapan HACCP & Pembentukan Tim",
+            "Penyusunan Rencana HACCP (HACCP Plan) & Penentuan CCP",
+            "Sistem Monitoring, Tindakan Koreksi, dan Verifikasi",
+          ],
+          benefits: [
+            "Sertifikat Pelatihan Resmi Berbarcode",
+            "Modul Lengkap & Template Dokumen HACCP",
+            "Konsultasi Interaktif dengan Lead Auditor",
+          ],
+        },
+        {
+          id: "internal-auditor",
+          code: "TR-AUDIT-02",
+          title: "Pelatihan Internal Auditor HACCP & Verifikasi Sistem",
+          category: "Audit & Pengawasan Internal",
+          duration: "2 Hari (16 Jam Pelajaran)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Mempersiapkan tim internal perusahaan agar mampu merencanakan, melaksanakan, dan melaporkan audit internal sistem HACCP sesuai panduan ISO 19011.",
+          syllabus: [
+            "Prinsip & Metodologi Audit Sistem Manajemen Pangan",
+            "Teknik Penyusunan Audit Checklist & Sampling",
+            "Teknik Wawancara & Pengumpulan Bukti Audit Objektif",
+            "Klasifikasi Temuan Ketidaksesuaian (KNC / KC)",
+            "Pelaporan Audit & Tindak Lanjut Verifikasi Perbaikan (CAPA)",
+          ],
+          benefits: [
+            "Sertifikat Kelulusan Internal Auditor",
+            "Formulir Audit Checklist & Template Laporan",
+            "Studi Kasus & Simulasi Audit Lapangan Nyata",
+          ],
+        },
+        {
+          id: "cppob-gmp",
+          code: "TR-GMP-03",
+          title: "Pelatihan CPPOB & Good Manufacturing Practices (GMP)",
+          category: "Praktik Higiene & Sanitasi",
+          duration: "1 Hari (8 Jam Pelajaran)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Fokus pada penerapan sanitasi fasilitas, pengendalian higiene personal, pencegahan kontaminasi silang, dan kepatuhan terhadap pedoman CPPOB BPOM RI.",
+          syllabus: [
+            "Persyaratan Desain Fasilitas & Sanitasi Bangunan",
+            "Higiene Karyawan & Protokol Kebersihan Produksi",
+            "Program Pest Control & Manajemen Limbah Pangan",
+            "Penanganan Bahan Baku & Pengendalian Suhu Penyimpanan",
+            "Dokumentasi & Catatan Rekaman Kebersihan Rutin",
+          ],
+          benefits: [
+            "Sertifikat Resmi CPPOB/GMP",
+            "Panduan Sanitasi Standar BPOM RI",
+            "Checklist Self-Assessment Fasilitas",
+          ],
+        },
+        {
+          id: "hazard-ccp-advanced",
+          code: "TR-CCP-04",
+          title: "Pelatihan Analisis Bahaya & Validasi Titik Kendali Kritis (CCP)",
+          category: "Teknis Lanjutan",
+          duration: "1 Hari (8 Jam Pelajaran)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Pelatihan teknis tingkat lanjut untuk menyusun matriks analisis bahaya kuantitatif, penetapan batas kritis (*Critical Limits*), serta validasi ilmiah langkah pencegahan bahaya pangan.",
+          syllabus: [
+            "Metodologi Penetapan Signifikansi Bahaya (Risk Assessment)",
+            "Penerapan Pohon Keputusan (Decision Tree) Codex Terbaru",
+            "Penetapan Batas Kritis Berbasis Data Ilmiah",
+            "Teknik Validasi & Kalibrasi Instrumen Pengukuran CCP",
+            "Studi Kasus Produk Pangan Kering, Beku, & Olahan Basah",
+          ],
+          benefits: [
+            "Sertifikat Tingkat Lanjutan (Advanced)",
+            "Worksheet Validasi CCP Komprehensif",
+            "Bimbingan Eksklusif Penyusunan HACCP Plan",
+          ],
+        },
+      ],
+    },
+    haccpDocsPage: {
+      tagline: "PORTAL PRA-AUDIT SERTIFIKASI HACCP",
+      title: "Unggah Dokumen Persiapan Audit HACCP",
+      subtitle:
+        "Portal resmi bagi pemohon sertifikasi yang telah terdaftar untuk mengunggah kelengkapan dokumen sistem keamanan pangan sebelum pelaksanaan audit tahap 1.",
+      guideTitle: "Panduan & Ketentuan Berkas Audit",
+      guideSubtitle:
+        "Pastikan seluruh dokumen dalam format digital yang jelas (PDF/DOCX/ZIP, maks 10MB per dokumen) untuk mempermudah kajian awal tim verifikator.",
+      formTitle: "Formulir Pengunggahan Berkas Audit",
+      formSubtitle: "Isi data permohonan Anda dan unggah berkas sesuai kategori dokumen yang dipersyaratkan.",
+    },
   },
   en: {
     nav: {
@@ -724,6 +876,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       gallery: "Photo Gallery",
       faq: "FAQ",
       contact: "Contact",
+      visitorInfo: "Visitor Info",
+      trainingList: "Training Programs",
+      haccpDocs: "HACCP Documents",
       adminPortal: "Admin Portal",
       applyCertification: "Apply for Certification",
       accreditationTag: "KAN Accredited • LSHACCP-009-IDN",
@@ -1151,6 +1306,118 @@ export const translations: Record<Language, TranslationDictionary> = {
           "Certification decisions are based strictly on objective evidence obtained during field assessments.",
         ],
       },
+    },
+    trainingPage: {
+      tagline: "FOOD SAFETY COMPETENCE CENTER",
+      title: "Training Programs & Competence Certification",
+      subtitle:
+        "Upgrade your team's understanding of HACCP implementation, CPPOB/GMP, and food safety auditing with certified expert instructors from PT Food Quality Certification.",
+      catalogTitle: "Official Training Program Catalog",
+      catalogSubtitle: "Structured curriculum based on Codex Alimentarius (SNI CXC 1-1969), BPOM RI regulations, and KAN guidelines.",
+      formTitle: "Online Training Registration Form",
+      formSubtitle: "Complete participant or company details below to register for a training program.",
+      registeredCount: "Registered Participants",
+      programs: [
+        {
+          id: "haccp-awareness",
+          code: "TR-HACCP-01",
+          title: "HACCP System Awareness & Implementation Training",
+          category: "Fundamentals & Practical Implementation",
+          duration: "2 Days (16 Hours)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Provides comprehensive understanding of the 7 Principles and 12 Steps of HACCP according to Codex Alimentarius (SNI CXC 1-1969) standards to guarantee food product safety.",
+          syllabus: [
+            "Introduction to Food Safety Hazards (Biological, Chemical, Physical, Allergens)",
+            "Prerequisite Programs (PRP / CPPOB / GMP)",
+            "12 Steps of HACCP Implementation & Team Setup",
+            "HACCP Plan Formulation & CCP Determination",
+            "Monitoring Systems, Corrective Actions, and Verification",
+          ],
+          benefits: [
+            "Official Barcoded Training Certificate",
+            "Complete Modules & HACCP Document Templates",
+            "Interactive Consultation with Lead Auditors",
+          ],
+        },
+        {
+          id: "internal-auditor",
+          code: "TR-AUDIT-02",
+          title: "HACCP Internal Auditor & System Verification Training",
+          category: "Auditing & Internal Control",
+          duration: "2 Days (16 Hours)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Prepares internal company teams to effectively plan, conduct, and report HACCP system internal audits in accordance with ISO 19011 guidelines.",
+          syllabus: [
+            "Principles & Methodologies of Food Safety Management Auditing",
+            "Audit Checklist Preparation & Sampling Techniques",
+            "Interview Techniques & Objective Evidence Collection",
+            "Non-Conformity Classification (Major / Minor NC)",
+            "Audit Reporting & Corrective Action (CAPA) Follow-up Verification",
+          ],
+          benefits: [
+            "Internal Auditor Certificate of Competence",
+            "Audit Checklist & Standard Report Templates",
+            "Case Studies & Real-world Simulated Field Audits",
+          ],
+        },
+        {
+          id: "cppob-gmp",
+          code: "TR-GMP-03",
+          title: "CPPOB & Good Manufacturing Practices (GMP) Training",
+          category: "Hygiene & Sanitation Practices",
+          duration: "1 Day (8 Hours)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Focuses on facility sanitation implementation, personal hygiene controls, cross-contamination prevention, and compliance with BPOM RI CPPOB guidelines.",
+          syllabus: [
+            "Facility Layout & Sanitation Infrastructure Requirements",
+            "Personnel Hygiene & Production Cleanliness Protocols",
+            "Pest Control Programs & Food Waste Management",
+            "Raw Material Handling & Temperature Controlled Storage",
+            "Sanitation Logs & Routine Verification Records",
+          ],
+          benefits: [
+            "Official CPPOB/GMP Certificate",
+            "Standard Sanitation Guidelines based on BPOM RI",
+            "Facility Self-Assessment Checklist",
+          ],
+        },
+        {
+          id: "hazard-ccp-advanced",
+          code: "TR-CCP-04",
+          title: "Hazard Analysis & Critical Control Point (CCP) Validation Training",
+          category: "Advanced Technical",
+          duration: "1 Day (8 Hours)",
+          method: "Online Webinar / Offline In-House",
+          description:
+            "Advanced technical training on constructing quantitative hazard analysis matrices, establishing scientifically justified critical limits, and validating control measures.",
+          syllabus: [
+            "Risk Assessment & Hazard Significance Methodologies",
+            "Application of the Latest Codex Decision Tree",
+            "Science-based Critical Limits Establishment",
+            "Validation & Calibration Techniques for CCP Monitoring Equipment",
+            "Case Studies in Dry, Frozen, and Processed Food Categories",
+          ],
+          benefits: [
+            "Advanced Level Certificate",
+            "Comprehensive CCP Validation Worksheets",
+            "Dedicated Guidance on HACCP Plan Construction",
+          ],
+        },
+      ],
+    },
+    haccpDocsPage: {
+      tagline: "HACCP CERTIFICATION PRE-AUDIT PORTAL",
+      title: "Upload Pre-Audit HACCP Preparation Documents",
+      subtitle:
+        "Official portal for registered certification applicants to submit required food safety documentation prior to stage 1 audit execution.",
+      guideTitle: "Audit Document Guidelines & Requirements",
+      guideSubtitle:
+        "Ensure all documents are in clear digital formats (PDF/DOCX/ZIP, max 10MB each) to facilitate swift preliminary review by our auditor verification team.",
+      formTitle: "Pre-Audit Document Submission Form",
+      formSubtitle: "Fill in your application details and upload files corresponding to the mandatory document categories.",
     },
   },
 };

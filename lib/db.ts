@@ -41,6 +41,39 @@ export interface ProjectItem {
   year?: string;
 }
 
+export interface TrainingRegistration {
+  id: string;
+  ticketNumber: string;
+  fullName: string;
+  companyName: string;
+  email: string;
+  phone: string;
+  programId: string;
+  programTitle: string;
+  participantCount: number;
+  notes?: string;
+  status: "pending" | "confirmed" | "completed" | "cancelled";
+  createdAt: string;
+}
+
+export interface HaccpDocSubmission {
+  id: string;
+  ticketNumber: string;
+  companyName: string;
+  picName: string;
+  picPhone: string;
+  picEmail: string;
+  productScope: string;
+  documentCategory: string;
+  documentCategoryLabel: string;
+  fileName: string;
+  fileSize?: string;
+  fileData?: string;
+  notes?: string;
+  status: "submitted" | "under_review" | "verified" | "need_revision";
+  createdAt: string;
+}
+
 export interface TeamMember {
   id: string;
   name: string;
@@ -930,5 +963,151 @@ export const deleteProject = async (id: string): Promise<boolean> => {
     }
   }
 
+  return true;
+};
+
+// --- TRAINING REGISTRATIONS (PELATIHAN) CRUD ---
+
+export const SEED_TRAININGS: TrainingRegistration[] = [
+  {
+    id: "train-001",
+    ticketNumber: "TR-2026-0812",
+    fullName: "Budi Santoso, S.TP.",
+    companyName: "PT Sumber Pangan Sejahtera",
+    email: "budi.santoso@sumberpangan.co.id",
+    phone: "081234567890",
+    programId: "haccp-awareness",
+    programTitle: "Pelatihan Awareness & Implementasi Sistem HACCP",
+    participantCount: 3,
+    notes: "Kebutuhan sertifikasi persiapan audit ekspor ke Timur Tengah.",
+    status: "confirmed",
+    createdAt: "2026-08-25T09:30:00Z"
+  },
+  {
+    id: "train-002",
+    ticketNumber: "TR-2026-0904",
+    fullName: "Dewi Lestari, S.Si.",
+    companyName: "CV Nusantara Food Mandiri",
+    email: "dewi.qa@nusantarafood.com",
+    phone: "085712345678",
+    programId: "internal-auditor",
+    programTitle: "Pelatihan Internal Auditor HACCP & Verifikasi Sistem",
+    participantCount: 2,
+    notes: "Ingin pelatihan metode online via Zoom.",
+    status: "pending",
+    createdAt: "2026-09-01T14:15:00Z"
+  }
+];
+
+export const getTrainingRegistrations = async (): Promise<TrainingRegistration[]> => {
+  return getLocal<TrainingRegistration>("hacpp_trainings", SEED_TRAININGS);
+};
+
+export const createTrainingRegistration = async (
+  data: Omit<TrainingRegistration, "id" | "ticketNumber" | "createdAt" | "status">
+): Promise<TrainingRegistration> => {
+  const newReg: TrainingRegistration = {
+    ...data,
+    id: `train-${Date.now()}`,
+    ticketNumber: `TR-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
+    status: "pending",
+    createdAt: new Date().toISOString()
+  };
+
+  const list = getLocal<TrainingRegistration>("hacpp_trainings", SEED_TRAININGS);
+  list.unshift(newReg);
+  setLocal("hacpp_trainings", list);
+  return newReg;
+};
+
+export const updateTrainingStatus = async (
+  id: string,
+  status: TrainingRegistration["status"]
+): Promise<boolean> => {
+  const list = getLocal<TrainingRegistration>("hacpp_trainings", SEED_TRAININGS);
+  const updated = list.map((item) => (item.id === id ? { ...item, status } : item));
+  setLocal("hacpp_trainings", updated);
+  return true;
+};
+
+export const deleteTrainingRegistration = async (id: string): Promise<boolean> => {
+  const list = getLocal<TrainingRegistration>("hacpp_trainings", SEED_TRAININGS);
+  const updated = list.filter((item) => item.id !== id);
+  setLocal("hacpp_trainings", updated);
+  return true;
+};
+
+// --- PRE-AUDIT HACCP DOCUMENT SUBMISSIONS CRUD ---
+
+export const SEED_HACCP_DOCS: HaccpDocSubmission[] = [
+  {
+    id: "doc-001",
+    ticketNumber: "DOC-2026-1042",
+    companyName: "PT Agro Makmur Berjaya",
+    picName: "Hendro Wibowo, S.T.",
+    picPhone: "081398765432",
+    picEmail: "qa.lead@agromakmur.com",
+    productScope: "Produk Olahan Daging & Unggas Beku",
+    documentCategory: "manual-haccp",
+    documentCategoryLabel: "Manual HACCP & SOP Pengendalian Bahaya",
+    fileName: "Manual_Sistem_HACCP_PT_Agro_Makmur_2026.pdf",
+    fileSize: "4.2 MB",
+    notes: "Sudah dilengkapi SK Tim HACCP dan lembar pengesahan direktur.",
+    status: "verified",
+    createdAt: "2026-08-28T11:00:00Z"
+  },
+  {
+    id: "doc-002",
+    ticketNumber: "DOC-2026-2189",
+    companyName: "PT Sari Rempah Nusantara",
+    picName: "Siti Rahmawati, S.Farm.",
+    picPhone: "081923456789",
+    picEmail: "siti.rahma@sarirempah.co.id",
+    productScope: "Bumbu & Rempah Olahan Kering",
+    documentCategory: "hazard-ccp",
+    documentCategoryLabel: "Analisis Bahaya & Critical Control Points (CCP Plan)",
+    fileName: "Tabel_Analisis_Bahaya_CCP_Sari_Rempah_v2.pdf",
+    fileSize: "2.8 MB",
+    notes: "Revisi batas kritis tahap pemanasan oven sesuai rekomendasi.",
+    status: "under_review",
+    createdAt: "2026-09-02T16:20:00Z"
+  }
+];
+
+export const getHaccpDocSubmissions = async (): Promise<HaccpDocSubmission[]> => {
+  return getLocal<HaccpDocSubmission>("hacpp_docs", SEED_HACCP_DOCS);
+};
+
+export const createHaccpDocSubmission = async (
+  data: Omit<HaccpDocSubmission, "id" | "ticketNumber" | "createdAt" | "status">
+): Promise<HaccpDocSubmission> => {
+  const newDoc: HaccpDocSubmission = {
+    ...data,
+    id: `doc-${Date.now()}`,
+    ticketNumber: `DOC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
+    status: "submitted",
+    createdAt: new Date().toISOString()
+  };
+
+  const list = getLocal<HaccpDocSubmission>("hacpp_docs", SEED_HACCP_DOCS);
+  list.unshift(newDoc);
+  setLocal("hacpp_docs", list);
+  return newDoc;
+};
+
+export const updateHaccpDocStatus = async (
+  id: string,
+  status: HaccpDocSubmission["status"]
+): Promise<boolean> => {
+  const list = getLocal<HaccpDocSubmission>("hacpp_docs", SEED_HACCP_DOCS);
+  const updated = list.map((item) => (item.id === id ? { ...item, status } : item));
+  setLocal("hacpp_docs", updated);
+  return true;
+};
+
+export const deleteHaccpDocSubmission = async (id: string): Promise<boolean> => {
+  const list = getLocal<HaccpDocSubmission>("hacpp_docs", SEED_HACCP_DOCS);
+  const updated = list.filter((item) => item.id !== id);
+  setLocal("hacpp_docs", updated);
   return true;
 };

@@ -40,7 +40,9 @@ function AdminSidebar({
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard Ringkasan", icon: "📊" },
-    { id: "sertifikasi", label: "Ajukan Sertifikasi", icon: "📝" },
+    { id: "sertifikasi", label: "Permohonan Sertifikasi", icon: "📝" },
+    { id: "pelatihan", label: "Pendaftaran Pelatihan", icon: "🎓" },
+    { id: "berkas-haccp", label: "Berkas Audit HACCP", icon: "📁" },
     { id: "proyek", label: "Kelola Proyek / Sektor", icon: "🏗️" },
     { id: "pegawai", label: "Kelola Pegawai / Tim", icon: "👥" },
     { id: "galeri", label: "Kelola Galeri Foto", icon: "🖼️" }

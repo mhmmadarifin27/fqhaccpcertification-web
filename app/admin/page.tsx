@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/AdminLayout";
 import AdminSertifikasi from "../../components/AdminSertifikasi";
+import AdminPelatihan from "../../components/AdminPelatihan";
+import AdminBerkasHaccp from "../../components/AdminBerkasHaccp";
 import AdminGaleri from "../../components/AdminGaleri";
 import AdminTim from "../../components/AdminTim";
 import AdminProyek from "../../components/AdminProyek";
@@ -11,10 +13,14 @@ import ConfirmModal from "../../components/ConfirmModal";
 import { supabase } from "../../lib/supabase";
 import {
   SertifikasiInquiry,
+  TrainingRegistration,
+  HaccpDocSubmission,
   GalleryItem,
   TeamMember,
   ProjectItem,
   getInquiries,
+  getTrainingRegistrations,
+  getHaccpDocSubmissions,
   getGallery,
   getTeamMembers,
   getProjects,
@@ -32,6 +38,8 @@ export default function AdminPage() {
   // Content states
   const [activeTab, setActiveTab] = useState("dashboard");
   const [inquiries, setInquiries] = useState<SertifikasiInquiry[]>([]);
+  const [trainings, setTrainings] = useState<TrainingRegistration[]>([]);
+  const [haccpDocs, setHaccpDocs] = useState<HaccpDocSubmission[]>([]);
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -52,11 +60,15 @@ export default function AdminPage() {
     setLoading(true);
     try {
       const inqData = await getInquiries();
+      const trainData = await getTrainingRegistrations();
+      const docsData = await getHaccpDocSubmissions();
       const galData = await getGallery();
       const teamData = await getTeamMembers();
       const projData = await getProjects();
 
       setInquiries(inqData);
+      setTrainings(trainData);
+      setHaccpDocs(docsData);
       setGallery(galData);
       setTeamMembers(teamData);
       setProjects(projData);
@@ -375,7 +387,7 @@ export default function AdminPage() {
           {activeTab === "dashboard" && (
             <div className="space-y-6 sm:space-y-8">
               
-              {/* Statistic widgets grid - Responsive 2-Column Mobile & 3-Column Desktop Layout */}
+              {/* Statistic widgets grid - Responsive 3-Column Layout */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-6">
                 
                 {/* Stats 1: Inquiries */}
@@ -388,7 +400,7 @@ export default function AdminPage() {
                       📝
                     </div>
                     <span className="bg-emerald-50 text-emerald-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-emerald-200/50">
-                      +12.5% Active
+                      Active
                     </span>
                   </div>
                   <div>
@@ -405,7 +417,61 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {/* Stats 2: Team Members */}
+                {/* Stats 2: Pelatihan */}
+                <div
+                  onClick={() => setActiveTab("pelatihan")}
+                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                      🎓
+                    </div>
+                    <span className="bg-emerald-50 text-emerald-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-emerald-200/50">
+                      Training
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
+                      Pendaftar Pelatihan
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
+                      {trainings.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Peserta</span>
+                    </h3>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                    <span className="truncate">Kelola Pelatihan</span>
+                    <span>&rarr;</span>
+                  </div>
+                </div>
+
+                {/* Stats 3: Berkas HACCP */}
+                <div
+                  onClick={() => setActiveTab("berkas-haccp")}
+                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                      📁
+                    </div>
+                    <span className="bg-cyan-50 text-cyan-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-cyan-200/50">
+                      Pre-Audit
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
+                      Berkas Audit Masuk
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
+                      {haccpDocs.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Dokumen</span>
+                    </h3>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-cyan-600 group-hover:translate-x-1 transition-transform">
+                    <span className="truncate">Periksa Berkas</span>
+                    <span>&rarr;</span>
+                  </div>
+                </div>
+
+                {/* Stats 4: Team Members */}
                 <div
                   onClick={() => setActiveTab("pegawai")}
                   className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
@@ -415,12 +481,12 @@ export default function AdminPage() {
                       👥
                     </div>
                     <span className="bg-indigo-50 text-indigo-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-indigo-200/50">
-                      Expert Team
+                      Auditor Team
                     </span>
                   </div>
                   <div>
                     <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
-                      Auditor &amp; Personel
+                      Tim Auditor HACCP
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
                       {teamMembers.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Orang</span>
@@ -432,10 +498,10 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {/* Stats 3: Proyek & Sektor */}
+                {/* Stats 5: Proyek & Sektor */}
                 <div
                   onClick={() => setActiveTab("proyek")}
-                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4 col-span-2 sm:col-span-1"
+                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
                 >
                   <div className="flex items-center justify-between">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
@@ -459,6 +525,33 @@ export default function AdminPage() {
                   </div>
                 </div>
 
+                {/* Stats 6: Galeri */}
+                <div
+                  onClick={() => setActiveTab("galeri")}
+                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                      🖼️
+                    </div>
+                    <span className="bg-purple-50 text-purple-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-purple-200/50">
+                      Showcase
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
+                      Galeri Foto
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
+                      {gallery.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Foto</span>
+                    </h3>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
+                    <span className="truncate">Kelola Galeri</span>
+                    <span>&rarr;</span>
+                  </div>
+                </div>
+
               </div>
 
               {/* Bottom Quick Action Grid */}
@@ -471,49 +564,38 @@ export default function AdminPage() {
                 </div>
                 
                 {/* 2-Column Grid on Mobile, Single Column on Desktop */}
-                <div className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
                   <button
                     onClick={() => setActiveTab("sertifikasi")}
-                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                    className="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group"
                   >
                     <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-sm shrink-0">📊</span>
-                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Ekspor Data</span>
+                      <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-sm shrink-0">📝</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Permohonan Sertifikasi</span>
                     </div>
-                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform">&rarr;</span>
                   </button>
 
                   <button
-                    onClick={() => setActiveTab("proyek")}
-                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                    onClick={() => setActiveTab("pelatihan")}
+                    className="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-emerald-500/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group"
                   >
                     <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-sm shrink-0">🏗️</span>
-                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Kelola Proyek</span>
+                      <span className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm shrink-0">🎓</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Pendaftar Pelatihan</span>
                     </div>
-                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform">&rarr;</span>
                   </button>
 
                   <button
-                    onClick={() => setActiveTab("pegawai")}
-                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
+                    onClick={() => setActiveTab("berkas-haccp")}
+                    className="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-cyan-500/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group"
                   >
                     <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm shrink-0">👥</span>
-                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Kelola Auditor</span>
+                      <span className="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-sm shrink-0">📁</span>
+                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Berkas Audit Masuk</span>
                     </div>
-                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab("galeri")}
-                    className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-brand-blue/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group space-y-2 lg:space-y-0"
-                  >
-                    <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-sm shrink-0">📸</span>
-                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Foto Galeri</span>
-                    </div>
-                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform hidden lg:inline">&rarr;</span>
+                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform">&rarr;</span>
                   </button>
                 </div>
               </div>
@@ -524,6 +606,16 @@ export default function AdminPage() {
           {/* TAB 2: CERTIFICATION MANAGEMENTS */}
           {activeTab === "sertifikasi" && (
             <AdminSertifikasi inquiries={inquiries} onUpdateStatus={handleUpdateStatus} />
+          )}
+
+          {/* TAB: TRAINING REGISTRATIONS */}
+          {activeTab === "pelatihan" && (
+            <AdminPelatihan trainings={trainings} onRefresh={fetchData} />
+          )}
+
+          {/* TAB: PRE-AUDIT HACCP DOCUMENTS */}
+          {activeTab === "berkas-haccp" && (
+            <AdminBerkasHaccp documents={haccpDocs} onRefresh={fetchData} />
           )}
 
           {/* TAB 3: PROJECT MANAGEMENTS */}
