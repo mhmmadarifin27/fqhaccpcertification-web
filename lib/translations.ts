@@ -294,8 +294,23 @@ export interface TranslationDictionary {
     subtitle: string;
     guideTitle: string;
     guideSubtitle: string;
+    section1Title: string;
+    section1Desc: string;
+    section2Title: string;
+    section2Desc: string;
+    section3Title: string;
+    section3Desc: string;
     formTitle: string;
     formSubtitle: string;
+    lookupLabel: string;
+    lookupPlaceholder: string;
+    lookupButton: string;
+    lookupFound: string;
+    lookupNotFound: string;
+    manualToggle: string;
+    changeLookup: string;
+    applyPrompt: string;
+    applyLink: string;
   };
 };
 
@@ -796,12 +811,31 @@ export const translations: Record<Language, TranslationDictionary> = {
       tagline: "PORTAL PRA-AUDIT SERTIFIKASI HACCP",
       title: "Unggah Dokumen Persiapan Audit HACCP",
       subtitle:
-        "Portal resmi bagi pemohon sertifikasi yang telah terdaftar untuk mengunggah kelengkapan dokumen sistem keamanan pangan sebelum pelaksanaan audit tahap 1.",
-      guideTitle: "Panduan & Ketentuan Berkas Audit",
+        "Portal resmi bagi pemohon sertifikasi untuk mengunggah kelengkapan dokumen sistem keamanan pangan berdasarkan standar SNI CXC 1:1969 (2024) sebelum pelaksanaan audit tahap 1.",
+      guideTitle: "Panduan Berkas Persiapan Audit — Standar SNI CXC 1:1969 (2024)",
       guideSubtitle:
-        "Pastikan seluruh dokumen dalam format digital yang jelas (PDF/DOCX/ZIP, maks 10MB per dokumen) untuk mempermudah kajian awal tim verifikator.",
+        "SNI CXC 1:1969 (2024) adalah Standar Nasional Indonesia tentang Prinsip Umum Higiene Pangan (General Principles of Food Hygiene) yang diadopsi secara identik dari standar internasional Codex Alimentarius (Codex CXC 1-1969) versi revisi terbaru.",
+      section1Title: "Bagian 1: Cara Higiene yang Baik (GHP / GMP)",
+      section1Desc:
+        "Mengatur persyaratan prasyarat seperti fasilitas, sanitasi, kebersihan personel, pemeliharaan, serta pengendalian operasional di seluruh rantai pangan.",
+      section2Title: "Bagian 2: Rencana HACCP & 7 Prinsip",
+      section2Desc:
+        "Mengatur 7 prinsip sistem HACCP untuk mengidentifikasi, mengevaluasi, dan mengendalikan bahaya keamanan pangan (biologis, kimia, dan fisik) secara preventif dari produksi primer hingga penyajian.",
+      section3Title: "Legalitas & Pengujian Laboratorium",
+      section3Desc:
+        "Surat Keputusan (SK) Tim HACCP, Izin Usaha / NIB, hasil uji laboratorium mikrobiologi/kimia produk, sertifikat kalibrasi alat ukur, dan laporan audit internal terakhir.",
       formTitle: "Formulir Pengunggahan Berkas Audit",
-      formSubtitle: "Isi data permohonan Anda dan unggah berkas sesuai kategori dokumen yang dipersyaratkan.",
+      formSubtitle:
+        "Cukup masukkan Nomor Tiket, Email, atau No. WhatsApp untuk memuat data permohonan sertifikasi Anda secara otomatis.",
+      lookupLabel: "Cari Data Permohonan Sertifikasi (Nomor Tiket / Email / Kontak)",
+      lookupPlaceholder: "Ketik Nomor Tiket (cth: HACCP-2026-1024), Email Perusahaan, atau No. WhatsApp...",
+      lookupButton: "Cari & Muat Data",
+      lookupFound: "Data Permohonan Terverifikasi",
+      lookupNotFound: "Data permohonan tidak ditemukan dengan kata kunci tersebut. Pastikan Anda telah mengisi formulir sertifikasi atau Anda dapat mengisi data secara manual.",
+      manualToggle: "Isi Formulir Manual",
+      changeLookup: "Ganti Pencarian",
+      applyPrompt: "Belum mengajukan permohonan sertifikasi?",
+      applyLink: "Ajukan Permohonan Sertifikasi di Sini →",
     },
   },
   en: {
@@ -1300,12 +1334,31 @@ export const translations: Record<Language, TranslationDictionary> = {
       tagline: "HACCP CERTIFICATION PRE-AUDIT PORTAL",
       title: "Upload Pre-Audit HACCP Preparation Documents",
       subtitle:
-        "Official portal for registered certification applicants to submit required food safety documentation prior to stage 1 audit execution.",
-      guideTitle: "Audit Document Guidelines & Requirements",
+        "Official portal for registered certification applicants to submit food safety documentation compliance under the SNI CXC 1:1969 (2024) standard prior to stage 1 audit.",
+      guideTitle: "Audit Document Guidelines — SNI CXC 1:1969 (2024) Standard",
       guideSubtitle:
-        "Ensure all documents are in clear digital formats (PDF/DOCX/ZIP, max 10MB each) to facilitate swift preliminary review by our auditor verification team.",
+        "SNI CXC 1:1969 (2024) is the Indonesian National Standard on General Principles of Food Hygiene, an identical adoption of the latest revised Codex Alimentarius (Codex CXC 1-1969) international standard.",
+      section1Title: "Section 1: Good Hygiene Practices (GHP / GMP)",
+      section1Desc:
+        "Regulates prerequisite requirements such as facilities, sanitation, personnel hygiene, maintenance, and operational control across the food chain.",
+      section2Title: "Section 2: HACCP Plan & 7 Principles",
+      section2Desc:
+        "Regulates the 7 principles of the HACCP system to proactively identify, evaluate, and control food safety hazards (biological, chemical, and physical) from primary production to final presentation.",
+      section3Title: "Legalities & Laboratory Test Reports",
+      section3Desc:
+        "HACCP Team Appointment Letter, Business License / NIB, laboratory test results (microbiological & chemical), CCP equipment calibration records, and internal audit reports.",
       formTitle: "Pre-Audit Document Submission Form",
-      formSubtitle: "Fill in your application details and upload files corresponding to the mandatory document categories.",
+      formSubtitle:
+        "Simply enter your Application Ticket Number, Company Email, or Phone to automatically retrieve and load your application details.",
+      lookupLabel: "Search Certification Application Data (Ticket / Email / Phone)",
+      lookupPlaceholder: "Enter Ticket Number (e.g. HACCP-2026-1024), Official Email, or WhatsApp...",
+      lookupButton: "Find & Load Data",
+      lookupFound: "Verified Application Data",
+      lookupNotFound: "Application data not found with the specified keyword. Make sure you have submitted the certification form or fill out manually.",
+      manualToggle: "Fill Form Manually",
+      changeLookup: "Change Search",
+      applyPrompt: "Haven't applied for HACCP certification yet?",
+      applyLink: "Apply for Certification Here →",
     },
   },
 };

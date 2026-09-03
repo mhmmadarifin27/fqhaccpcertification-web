@@ -132,13 +132,13 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
               className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 text-xs sm:text-sm font-bold focus:bg-white focus:outline-brand-blue rounded-xl transition-all"
             >
               <option value="all">Semua Kategori Dokumen</option>
-              <option value="bundle-all">Bundel Lengkap</option>
-              <option value="manual-haccp">Manual HACCP</option>
-              <option value="flow-diagram">Diagram Alir</option>
-              <option value="hazard-ccp">Analisis Bahaya & CCP</option>
-              <option value="sk-tim">SK Tim HACCP</option>
-              <option value="legalitas-nib">Izin & NIB</option>
-              <option value="internal-audit">Audit Internal</option>
+              <option value="bundle-sni-cxc-1">Bundel Lengkap SNI CXC 1:1969</option>
+              <option value="ghp-gmp-section1">Bagian 1: GHP / GMP</option>
+              <option value="haccp-plan-section2">Bagian 2: Rencana HACCP</option>
+              <option value="flow-diagram-layout">Diagram Alir & Layout</option>
+              <option value="sk-tim-kompetensi">SK Tim & Personel</option>
+              <option value="legalitas-lab-test">Legalitas & Uji Lab</option>
+              <option value="internal-audit-monev">Audit Internal</option>
             </select>
           </div>
 
