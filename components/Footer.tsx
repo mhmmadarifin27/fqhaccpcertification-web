@@ -54,8 +54,8 @@ export default function Footer() {
               <a href="/profile/tentang-kami" className="hover:text-white transition-colors">{t.nav.profile}</a>
               <a href="/info/pelatihan" className="hover:text-white transition-colors font-medium text-brand-cyan">{t.nav.trainingList}</a>
               <a href="/info/berkas-haccp" className="hover:text-white transition-colors font-medium text-brand-cyan">{t.nav.haccpDocs}</a>
-              <a href="/#tahapan" className="hover:text-white transition-colors">{t.nav.timeline}</a>
-              <a href="/#pelatihan" className="hover:text-white transition-colors">{t.nav.projects}</a>
+              <a href="/alur-sertifikasi" className="hover:text-white transition-colors">{t.nav.timeline}</a>
+              <a href="/info/pelatihan" className="hover:text-white transition-colors">{t.nav.projects}</a>
               <a href="/#faq" className="hover:text-white transition-colors">{t.nav.faq}</a>
             </nav>
           </div>

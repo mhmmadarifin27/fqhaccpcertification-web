@@ -123,14 +123,14 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       </div>
 
       <a
-        href="/#tahapan"
+        href="/alur-sertifikasi"
         onClick={onClose}
         className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
       >
         {t.nav.timeline}
       </a>
       <a
-        href="/#pelatihan"
+        href="/info/pelatihan"
         onClick={onClose}
         className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
       >
