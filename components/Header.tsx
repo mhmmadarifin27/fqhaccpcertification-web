@@ -220,7 +220,7 @@ export default function Header() {
             {t.nav.timeline}
           </a>
           <a
-            href="/#experience"
+            href="/#pelatihan"
             className={`transition-colors duration-200 ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
               }`}
           >
@@ -414,7 +414,7 @@ export default function Header() {
             {t.nav.timeline}
           </a>
           <a
-            href="/#experience"
+            href="/#pelatihan"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
           >

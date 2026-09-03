@@ -157,6 +157,17 @@ export interface TranslationDictionary {
     statusCertified: string;
   };
 
+  // Training Callout Section (Homepage)
+  trainingCallout: {
+    tagline: string;
+    title: string;
+    description1: string;
+    description2: string;
+    badge: string;
+    ctaButton: string;
+    topics: string[];
+  };
+
   // Gallery Section
   gallery: {
     tagline: string;
@@ -326,7 +337,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       independence: "Komitmen Independensi",
       scope: "Ruang Lingkup Audit",
       timeline: "Alur Sertifikasi",
-      projects: "Klien & Proyek",
+      projects: "Info Pelatihan",
       gallery: "Galeri Foto",
       faq: "FAQ",
       contact: "Kontak",
@@ -417,18 +428,12 @@ export const translations: Record<Language, TranslationDictionary> = {
       ],
       targetTitle: "Siapa yang Membutuhkan HACCP?",
       targetSubtitle:
-        "Sertifikasi HACCP diwajibkan dan direkomendasikan bagi 4 sektor rantai industri pengolahan pangan berikut:",
+        "Sertifikasi HACCP diwajibkan dan direkomendasikan bagi 4 sektor ruang lingkup industri pengolahan pangan berikut:",
       targetList: [
-        "Industri Produk Bakeri & Roti",
-        "Pabrik Pastry, Biskuit, Cake & Roti Kering",
-        "Industri Pemotongan & Pengolahan Daging",
-        "Pabrik Olahan Daging (Sosis, Bakso, Nugget, Daging Beku)",
-        "Industri Pengolahan Daging Unggas & Ternak",
-        "Pabrik Pangan Olahan untuk Keperluan Gizi Khusus",
-        "Produsen MP-ASI & Pangan Diet Medis Khusus",
-        "Sentra Pengolahan Pangan Gizi (SPPG)",
-        "Jasa Boga & Katering Industri / Institusi",
-        "Unit Pelayanan Pangan & Penyedia Makanan Massal",
+        "Produk bakeri",
+        "Daging dan produk daging",
+        "Pangan olahan untuk keperluan gizi khusus",
+        "Jasa Boga / Pelayanan Pangan / SPPG",
       ],
     },
     scope: {
@@ -556,6 +561,22 @@ export const translations: Record<Language, TranslationDictionary> = {
       swipeHint: "👈 Geser ke kanan untuk melihat proyek lainnya 👉",
       statusCertified: "Status: Certified",
     },
+    trainingCallout: {
+      tagline: "LAYANAN PELATIHAN PROFESIONAL",
+      title: "Pelatihan & Bimbingan Teknis Keamanan Pangan HACCP",
+      description1:
+        "PT FOOD QUALITY CERTIFICATION menyelenggarakan program pelatihan terstruktur untuk meningkatkan kapasitas SDM industri pangan, mencakup pemahaman prinsip HACCP, sistem CPPOB/GMP, hingga kualifikasi Internal Auditor bersertifikat.",
+      description2:
+        "Pelatihan dipandu langsung oleh Lead Auditor berpengalaman dan praktisi industri, dengan metode fleksibel baik secara online webinar maupun in-house training di perusahaan Anda.",
+      badge: "Sertifikat Berbarcode Resmi & Terverifikasi",
+      ctaButton: "Cek Pelatihan Lengkap →",
+      topics: [
+        "HACCP Awareness & Implementation",
+        "Pelatihan Internal Auditor HACCP",
+        "CPPOB & Good Manufacturing Practices (GMP)",
+        "Analisis Bahaya & Validasi Titik Kendali Kritis (CCP)",
+      ],
+    },
     gallery: {
       tagline: "DOKUMENTASI FOTO LAPANGAN",
       title: "Galeri Audit & Penyerahan Sertifikat",
@@ -586,7 +607,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
         {
           q: "3. Siapa yang dapat mengajukan sertifikasi HACCP?",
-          a: "Sertifikasi HACCP dapat diajukan oleh organisasi yang bergerak dalam rantai pangan, seperti industri pangan, katering, restoran, jasa boga, penyimpanan, distribusi, dan bidang terkait lainnya.",
+          a: "Sertifikasi HACCP dapat diajukan oleh organisasi dan pelaku usaha yang bergerak dalam 4 sektor ruang lingkup kami, yaitu: Produk bakeri, Daging dan produk daging, Pangan olahan untuk keperluan gizi khusus, serta Jasa Boga / Pelayanan Pangan / SPPG.",
         },
         {
           q: "4. Apa saja yang perlu disiapkan untuk sertifikasi HACCP?",
@@ -849,7 +870,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       independence: "Impartiality Commitment",
       scope: "Audit Scope",
       timeline: "Certification Process",
-      projects: "Clients & Projects",
+      projects: "Training Info",
       gallery: "Photo Gallery",
       faq: "FAQ",
       contact: "Contact",
@@ -940,18 +961,12 @@ export const translations: Record<Language, TranslationDictionary> = {
       ],
       targetTitle: "Who Needs HACCP Certification?",
       targetSubtitle:
-        "HACCP Certification is mandatory and strongly recommended for the following 4 food industry sectors:",
+        "HACCP Certification is mandatory and strongly recommended for the following 4 food industry scope sectors:",
       targetList: [
-        "Bakery & Bread Manufacturing Industry",
-        "Pastry, Biscuit, Cake & Dry Baked Goods Facilities",
-        "Slaughtering & Meat Processing Facilities",
-        "Processed Meat Producers (Sausages, Meatballs, Nuggets, Frozen Meats)",
-        "Poultry & Livestock Meat Processing Facilities",
-        "Processed Foods for Special Dietary Uses (Infant Formula / MP-ASI)",
-        "Medical Nutrition & Specialized Dietary Food Formulators",
-        "Nutrition Food Processing Centers (SPPG)",
-        "Industrial & Institutional Catering Services",
-        "Large-scale Food Services & Bulk Dining Providers",
+        "Bakery products",
+        "Meat and meat products",
+        "Processed food for special dietary needs",
+        "Food Services / Catering / SPPG",
       ],
     },
     scope: {
@@ -1079,6 +1094,22 @@ export const translations: Record<Language, TranslationDictionary> = {
       swipeHint: "👈 Swipe right to view more projects 👉",
       statusCertified: "Status: Certified",
     },
+    trainingCallout: {
+      tagline: "PROFESSIONAL TRAINING SERVICES",
+      title: "HACCP & Food Safety Technical Training",
+      description1:
+        "PT FOOD QUALITY CERTIFICATION delivers structured training programs to elevate food industry human resource capacity, covering core HACCP principles, CPPOB/GMP hygiene practices, and certified Internal Auditor qualifications.",
+      description2:
+        "Courses are conducted directly by certified Lead Auditors and experienced food safety practitioners, with flexible formats available via interactive webinars or on-site in-house training.",
+      badge: "Official Barcoded & Verifiable Certificate",
+      ctaButton: "View Complete Training Programs →",
+      topics: [
+        "HACCP Awareness & Implementation",
+        "HACCP Internal Auditor Training",
+        "CPPOB & Good Manufacturing Practices (GMP)",
+        "Advanced Hazard Analysis & CCP Validation",
+      ],
+    },
     gallery: {
       tagline: "FIELD AUDIT PHOTO DOCUMENTATION",
       title: "Audit Gallery & Certificate Handover",
@@ -1109,7 +1140,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
         {
           q: "3. Who can apply for HACCP certification?",
-          a: "HACCP certification can be applied for by organizations operating across the food chain, such as food processing industries, catering, restaurants, food services, storage, distribution, and other related sectors.",
+          a: "HACCP certification can be applied for by organizations and food businesses operating in our 4 official scope sectors: Bakery products, Meat and meat products, Processed food for special dietary needs, and Food Services / Catering / SPPG.",
         },
         {
           q: "4. What needs to be prepared for HACCP certification?",
