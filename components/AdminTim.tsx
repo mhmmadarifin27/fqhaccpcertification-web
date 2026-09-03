@@ -13,7 +13,6 @@ interface AdminTimProps {
 export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   const { showToast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
   
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +34,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   const [formData, setFormData] = useState({
     name: "",
     role: "",
-    category: "tphp-ugm",
+    category: "auditor",
     isLead: false,
     image: "",
     educationText: "",
@@ -45,12 +44,8 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
   });
 
   const filteredMembers = teamMembers.filter((m) => {
-    const matchesSearch =
-      m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      m.role.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      categoryFilter === "all" || m.category === categoryFilter;
-    return matchesSearch && matchesCategory;
+    const term = searchTerm.toLowerCase();
+    return m.name.toLowerCase().includes(term) || m.role.toLowerCase().includes(term);
   });
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,12 +75,12 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
     setFormData({
       name: "",
       role: "",
-      category: "tphp-ugm",
+      category: "auditor",
       isLead: false,
       image: "/hero1.jpg",
-      educationText: "S1 Teknologi Pangan, UGM\nS2 Ilmu Pangan, UGM",
-      experience: "Dosen & Peneliti Keamanan Pangan",
-      auditorExp: "Auditor Mutu Internal & Konsultan HACCP",
+      educationText: "S1 Teknologi Pangan\nS2 Ilmu & Teknologi Pangan",
+      experience: "Auditor & Tenaga Ahli Keamanan Pangan",
+      auditorExp: "Auditor Mutu & Konsultan HACCP Terakreditasi",
       motto: "Inovasi teknologi pangan harus berjalan beriringan dengan jaminan keamanan dan mutu."
     });
     setIsModalOpen(true);
@@ -96,7 +91,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
     setFormData({
       name: member.name,
       role: member.role,
-      category: member.category,
+      category: member.category || "auditor",
       isLead: !!member.isLead,
       image: member.image,
       educationText: Array.isArray(member.education) ? member.education.join("\n") : member.education || "",
@@ -217,7 +212,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
         </div>
 
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4 pt-2">
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="flex-1">
             <div className="relative">
               <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">🔍</span>
               <input
@@ -228,16 +223,6 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200/80 text-xs sm:text-sm font-medium focus:bg-white focus:outline-brand-blue rounded-xl transition-all"
               />
             </div>
-
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 text-xs sm:text-sm font-bold focus:bg-white focus:outline-brand-blue rounded-xl transition-all"
-            >
-              <option value="all">Semua Kategori Affiliasi</option>
-              <option value="tphp-ugm">Tenaga Ahli TPHP UGM</option>
-              <option value="uin-suka">Auditor Halal UIN Sunan Kalijaga</option>
-            </select>
           </div>
 
           <button
@@ -282,13 +267,6 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                     )}
                   </div>
                   <p className="text-xs font-bold text-brand-blue truncate">{member.role}</p>
-                  <span className={`inline-block px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide border rounded-full ${
-                    member.category === "tphp-ugm"
-                      ? "bg-blue-50 text-blue-800 border-blue-200"
-                      : "bg-emerald-50 text-emerald-800 border-emerald-200"
-                  }`}>
-                    {member.category === "tphp-ugm" ? "TPHP UGM" : "UIN Sunan Kalijaga"}
-                  </span>
                 </div>
               </div>
 
@@ -325,7 +303,6 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
               <th className="px-6 py-4">Foto</th>
               <th className="px-6 py-4">Nama &amp; Gelar Lengkap</th>
               <th className="px-6 py-4">Jabatan / Role</th>
-              <th className="px-6 py-4">Kategori Affiliasi</th>
               <th className="px-6 py-4">Status Professional</th>
               <th className="px-6 py-4 text-right">Aksi Kelola</th>
             </tr>
@@ -333,7 +310,7 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
           <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
             {filteredMembers.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-12 text-center text-slate-400 font-normal">
+                <td colSpan={5} className="py-12 text-center text-slate-400 font-normal">
                   Tidak ada data pegawai yang sesuai dengan pencarian Anda.
                 </td>
               </tr>
@@ -354,15 +331,6 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                     <p className="text-[11px] text-slate-400 italic mt-0.5 line-clamp-1">&ldquo;{member.motto}&rdquo;</p>
                   </td>
                   <td className="px-6 py-4 font-bold text-brand-blue">{member.role}</td>
-                  <td className="px-6 py-4">
-                    <span className={`px-3 py-1 text-[10px] font-extrabold uppercase tracking-wide border rounded-full ${
-                      member.category === "tphp-ugm"
-                        ? "bg-blue-50 text-blue-800 border-blue-200"
-                        : "bg-emerald-50 text-emerald-800 border-emerald-200"
-                    }`}>
-                      {member.category === "tphp-ugm" ? "TPHP UGM" : "UIN Sunan Kalijaga"}
-                    </span>
-                  </td>
                   <td className="px-6 py-4">
                     {member.isLead ? (
                       <span className="bg-brand-navy text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
@@ -436,31 +404,16 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Kategori Affiliasi *</label>
-                  <select
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 bg-slate-50 text-xs font-bold focus:bg-white focus:outline-[#0a5c36]"
-                  >
-                    <option value="tphp-ugm">Departemen TPHP UGM</option>
-                    <option value="uin-sunan-kalijaga">Halal Center UIN Sunan Kalijaga</option>
-                  </select>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="font-extrabold text-slate-700 block">Status Lead Professional</label>
-                  <label className="flex items-center gap-2 pt-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={formData.isLead}
-                      onChange={(e) => setFormData({ ...formData, isLead: e.target.checked })}
-                      className="w-4 h-4 text-[#0a5c36] rounded"
-                    />
-                    <span className="text-xs font-bold text-slate-700">Tampilkan Badge ★ Lead Professional</span>
-                  </label>
-                </div>
+              <div className="space-y-1 pt-1">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.isLead}
+                    onChange={(e) => setFormData({ ...formData, isLead: e.target.checked })}
+                    className="w-4 h-4 text-brand-navy rounded"
+                  />
+                  <span className="text-xs font-bold text-slate-700">Tampilkan Badge ★ Lead Professional</span>
+                </label>
               </div>
 
               {/* Direct File Manager Upload Box */}

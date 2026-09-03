@@ -170,7 +170,6 @@ const TEAM_MEMBERS = [
 
 export default function TimPage() {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState("all");
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
@@ -182,15 +181,6 @@ export default function TimPage() {
     fetchTeam();
   }, []);
 
-  // Filter team members based on selected tab
-  const filteredMembers = members.filter((member) => {
-    if (activeTab === "all") return true;
-    if (activeTab === "tphp") return member.category === "tphp-ugm";
-    if (activeTab === "halal") return member.category === "uin-suka";
-    if (activeTab === "lead") return member.isLead;
-    return true;
-  });
-
   return (
     <div className="relative min-h-screen bg-slate-50 text-slate-800 font-sans">
       <Header />
@@ -198,50 +188,31 @@ export default function TimPage() {
       {/* Main Content Container */}
       <main className="pt-24 md:pt-36 pb-20">
         
-        {/* Acquis Consulting styled Hero/Banner */}
+        {/* Hero / Banner */}
         <section className="bg-slate-50 text-slate-800 pt-12 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="space-y-6">
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-brand-navy leading-none font-heading">
+          <div className="space-y-4">
+            <span className="inline-block bg-brand-navy/10 text-brand-navy border border-brand-navy/20 px-3.5 py-1 text-xs font-black uppercase tracking-widest rounded-full">
+              {t.nav.team}
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-navy leading-tight font-heading">
               {t.profilePages.tim.title}
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-4xl leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-slate-600 max-w-4xl leading-relaxed font-normal">
               {t.profilePages.tim.subtitle}
             </p>
           </div>
-          <div className="border-t border-slate-200 mt-12 mb-2" />
+          <div className="border-t border-slate-200 mt-10 mb-2" />
         </section>
 
-        {/* Filters and Card Grid Section */}
+        {/* Card Grid Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
-          {/* Navigation Filter Tabs */}
-          <div className="flex flex-wrap justify-start sm:justify-center border-b border-slate-200 gap-1 sm:gap-2">
-            {[
-              { id: "all", label: t.teamUI.filterAll },
-              { id: "tphp", label: t.teamUI.filterTphp },
-              { id: "halal", label: t.teamUI.filterHalal },
-              { id: "lead", label: t.teamUI.filterLead }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-3 px-6 text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all duration-350 cursor-pointer rounded-t-xl ${
-                  activeTab === tab.id
-                    ? "border-b-2 border-brand-blue text-brand-blue bg-slate-100"
-                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Card Grid - 3 Columns matching Acquis layout */}
+          {/* Card Grid - 3 Columns */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredMembers.map((member) => (
+            {members.map((member) => (
               <div
                 key={member.id}
-                className="bg-white border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group h-full rounded-2xl"
+                className="bg-white border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group h-full rounded-3xl transition-all duration-300 hover:shadow-md"
               >
                 {/* Photo Header */}
                 <div className="relative aspect-square w-full overflow-hidden bg-slate-100">
@@ -260,9 +231,6 @@ export default function TimPage() {
                 {/* Body Details */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-2">
-                    <span className="text-[10px] font-extrabold tracking-widest text-slate-400 uppercase leading-none block">
-                      {member.category === "tphp-ugm" ? "TPHP UGM AFFILIATION" : "UIN SUNAN KALIJAGA"}
-                    </span>
                     <h3 className="text-base sm:text-lg font-extrabold text-slate-800 leading-snug group-hover:text-brand-blue transition-colors font-heading min-h-[52px]">
                       {member.name}
                     </h3>
@@ -290,7 +258,7 @@ export default function TimPage() {
         </section>
       </main>
 
-      {/* Interactive Profile Detail Modal (David Kaufman Bio Layout style) */}
+      {/* Interactive Profile Detail Modal */}
       {selectedMember && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-brand-navy-dark/80 backdrop-blur-sm animate-fade-in">
           
@@ -320,10 +288,7 @@ export default function TimPage() {
               </div>
 
               <div className="md:col-span-8 flex flex-col justify-between space-y-6">
-                <div className="space-y-3">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">
-                    {selectedMember.category === "tphp-ugm" ? "Teknologi Pangan UGM" : "UIN Sunan Kalijaga"}
-                  </span>
+                <div className="space-y-2">
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-navy tracking-tight font-heading leading-tight">
                     {selectedMember.name}
                   </h2>
