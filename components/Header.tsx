@@ -238,28 +238,34 @@ export default function Header() {
         {/* Right Header Buttons & Language Pill */}
         <div className="hidden lg:flex items-center gap-4">
           {/* Main Nav Language Switcher Pill */}
-          <div className="flex items-center bg-slate-100 p-1 rounded-full border border-slate-200/80 text-xs font-bold shadow-xs">
+          <div className="flex items-center bg-slate-100/90 backdrop-blur-xs p-1 rounded-full border border-slate-200/80 text-xs font-bold shadow-xs">
+            <div className="pl-2 pr-1 text-slate-400 flex items-center">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                <path strokeWidth="2" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+              </svg>
+            </div>
             <button
+              type="button"
               onClick={() => setLang("id")}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer border-none flex items-center gap-1.5 ${
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer border-none font-bold ${
                 lang === "id"
                   ? "bg-brand-navy text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900 bg-transparent"
               }`}
             >
-              <span>🇮🇩</span>
-              <span>ID</span>
+              ID
             </button>
             <button
+              type="button"
               onClick={() => setLang("en")}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer border-none flex items-center gap-1.5 ${
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer border-none font-bold ${
                 lang === "en"
                   ? "bg-brand-navy text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900 bg-transparent"
               }`}
             >
-              <span>🇬🇧</span>
-              <span>EN</span>
+              EN
             </button>
           </div>
 
@@ -274,18 +280,24 @@ export default function Header() {
         {/* Mobile Navigation Toggle Button */}
         <div className="lg:hidden flex items-center gap-2">
           {/* Mobile Language Toggle Pill */}
-          <div className="flex items-center bg-slate-100 p-0.5 rounded-full border border-slate-200 text-[10px] font-extrabold">
+          <div className="flex items-center bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold">
+            <svg className="w-3.5 h-3.5 text-slate-400 ml-1.5 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" strokeWidth="2" />
+              <path strokeWidth="2" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+            </svg>
             <button
+              type="button"
               onClick={() => setLang("id")}
-              className={`px-2 py-0.5 rounded-full transition-all border-none ${
+              className={`px-2 py-0.5 rounded-full transition-all border-none text-[11px] font-bold ${
                 lang === "id" ? "bg-brand-navy text-white" : "text-slate-600 bg-transparent"
               }`}
             >
               ID
             </button>
             <button
+              type="button"
               onClick={() => setLang("en")}
-              className={`px-2 py-0.5 rounded-full transition-all border-none ${
+              className={`px-2 py-0.5 rounded-full transition-all border-none text-[11px] font-bold ${
                 lang === "en" ? "bg-brand-navy text-white" : "text-slate-600 bg-transparent"
               }`}
             >
