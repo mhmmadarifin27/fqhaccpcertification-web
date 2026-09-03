@@ -3,25 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "../context/LanguageContext";
+import LanguageSwitcher from "./header/LanguageSwitcher";
+import DesktopNav from "./header/DesktopNav";
+import MobileMenu from "./header/MobileMenu";
 
 export default function Header() {
   const pathname = usePathname();
   const isHomepage = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileProfileOpen, setMobileProfileOpen] = useState(false);
-  const [mobileVisitorInfoOpen, setMobileVisitorInfoOpen] = useState(false);
 
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!isHomepage) return;
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -32,17 +29,19 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${showSolid
-        ? "bg-white/95 backdrop-blur-md border-slate-200 shadow-sm text-slate-800"
-        : "bg-transparent border-transparent text-white"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        showSolid
+          ? "bg-white/95 backdrop-blur-md border-slate-200 shadow-sm text-slate-800"
+          : "bg-transparent border-transparent text-white"
+      }`}
     >
       {/* Top Utility Bar */}
       <div
-        className={`px-4 lg:px-12 py-1.5 flex justify-between items-center text-xs tracking-wide transition-colors duration-300 ${isUtilityNavy
-          ? "bg-brand-navy-dark text-slate-300"
-          : "bg-black/30 backdrop-blur-md text-slate-200"
-          }`}
+        className={`px-4 lg:px-12 py-1.5 flex justify-between items-center text-xs tracking-wide transition-colors duration-300 ${
+          isUtilityNavy
+            ? "bg-brand-navy-dark text-slate-300"
+            : "bg-black/30 backdrop-blur-md text-slate-200"
+        }`}
       >
         <div className="flex items-center gap-6">
           <span className="flex items-center gap-2">
@@ -59,10 +58,11 @@ export default function Header() {
           </span>
         </div>
         <span
-          className={`border px-2.5 py-0.5 text-[10px] uppercase font-bold tracking-wider transition-all duration-300 ${isUtilityNavy
-            ? "bg-brand-cyan/20 text-brand-cyan border-brand-cyan/30"
-            : "bg-brand-navy/10 text-brand-navy border-brand-navy/20"
-            }`}
+          className={`border px-2.5 py-0.5 text-[10px] uppercase font-bold tracking-wider transition-all duration-300 ${
+            isUtilityNavy
+              ? "bg-brand-cyan/20 text-brand-cyan border-brand-cyan/30"
+              : "bg-brand-navy/10 text-brand-navy border-brand-navy/20"
+          }`}
         >
           {t.nav.accreditationTag}
         </span>
@@ -81,14 +81,16 @@ export default function Header() {
           </div>
           <div className="flex flex-col">
             <span
-              className={`text-sm lg:text-base font-extrabold tracking-tight leading-none font-heading transition-colors ${showSolid ? "text-slate-900" : "text-white"
-                }`}
+              className={`text-sm lg:text-base font-extrabold tracking-tight leading-none font-heading transition-colors ${
+                showSolid ? "text-slate-900" : "text-white"
+              }`}
             >
               PT FOOD QUALITY
             </span>
             <span
-              className={`text-[10px] lg:text-[11px] font-medium tracking-wider mt-0.5 transition-colors ${showSolid ? "text-slate-500" : "text-slate-300"
-                }`}
+              className={`text-[10px] lg:text-[11px] font-medium tracking-wider mt-0.5 transition-colors ${
+                showSolid ? "text-slate-500" : "text-slate-300"
+              }`}
             >
               CERTIFICATION
             </span>
@@ -96,191 +98,11 @@ export default function Header() {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold tracking-wide">
-          <a
-            href="/"
-            className={`transition-colors duration-200 ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-              }`}
-          >
-            {t.nav.home}
-          </a>
-
-          {/* Hover Profile Dropdown for Desktop */}
-          <div className="relative group">
-            <button
-              className={`flex items-center gap-1 transition-colors duration-200 font-semibold text-sm cursor-pointer py-2 focus:outline-none ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-                }`}
-            >
-              {t.nav.profile}
-              <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            {/* Dropdown Box */}
-            <div
-              className={`absolute left-0 mt-0.5 w-56 border shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 flex flex-col py-1 ${showSolid
-                ? "bg-white text-slate-800 border-slate-200"
-                : "bg-brand-navy-dark text-white border-white/10"
-                }`}
-            >
-              <a
-                href="/profile/tentang-kami"
-                className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
-                  }`}
-              >
-                {t.nav.aboutUs}
-              </a>
-              <a
-                href="/profile/visi-misi"
-                className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
-                  }`}
-              >
-                {t.nav.visionMission}
-              </a>
-              <a
-                href="/profile/independensi"
-                className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
-                  }`}
-              >
-                {t.nav.independence}
-              </a>
-              <a
-                href="/profile/struktur"
-                className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
-                  }`}
-              >
-                {t.nav.structure}
-              </a>
-              <a
-                href="/profile/tim"
-                className={`px-4 py-2.5 text-xs font-semibold transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white"
-                  }`}
-              >
-                {t.nav.team}
-              </a>
-            </div>
-          </div>
-
-          {/* Hover Info Pengunjung Dropdown for Desktop */}
-          <div className="relative group">
-            <button
-              className={`flex items-center gap-1 transition-colors duration-200 font-semibold text-sm cursor-pointer py-2 focus:outline-none ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-                }`}
-            >
-              {t.nav.visitorInfo}
-              <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            {/* Dropdown Box */}
-            <div
-              className={`absolute left-0 mt-0.5 w-60 border shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 flex flex-col py-1.5 rounded-2xl overflow-hidden ${showSolid
-                ? "bg-white text-slate-800 border-slate-200"
-                : "bg-brand-navy-dark text-white border-white/10"
-                }`}
-            >
-              <a
-                href="/info/pelatihan"
-                className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
-                  }`}
-              >
-                {t.nav.trainingList}
-              </a>
-              <a
-                href="/info/berkas-haccp"
-                className={`px-4 py-2.5 text-xs font-semibold transition-colors ${showSolid
-                  ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue"
-                  : "text-slate-300 hover:bg-brand-blue/30 hover:text-white"
-                  }`}
-              >
-                {t.nav.haccpDocs}
-              </a>
-            </div>
-          </div>
-
-          <a
-            href="/#tahapan"
-            className={`transition-colors duration-200 ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-              }`}
-          >
-            {t.nav.timeline}
-          </a>
-          <a
-            href="/#pelatihan"
-            className={`transition-colors duration-200 ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-              }`}
-          >
-            {t.nav.projects}
-          </a>
-          <a
-            href="/#faq"
-            className={`transition-colors duration-200 ${showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-              }`}
-          >
-            {t.nav.faq}
-          </a>
-        </nav>
+        <DesktopNav showSolid={showSolid} />
 
         {/* Right Header Buttons & Language Pill */}
         <div className="hidden lg:flex items-center gap-4">
-          {/* Main Nav Language Switcher Pill */}
-          <div className="flex items-center bg-slate-100/90 backdrop-blur-xs p-1 rounded-full border border-slate-200/80 text-xs font-bold shadow-xs">
-            <button
-              type="button"
-              onClick={() => setLang("id")}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer border-none font-bold flex items-center gap-1.5 ${
-                lang === "id"
-                  ? "bg-brand-navy text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 bg-transparent"
-              }`}
-            >
-              <span className="w-4 h-2.5 rounded-xs overflow-hidden inline-flex flex-col border border-slate-300 shadow-2xs shrink-0">
-                <span className="w-full h-1/2 bg-[#e70011]"></span>
-                <span className="w-full h-1/2 bg-white"></span>
-              </span>
-              <span>ID</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setLang("en")}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer border-none font-bold flex items-center gap-1.5 ${
-                lang === "en"
-                  ? "bg-brand-navy text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 bg-transparent"
-              }`}
-            >
-              <svg className="w-4 h-2.5 rounded-xs overflow-hidden border border-slate-300 shadow-2xs shrink-0" viewBox="0 0 60 30">
-                <clipPath id="uk-flag-desktop">
-                  <path d="M0,0 v30 h60 v-30 z"/>
-                </clipPath>
-                <clipPath id="uk-diag-desktop">
-                  <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/>
-                </clipPath>
-                <g clipPath="url(#uk-flag-desktop)">
-                  <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-                  <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" strokeWidth="6"/>
-                  <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#uk-diag-desktop)" stroke="#C8102E" strokeWidth="4"/>
-                  <path d="M30,0 v30 M0,15 h60" stroke="#ffffff" strokeWidth="10"/>
-                  <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
-                </g>
-              </svg>
-              <span>EN</span>
-            </button>
-          </div>
+          <LanguageSwitcher />
 
           <a
             href="/#form-inquiry"
@@ -290,53 +112,15 @@ export default function Header() {
           </a>
         </div>
 
-        {/* Mobile Navigation Toggle Button */}
+        {/* Mobile Navigation Toggle Button & Switcher */}
         <div className="lg:hidden flex items-center gap-2">
-          {/* Mobile Language Toggle Pill */}
-          <div className="flex items-center bg-slate-100 p-0.5 rounded-full border border-slate-200 text-xs font-bold">
-            <button
-              type="button"
-              onClick={() => setLang("id")}
-              className={`px-2 py-1 rounded-full transition-all border-none text-[11px] font-bold flex items-center gap-1 ${
-                lang === "id" ? "bg-brand-navy text-white shadow-xs" : "text-slate-600 bg-transparent"
-              }`}
-            >
-              <span className="w-3.5 h-2 rounded-xs overflow-hidden inline-flex flex-col border border-slate-300 shadow-2xs shrink-0">
-                <span className="w-full h-1/2 bg-[#e70011]"></span>
-                <span className="w-full h-1/2 bg-white"></span>
-              </span>
-              <span>ID</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setLang("en")}
-              className={`px-2 py-1 rounded-full transition-all border-none text-[11px] font-bold flex items-center gap-1 ${
-                lang === "en" ? "bg-brand-navy text-white shadow-xs" : "text-slate-600 bg-transparent"
-              }`}
-            >
-              <svg className="w-3.5 h-2 rounded-xs overflow-hidden border border-slate-300 shadow-2xs shrink-0" viewBox="0 0 60 30">
-                <clipPath id="uk-flag-mobile">
-                  <path d="M0,0 v30 h60 v-30 z"/>
-                </clipPath>
-                <clipPath id="uk-diag-mobile">
-                  <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/>
-                </clipPath>
-                <g clipPath="url(#uk-flag-mobile)">
-                  <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-                  <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" strokeWidth="6"/>
-                  <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#uk-diag-mobile)" stroke="#C8102E" strokeWidth="4"/>
-                  <path d="M30,0 v30 M0,15 h60" stroke="#ffffff" strokeWidth="10"/>
-                  <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
-                </g>
-              </svg>
-              <span>EN</span>
-            </button>
-          </div>
+          <LanguageSwitcher isMobile />
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`p-2 transition-colors focus:outline-none ${showSolid ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
-              }`}
+            className={`p-2 transition-colors focus:outline-none ${
+              showSolid ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
+            }`}
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? (
@@ -353,129 +137,7 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white py-4 px-6 space-y-4 shadow-inner max-h-[calc(100vh-120px)] overflow-y-auto text-slate-800 animate-fade-in">
-          <a
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
-          >
-            {t.nav.home}
-          </a>
-
-          {/* Collapsible Profile Sub-menu for Mobile */}
-          <div className="border-b border-slate-100 pb-2">
-            <button
-              onClick={() => setMobileProfileOpen(!mobileProfileOpen)}
-              className="w-full flex items-center justify-between py-2 text-sm font-bold text-slate-800 hover:text-brand-blue cursor-pointer text-left focus:outline-none"
-            >
-              <span>{t.nav.profile}</span>
-              <svg className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${mobileProfileOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {mobileProfileOpen && (
-              <div className="pl-3 mt-1.5 space-y-2 border-l border-brand-blue/30 animate-fade-in">
-                <a
-                  href="/profile/tentang-kami"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.aboutUs}
-                </a>
-                <a
-                  href="/profile/visi-misi"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.visionMission}
-                </a>
-                <a
-                  href="/profile/independensi"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.independence}
-                </a>
-                <a
-                  href="/profile/struktur"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.structure}
-                </a>
-                <a
-                  href="/profile/tim"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.team}
-                </a>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile Accordion for Info Pengunjung */}
-          <div className="border-b border-slate-100 pb-2">
-            <button
-              onClick={() => setMobileVisitorInfoOpen(!mobileVisitorInfoOpen)}
-              className="w-full flex items-center justify-between py-2 text-sm font-bold text-slate-800 hover:text-brand-blue cursor-pointer text-left focus:outline-none"
-            >
-              <span>{t.nav.visitorInfo}</span>
-              <svg className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${mobileVisitorInfoOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {mobileVisitorInfoOpen && (
-              <div className="pl-3 mt-1.5 space-y-2 border-l border-brand-navy/30 animate-fade-in">
-                <a
-                  href="/info/pelatihan"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.trainingList}
-                </a>
-                <a
-                  href="/info/berkas-haccp"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-                >
-                  {t.nav.haccpDocs}
-                </a>
-              </div>
-            )}
-          </div>
-
-          <a
-            href="/#tahapan"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
-          >
-            {t.nav.timeline}
-          </a>
-          <a
-            href="/#pelatihan"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
-          >
-            {t.nav.projects}
-          </a>
-          <a
-            href="/#faq"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
-          >
-            {t.nav.faq}
-          </a>
-          <a
-            href="/#form-inquiry"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block w-full text-center bg-brand-blue hover:bg-brand-navy py-3 text-xs font-extrabold text-white transition-colors mt-4 rounded-full uppercase tracking-wider"
-          >
-            {t.nav.applyCertification}
-          </a>
-        </div>
-      )}
+      <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
     </header>
   );
 }
