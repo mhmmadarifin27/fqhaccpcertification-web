@@ -43,7 +43,6 @@ function AdminSidebar({
     { id: "sertifikasi", label: "Permohonan Sertifikasi", icon: "📝" },
     { id: "pelatihan", label: "Pendaftaran Pelatihan", icon: "🎓" },
     { id: "berkas-haccp", label: "Berkas Audit HACCP", icon: "📁" },
-    { id: "proyek", label: "Kelola Proyek / Sektor", icon: "🏗️" },
     { id: "pegawai", label: "Kelola Pegawai / Tim", icon: "👥" },
     { id: "galeri", label: "Kelola Galeri Foto", icon: "🖼️" }
   ];

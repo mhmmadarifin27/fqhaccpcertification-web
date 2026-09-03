@@ -11,7 +11,7 @@ export default function PelatihanPage() {
   const { t, lang } = useLanguage();
   const { showToast } = useToast();
 
-  const [selectedProgram, setSelectedProgram] = useState<string>("haccp-awareness");
+  const [selectedProgram, setSelectedProgram] = useState<string>("pengelolaan-haccp");
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",

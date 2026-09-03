@@ -971,15 +971,15 @@ export const deleteProject = async (id: string): Promise<boolean> => {
 export const SEED_TRAININGS: TrainingRegistration[] = [
   {
     id: "train-001",
-    ticketNumber: "TR-2026-0812",
+    ticketNumber: "TR-2026-1048",
     fullName: "Budi Santoso, S.TP.",
     companyName: "PT Sumber Pangan Sejahtera",
     email: "budi.santoso@sumberpangan.co.id",
     phone: "081234567890",
-    programId: "haccp-awareness",
-    programTitle: "Pelatihan Awareness & Implementasi Sistem HACCP",
+    programId: "pengelolaan-haccp",
+    programTitle: "Pengelolaan Keamanan Pangan Berbasis HACCP",
     participantCount: 3,
-    notes: "Kebutuhan sertifikasi persiapan audit ekspor ke Timur Tengah.",
+    notes: "Kebutuhan pelatihan tim mutu persiapan audit sertifikasi.",
     status: "confirmed",
     createdAt: "2026-08-25T09:30:00Z"
   },
@@ -990,10 +990,10 @@ export const SEED_TRAININGS: TrainingRegistration[] = [
     companyName: "CV Nusantara Food Mandiri",
     email: "dewi.qa@nusantarafood.com",
     phone: "085712345678",
-    programId: "internal-auditor",
-    programTitle: "Pelatihan Internal Auditor HACCP & Verifikasi Sistem",
+    programId: "penyusunan-dokumen-haccp",
+    programTitle: "Pelatihan dan Sertifikasi Penyusunan Dokumen HACCP",
     participantCount: 2,
-    notes: "Ingin pelatihan metode online via Zoom.",
+    notes: "Ingin bimbingan penyusunan HACCP plan dan diagram alir terverifikasi.",
     status: "pending",
     createdAt: "2026-09-01T14:15:00Z"
   }

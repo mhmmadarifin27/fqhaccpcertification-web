@@ -498,32 +498,6 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {/* Stats 5: Proyek & Sektor */}
-                <div
-                  onClick={() => setActiveTab("proyek")}
-                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
-                      🏗️
-                    </div>
-                    <span className="bg-amber-50 text-amber-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-amber-200/50">
-                      Live Projects
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
-                      Kategori Sektor
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
-                      {projects.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Proyek</span>
-                    </h3>
-                  </div>
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-amber-600 group-hover:translate-x-1 transition-transform">
-                    <span className="truncate">Kelola Sektor</span>
-                    <span>&rarr;</span>
-                  </div>
-                </div>
 
                 {/* Stats 6: Galeri */}
                 <div
@@ -618,10 +592,6 @@ export default function AdminPage() {
             <AdminBerkasHaccp documents={haccpDocs} onRefresh={fetchData} />
           )}
 
-          {/* TAB 3: PROJECT MANAGEMENTS */}
-          {activeTab === "proyek" && (
-            <AdminProyek projects={projects} onRefresh={fetchData} />
-          )}
 
           {/* TAB 4: TEAM / PEGAWAI MANAGEMENTS */}
           {activeTab === "pegawai" && (

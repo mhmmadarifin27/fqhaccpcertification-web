@@ -708,6 +708,16 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Button Selengkapnya Menuju Halaman Alur Sertifikasi */}
+            <div className="text-center pt-2">
+              <a
+                href="/alur-sertifikasi"
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-navy hover:bg-brand-navy-dark text-white font-extrabold text-xs uppercase tracking-widest rounded-full transition-all shadow-md active:scale-95 border-none cursor-pointer"
+              >
+                <span>{lang === "en" ? "View Full Certification Flowchart →" : "Lihat Alur Sertifikasi Lengkap →"}</span>
+              </a>
+            </div>
+
           </div>
         </div>
       </section>
@@ -773,8 +783,12 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5 space-y-4 text-center order-1 lg:order-2 flex flex-col items-center justify-center bg-white/5 border border-white/10 p-8 sm:p-10 rounded-3xl backdrop-blur-xs">
-              <div className="w-16 h-16 rounded-2xl bg-brand-cyan/20 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan text-2xl font-black mb-2">
-                HACCP
+              <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 p-2 flex items-center justify-center mb-2 shadow-inner">
+                <img
+                  src="/logo2.png"
+                  alt="Logo PT Food Quality Certification"
+                  className="w-full h-full object-contain filter drop-shadow-sm"
+                />
               </div>
               <h4 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight font-heading">
                 Kompetensi & Mutu SDM Pangan
