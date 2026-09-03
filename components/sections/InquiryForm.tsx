@@ -111,10 +111,10 @@ export default function InquiryForm() {
               t.trust.satisfactionDesc,
               t.whyUs.card4Title,
             ].map((bullet, idx) => (
-              <div key={idx} className="flex items-center gap-2.5 text-slate-700 text-sm font-semibold">
-                <span className="w-5 h-5 text-brand-blue flex items-center justify-center text-xs shrink-0 font-bold">
-                  ✔
-                </span>
+              <div key={idx} className="flex items-center gap-3 text-slate-700 text-sm font-semibold">
+                <svg className="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
                 <span>{bullet}</span>
               </div>
             ))}
@@ -123,8 +123,6 @@ export default function InquiryForm() {
 
         {/* Right Block: Interactive Submission Form */}
         <div className="lg:col-span-7 bg-white p-6 sm:p-10 border border-slate-200 shadow-xl relative overflow-hidden rounded-2xl">
-          <div className="absolute top-0 left-0 right-0 h-2 bg-brand-blue animate-pulse" />
-
           {formSubmitted ? (
             // Simple Clean Thank You Screen
             <div className="text-center py-12 px-4 space-y-6">

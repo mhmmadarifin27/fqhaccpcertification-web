@@ -37,7 +37,7 @@ export default function Footer() {
               {t.footer.companyDesc}
             </p>
             <div className="pt-2 flex items-center gap-3">
-              <span className="bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 text-[9px] px-2.5 py-0.5 font-extrabold tracking-wide uppercase">
+              <span className="bg-white/10 text-slate-300 border border-white/20 text-[9px] px-2.5 py-0.5 font-bold tracking-wide uppercase">
                 KAN LSHACCP-009-IDN
               </span>
               <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
@@ -52,8 +52,8 @@ export default function Footer() {
             <nav className="flex flex-col gap-2.5 text-xs text-slate-400">
               <a href="/" className="hover:text-white transition-colors">{t.nav.home}</a>
               <a href="/profile/tentang-kami" className="hover:text-white transition-colors">{t.nav.profile}</a>
-              <a href="/info/pelatihan" className="hover:text-white transition-colors font-medium text-brand-cyan">{t.nav.trainingList}</a>
-              <a href="/info/berkas-haccp" className="hover:text-white transition-colors font-medium text-brand-cyan">{t.nav.haccpDocs}</a>
+              <a href="/info/pelatihan" className="hover:text-white transition-colors">{t.nav.trainingList}</a>
+              <a href="/info/berkas-haccp" className="hover:text-white transition-colors">{t.nav.haccpDocs}</a>
               <a href="/alur-sertifikasi" className="hover:text-white transition-colors">{t.nav.timeline}</a>
               <a href="/info/pelatihan" className="hover:text-white transition-colors">{t.nav.projects}</a>
               <a href="/#faq" className="hover:text-white transition-colors">{t.nav.faq}</a>
@@ -65,7 +65,7 @@ export default function Footer() {
             <h4 className="text-white font-bold tracking-wider uppercase text-xs font-heading">{t.footer.contactInfo}</h4>
             <div className="flex flex-col gap-3 text-xs text-slate-400">
               <div className="flex items-start gap-2.5">
-                <svg className="w-4 h-4 text-brand-cyan shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -76,7 +76,7 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
-                <svg className="w-4 h-4 text-brand-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <a
@@ -89,7 +89,7 @@ export default function Footer() {
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
-                <svg className="w-4 h-4 text-brand-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <a href="mailto:fqhaccpcertification@gmail.com" className="hover:text-white transition-colors">

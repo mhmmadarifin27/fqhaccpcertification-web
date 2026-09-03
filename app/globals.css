@@ -4,13 +4,13 @@
   --font-heading: "Outfit", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   
-  --color-brand-blue: #02509e;
-  --color-brand-blue-hover: #013f7e;
-  --color-brand-navy: #0b1e36;
-  --color-brand-navy-dark: #021526;
-  --color-brand-teal: #0ea5e9;
-  --color-brand-cyan: #00bdcc;
-  --color-brand-accent: #00818a;
+  --color-brand-blue: #0b3b72;
+  --color-brand-blue-hover: #082d57;
+  --color-brand-navy: #0f1e36;
+  --color-brand-navy-dark: #0a1424;
+  --color-brand-teal: #0284c7;
+  --color-brand-cyan: #38bdf8;
+  --color-brand-accent: #0369a1;
 }
 
 :root {
@@ -25,33 +25,25 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Glassmorphism Utilities */
+/* Corporate Card Utilities */
 .glassmorphism {
-  background: rgba(11, 30, 54, 0.75);
+  background: rgba(15, 30, 54, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .glassmorphism-light {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* Custom Wave Separators and Background Gradients */
 .bg-mesh {
-  background-color: #0b1e36;
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(213,94%,19%,1) 0px, transparent 50%),
-    radial-gradient(at 50% 0%, hsla(190,87%,24%,1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(215,80%,15%,1) 0px, transparent 50%);
+  background-color: #0f1e36;
 }
 
 .bg-mesh-footer {
-  background-color: #021526;
-  background-image: 
-    radial-gradient(at 0% 100%, hsla(213,94%,10%,1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(190,87%,15%,1) 0px, transparent 50%);
+  background-color: #0a1424;
 }
 
 .carousel-overlay-gradient {

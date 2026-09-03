@@ -306,7 +306,7 @@ export default function TimPage() {
             </div>
 
             {/* Quote Callout Banner (Motto) */}
-            <div className="bg-brand-navy text-brand-cyan relative overflow-hidden py-8 px-6 sm:px-12 text-center border-b border-white/5">
+            <div className="bg-slate-900 text-slate-200 relative overflow-hidden py-8 px-6 sm:px-12 text-center border-b border-slate-800">
               <p className="text-sm sm:text-base md:text-lg font-medium italic max-w-3xl mx-auto leading-relaxed z-10 relative">
                 &ldquo;{selectedMember.motto}&rdquo;
               </p>
