@@ -72,7 +72,7 @@ export default function AlurSertifikasiPage() {
             {/* HD Image Frame - Preserves original proportions without squishing */}
             <div className="w-full bg-slate-50 border border-slate-200/80 rounded-2xl p-4 sm:p-6 flex items-center justify-center overflow-hidden">
               <img
-                src="/alur-sertifikasi.jpeg"
+                src="/alur sertifikasi hccp.jpeg"
                 alt="Diagram Alur Sertifikasi HACCP PT Food Quality Certification"
                 className="w-full h-auto max-w-4xl object-contain rounded-xl shadow-xs cursor-pointer hover:opacity-95 transition-opacity"
                 onClick={() => setIsZoomed(true)}

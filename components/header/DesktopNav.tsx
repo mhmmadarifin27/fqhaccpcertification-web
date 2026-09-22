@@ -150,7 +150,7 @@ export default function DesktopNav({ showSolid }: DesktopNavProps) {
       </div>
 
       <a
-        href="/#tahapan"
+        href="/alur-sertifikasi"
         className={`transition-colors duration-200 ${
           showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
         }`}
@@ -158,7 +158,7 @@ export default function DesktopNav({ showSolid }: DesktopNavProps) {
         {t.nav.timeline}
       </a>
       <a
-        href="/#pelatihan"
+        href="/info/pelatihan"
         className={`transition-colors duration-200 ${
           showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
         }`}

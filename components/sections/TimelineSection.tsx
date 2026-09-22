@@ -10,10 +10,10 @@ export default function TimelineSection() {
   return (
     <section id="tahapan" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
       <div className="space-y-16">
-        <div className="max-w-3xl mx-auto text-center space-y-4">
-          <span className="inline-block bg-brand-navy/10 text-brand-navy border border-brand-navy/20 px-3.5 py-1 text-xs font-black uppercase tracking-widest rounded-full">
+        <div className="max-w-3xl mx-auto text-center space-y-3">
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-blue">
             {t.timeline.tagline}
-          </span>
+          </p>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
             {t.timeline.title}
           </h2>

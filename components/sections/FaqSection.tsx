@@ -11,10 +11,10 @@ export default function FaqSection() {
     <section id="faq" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-white border-t border-slate-200 scroll-mt-20">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <span className="inline-block bg-brand-navy/10 text-brand-navy border border-brand-navy/20 px-3.5 py-1 text-xs font-black uppercase tracking-widest rounded-full">
+        <div className="text-center space-y-3 max-w-3xl mx-auto">
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-blue">
             {t.faq.tagline}
-          </span>
+          </p>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading leading-tight">
             {t.faq.title}
           </h2>

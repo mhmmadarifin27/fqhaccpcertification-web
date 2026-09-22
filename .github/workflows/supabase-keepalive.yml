@@ -1,0 +1,24 @@
+name: Keep Supabase & Vercel Active
+
+on:
+  schedule:
+    # Runs every 3 days at 04:00 UTC (11:00 WIB)
+    - cron: '0 4 */3 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping-keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Keepalive Endpoint
+        run: |
+          echo "Pinging keep-alive endpoint to prevent Supabase 7-day inactivity pause..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" "https://www.foodqualitycertification.id/api/keepalive")
+          echo "Response: $RESPONSE"
+          
+          # Verify HTTP response is 200
+          if echo "$RESPONSE" | grep -q "HTTP_STATUS:200"; then
+            echo "Keepalive ping succeeded! Supabase inactivity timer has been reset."
+          else
+            echo "Warning: Response status was not 200. Endpoint might still be waking up or warming."
+          fi
