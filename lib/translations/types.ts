@@ -97,7 +97,7 @@ export interface TranslationDictionary {
     }>;
   };
 
-  // 5-Step HACCP Timeline
+  // 7-Step HACCP Timeline
   timeline: {
     tagline: string;
     title: string;

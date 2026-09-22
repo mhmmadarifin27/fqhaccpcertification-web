@@ -150,42 +150,56 @@ export const en: TranslationDictionary = {
       tagline: "TRANSPARENT & STRUCTURED",
       title: "HACCP Certification Process Flow",
       description:
-        "5 Primary HACCP audit certification stages from application submission to official certificate issuance.",
+        "7 Comprehensive stages of the HACCP certification process from initial application, audits, certificate issuance, to annual surveillance and renewal.",
       steps: [
         {
           badge: "Stage 1",
-          title: "Application Submission",
-          subtitle: "Fill form & documents",
+          title: "Application (Permohonan)",
+          subtitle: "Submission & Documents",
           description:
-            "Organization submits certification application form and required supporting documentation to our administration team.",
+            "The applicant organization submits the official certification application form along with business profile and preliminary requirement documents.",
         },
         {
           badge: "Stage 2",
-          title: "Application Review",
-          subtitle: "Technical review & schedule",
+          title: "Stage 1 Audit (Audit Tahap 1)",
+          subtitle: "Document & Readiness Audit",
           description:
-            "Our technical team reviews scope of business, document readiness, and agrees on the audit schedule.",
+            "Review and evaluation of the adequacy of the HACCP food safety management system manual documentation and facility readiness prior to on-site audit.",
         },
         {
           badge: "Stage 3",
-          title: "Document Audit (Stage 1)",
-          subtitle: "HACCP document review",
+          title: "Stage 2 Audit (Audit Tahap 2)",
+          subtitle: "On-Site Facility Verification",
           description:
-            "Evaluation of HACCP Food Safety Management System manual documentation to verify adequacy.",
+            "Direct on-site verification audit at food processing or production facilities to evaluate the effective implementation of HACCP principles in practice.",
         },
         {
           badge: "Stage 4",
-          title: "On-Site Audit (Stage 2)",
-          subtitle: "On-site verification",
+          title: "Recommendation & Technical Review",
+          subtitle: "Technical Review & Decision",
           description:
-            "On-site verification audit at production facilities to ensure practical field implementation.",
+            "Independent technical review of auditor reports, audit findings, and corrective action closures to formulate certification decision recommendations.",
         },
         {
           badge: "Stage 5",
-          title: "Certificate Issuance",
-          subtitle: "Official certificate",
+          title: "HACCP Certificate Issuance (Valid 3 Years)",
+          subtitle: "Official 3-Year Certificate",
           description:
-            "Issuance of Official HACCP Certificate upon successful resolution of all audit findings.",
+            "Issuance and delivery of the official barcoded HACCP Certificate adhering to SNI CXC 1:1969 standards with a 3-year validity cycle.",
+        },
+        {
+          badge: "Stage 6",
+          title: "Annual Surveillance Audit",
+          subtitle: "Routine Surveillance",
+          description:
+            "Annual routine surveillance audits conducted to ensure continued maintenance and adherence to HACCP food safety management system standards.",
+        },
+        {
+          badge: "Stage 7",
+          title: "Renewal Audit (Audit Pembaruan)",
+          subtitle: "3-Year Recertification",
+          description:
+            "Comprehensive renewal (recertification) audit conducted before the conclusion of the 3-year certificate cycle to maintain uninterrupted certification status.",
         },
       ],
     },

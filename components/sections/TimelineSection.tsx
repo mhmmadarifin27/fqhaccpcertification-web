@@ -24,12 +24,12 @@ export default function TimelineSection() {
 
         {/* Stepper Progress UI */}
         <div className="space-y-12">
-          <div className="relative max-w-5xl mx-auto px-4">
+          <div className="relative max-w-6xl mx-auto px-2 sm:px-4">
             {/* Dotted Horizontal Connecting Line */}
-            <div className="absolute top-[18px] left-[10%] right-[10%] border-b-2 border-dotted border-slate-300 hidden md:block z-0" />
+            <div className="absolute top-[20px] left-[6%] right-[6%] border-b-2 border-dotted border-slate-300 hidden lg:block z-0" />
 
-            {/* Steps Stepper Grid */}
-            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 md:gap-4">
+            {/* Steps Stepper Grid: 7 Steps Responsive */}
+            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-5 sm:gap-4 lg:gap-2">
               {t.timeline.steps.map((step, idx) => {
                 const isCompleted = idx < activeStep;
                 const isActive = idx === activeStep;
@@ -41,15 +41,15 @@ export default function TimelineSection() {
                   >
                     {/* Circle Indicator */}
                     <div
-                      className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 z-10 ${
-                        isCompleted || (isActive && idx === 0)
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 z-10 ${
+                        isCompleted
                           ? "bg-emerald-600 text-white shadow-sm ring-4 ring-emerald-100"
                           : isActive
-                          ? "bg-emerald-600 text-white shadow-sm ring-4 ring-emerald-100"
-                          : "bg-white border border-slate-300 text-slate-500 group-hover:border-emerald-500 group-hover:text-emerald-600"
+                          ? "bg-brand-blue text-white shadow-md ring-4 ring-blue-100 scale-110"
+                          : "bg-white border border-slate-300 text-slate-500 group-hover:border-brand-blue group-hover:text-brand-blue"
                       }`}
                     >
-                      {isCompleted || (isActive && idx === 0) ? (
+                      {isCompleted ? (
                         <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
@@ -59,15 +59,15 @@ export default function TimelineSection() {
                     </div>
 
                     {/* Step Labels */}
-                    <div className="mt-3 space-y-0.5 max-w-[170px]">
+                    <div className="mt-3 space-y-0.5 max-w-[140px]">
                       <h4
-                        className={`text-sm sm:text-base font-bold font-heading transition-colors ${
-                          isActive ? "text-slate-900" : isCompleted ? "text-slate-800" : "text-slate-600 group-hover:text-slate-900"
+                        className={`text-xs sm:text-sm font-extrabold font-heading leading-tight transition-colors line-clamp-2 ${
+                          isActive ? "text-brand-blue font-black" : isCompleted ? "text-slate-800" : "text-slate-600 group-hover:text-slate-900"
                         }`}
                       >
                         {step.title}
                       </h4>
-                      <p className="text-xs text-slate-400 font-normal leading-tight">
+                      <p className="text-[11px] text-slate-400 font-normal leading-tight hidden md:block">
                         {step.subtitle}
                       </p>
                     </div>

@@ -150,42 +150,56 @@ export const id: TranslationDictionary = {
       tagline: "TRANSPARAN & TERSTRUKTUR",
       title: "Alur Proses Sertifikasi HACCP",
       description:
-        "5 Tahapan utama audit sertifikasi HACCP mulai dari pengajuan permohonan hingga penerbitan sertifikat resmi.",
+        "7 Rangkaian tahapan audit sertifikasi HACCP mulai dari permohonan, audit lapangan, penerbitan sertifikat resmi, hingga pengawasan dan pembaruan.",
       steps: [
         {
-          badge: "Tahapan 1",
-          title: "Pengajuan Permohonan",
-          subtitle: "Isi formulir & berkas",
+          badge: "Tahap 1",
+          title: "Permohonan",
+          subtitle: "Pengajuan & Berkas",
           description:
-            "Organisasi mengajukan aplikasi permohonan sertifikasi beserta dokumen pendukung yang dipersyaratkan kepada tim administrasi kami.",
+            "Organisasi mengajukan permohonan sertifikasi beserta dokumen pendukung profil usaha dan pemenuhan awal persyaratan teknis kepada tim administrasi kami.",
         },
         {
-          badge: "Tahapan 2",
-          title: "Review Permohonan",
-          subtitle: "Kajian teknis & jadwal",
+          badge: "Tahap 2",
+          title: "Audit Tahap 1",
+          subtitle: "Audit Dokumen & Kesiapan",
           description:
-            "Tim teknis kami melakukan kajian mendalam terhadap ruang lingkup usaha, kesiapan dokumen, dan kesepakatan jadwal audit.",
+            "Evaluasi kecukupan dokumen panduan mutu dan Sistem Manajemen Keamanan Pangan HACCP yang disusun perusahaan guna memastikan kesiapan sebelum audit lapangan.",
         },
         {
-          badge: "Tahapan 3",
-          title: "Audit Dokumen (Tahap 1)",
-          subtitle: "Evaluasi dokumen HACCP",
+          badge: "Tahap 3",
+          title: "Audit Tahap 2",
+          subtitle: "Verifikasi Lapangan Langsung",
           description:
-            "Evaluasi dokumentasi Sistem Manajemen Keamanan Pangan HACCP yang telah disusun oleh perusahaan untuk menguji kelayakannya.",
+            "Audit verifikasi secara langsung di fasilitas dan sarana produksi pangan untuk memastikan keselarasan serta efektivitas implementasi prinsip HACCP di lapangan.",
         },
         {
-          badge: "Tahapan 4",
-          title: "Audit Lapangan (Tahap 2)",
-          subtitle: "Verifikasi lapangan",
+          badge: "Tahap 4",
+          title: "Rekomendasi dan Technical Review",
+          subtitle: "Kajian Teknis Hasil Audit",
           description:
-            "Audit verifikasi secara langsung di fasilitas produksi untuk memastikan keselarasan penerapannya di lapangan.",
+            "Kajian teknis independen terhadap seluruh laporan temuan auditor dan tindakan koreksi untuk merumuskan rekomendasi keputusan kelayakan sertifikasi.",
         },
         {
-          badge: "Tahapan 5",
-          title: "Penerbitan Sertifikat Resmi",
-          subtitle: "Sertifikat resmi",
+          badge: "Tahap 5",
+          title: "Penerbitan Sertifikat HACCP (berlaku 3 tahun)",
+          subtitle: "Sertifikat Resmi Berlaku 3 Tahun",
           description:
-            "Penerbitan Sertifikat HACCP Resmi setelah seluruh rekomendasi audit dinyatakan sesuai dan lengkap.",
+            "Penerbitan Sertifikat HACCP resmi berstandar SNI CXC 1:1969 berbarcode dengan masa berlaku sertifikasi aktif selama 3 (tiga) tahun.",
+        },
+        {
+          badge: "Tahap 6",
+          title: "Audit Pengawasan (Surveillance) setiap tahun",
+          subtitle: "Surveillance Berkala Tahunan",
+          description:
+            "Pelaksanaan audit penilikan berkala secara rutin setiap tahun untuk memastikan konsistensi pemeliharaan dan efektivitas sistem manajemen HACCP klien.",
+        },
+        {
+          badge: "Tahap 7",
+          title: "Audit Pembaruan (Renewal)",
+          subtitle: "Resertifikasi Siklus 3 Tahun",
+          description:
+            "Audit pembaruan (renewal) komprehensif menjelang berakhirnya masa berlaku sertifikat 3 tahun agar kesinambungan status sertifikasi tetap berlanjut.",
         },
       ],
     },
