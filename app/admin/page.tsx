@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/AdminLayout";
 import AdminSertifikasi from "../../components/AdminSertifikasi";
-import AdminPelatihan from "../../components/AdminPelatihan";
 import AdminBerkasHaccp from "../../components/AdminBerkasHaccp";
 import AdminGaleri from "../../components/AdminGaleri";
 import AdminTim from "../../components/AdminTim";
@@ -13,13 +12,11 @@ import ConfirmModal from "../../components/ConfirmModal";
 import { supabase } from "../../lib/supabase";
 import {
   SertifikasiInquiry,
-  TrainingRegistration,
   HaccpDocSubmission,
   GalleryItem,
   TeamMember,
   ProjectItem,
   getInquiries,
-  getTrainingRegistrations,
   getHaccpDocSubmissions,
   getGallery,
   getTeamMembers,
@@ -38,7 +35,6 @@ export default function AdminPage() {
   // Content states
   const [activeTab, setActiveTab] = useState("dashboard");
   const [inquiries, setInquiries] = useState<SertifikasiInquiry[]>([]);
-  const [trainings, setTrainings] = useState<TrainingRegistration[]>([]);
   const [haccpDocs, setHaccpDocs] = useState<HaccpDocSubmission[]>([]);
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
@@ -60,14 +56,12 @@ export default function AdminPage() {
     setLoading(true);
     try {
       const inqData = await getInquiries();
-      const trainData = await getTrainingRegistrations();
       const docsData = await getHaccpDocSubmissions();
       const galData = await getGallery();
       const teamData = await getTeamMembers();
       const projData = await getProjects();
 
       setInquiries(inqData);
-      setTrainings(trainData);
       setHaccpDocs(docsData);
       setGallery(galData);
       setTeamMembers(teamData);
@@ -417,34 +411,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {/* Stats 2: Pelatihan */}
-                <div
-                  onClick={() => setActiveTab("pelatihan")}
-                  className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
-                      🎓
-                    </div>
-                    <span className="bg-emerald-50 text-emerald-600 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] tracking-wide border border-emerald-200/50">
-                      Training
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 font-heading block truncate">
-                      Pendaftar Pelatihan
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
-                      {trainings.length} <span className="text-[10px] sm:text-xs font-semibold text-slate-400">Peserta</span>
-                    </h3>
-                  </div>
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-extrabold text-emerald-600 group-hover:translate-x-1 transition-transform">
-                    <span className="truncate">Kelola Pelatihan</span>
-                    <span>&rarr;</span>
-                  </div>
-                </div>
-
-                {/* Stats 3: Berkas HACCP */}
+                {/* Stats 2: Berkas HACCP */}
                 <div
                   onClick={() => setActiveTab("berkas-haccp")}
                   className="bg-white border border-slate-200/80 p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer group space-y-3 sm:space-y-4"
@@ -551,17 +518,6 @@ export default function AdminPage() {
                   </button>
 
                   <button
-                    onClick={() => setActiveTab("pelatihan")}
-                    className="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-emerald-500/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group"
-                  >
-                    <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm shrink-0">🎓</span>
-                      <span className="text-slate-800 font-extrabold text-[11px] sm:text-xs">Pendaftar Pelatihan</span>
-                    </div>
-                    <span className="text-slate-400 group-hover:translate-x-1 transition-transform">&rarr;</span>
-                  </button>
-
-                  <button
                     onClick={() => setActiveTab("berkas-haccp")}
                     className="w-full flex items-center justify-between p-3.5 sm:p-4 text-left font-bold text-xs transition-all duration-200 border border-slate-200/80 hover:border-cyan-500/40 hover:bg-slate-50/80 bg-white cursor-pointer rounded-2xl shadow-xs hover:shadow-sm group"
                   >
@@ -580,11 +536,6 @@ export default function AdminPage() {
           {/* TAB 2: CERTIFICATION MANAGEMENTS */}
           {activeTab === "sertifikasi" && (
             <AdminSertifikasi inquiries={inquiries} onUpdateStatus={handleUpdateStatus} />
-          )}
-
-          {/* TAB: TRAINING REGISTRATIONS */}
-          {activeTab === "pelatihan" && (
-            <AdminPelatihan trainings={trainings} onRefresh={fetchData} />
           )}
 
           {/* TAB: PRE-AUDIT HACCP DOCUMENTS */}
