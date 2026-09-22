@@ -70,12 +70,12 @@ export default function OfficeLocation() {
                   <div>
                     <strong className="font-bold text-slate-900 block mb-0.5">{t.location.whatsappTitle}</strong>
                     <a
-                      href="https://wa.me/6282247936392"
+                      href="https://wa.me/6281398987655"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-brand-blue hover:underline font-bold"
                     >
-                      +62 822-4793-6392
+                      +62 813-9898-7655
                     </a>
                   </div>
                 </div>

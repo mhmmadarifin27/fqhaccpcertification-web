@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "../context/LanguageContext";
 import { ToastProvider } from "../context/ToastContext";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 const siteUrl = "https://www.foodqualitycertification.id";
 
@@ -108,7 +109,7 @@ const jsonLd = {
       description:
         "Lembaga Sertifikasi HACCP Independen dan Profesional berstandar SNI CXC 1:1969 di Indonesia.",
       email: "fqhaccpcertification@gmail.com",
-      telephone: "+62-822-4793-6392",
+      telephone: "+62-813-9898-7655",
       address: {
         "@type": "PostalAddress",
         streetAddress: "TAJEM RT 004 RW 031, Maguwoharjo, Depok",
@@ -132,7 +133,7 @@ const jsonLd = {
       name: "PT FOOD QUALITY CERTIFICATION",
       url: siteUrl,
       priceRange: "$$",
-      telephone: "+62-822-4793-6392",
+      telephone: "+62-813-9898-7655",
       address: {
         "@type": "PostalAddress",
         streetAddress: "TAJEM RT 004 RW 031, Maguwoharjo, Depok",
@@ -191,7 +192,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-slate-900">
         <ToastProvider>
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            {children}
+            <WhatsAppButton />
+          </LanguageProvider>
         </ToastProvider>
       </body>
     </html>
