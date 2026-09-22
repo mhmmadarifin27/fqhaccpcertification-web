@@ -21,11 +21,6 @@ export default function ServicesCallout() {
           </div>
 
           <div className="lg:col-span-5 space-y-3 text-center order-1 lg:order-2 flex flex-col items-center justify-center">
-            <img
-              src="/kan-logo.png"
-              alt="Komite Akreditasi Nasional (KAN)"
-              className="h-16 sm:h-20 w-auto object-contain bg-transparent mb-2 mx-auto"
-            />
             <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight font-heading">
               {t.mainServices.slogan1}
             </h3>

@@ -13,12 +13,8 @@ export default function StatsBar() {
         <div className="text-[9px] font-bold uppercase tracking-wider text-slate-600">{t.trust.activeClients}</div>
       </div>
       <div className="p-4 space-y-1 text-center flex flex-col items-center justify-center">
-        <img
-          src="/kan-logo.png"
-          alt="KAN - Komite Akreditasi Nasional"
-          className="h-8 w-auto object-contain mb-1"
-        />
-        <div className="text-[9px] font-bold uppercase tracking-wider text-slate-600">{t.trust.kanStatus}</div>
+        <div className="text-2xl font-extrabold font-heading text-brand-navy">SNI</div>
+        <div className="text-[9px] font-bold uppercase tracking-wider text-slate-600">{t.trust.kanStatusDesc}</div>
       </div>
       <div className="p-4 space-y-1 text-center border-r border-slate-200 border-t border-slate-200 pt-4">
         <div className="text-2xl font-extrabold font-heading text-brand-navy">{t.trust.leadAuditors}</div>

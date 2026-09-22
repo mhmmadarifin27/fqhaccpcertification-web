@@ -127,16 +127,6 @@ export default function DesktopNav({ showSolid }: DesktopNavProps) {
           }`}
         >
           <a
-            href="/info/pelatihan"
-            className={`px-4 py-2.5 text-xs font-semibold border-b transition-colors ${
-              showSolid
-                ? "text-slate-700 hover:bg-slate-50 hover:text-brand-blue border-slate-100"
-                : "text-slate-300 hover:bg-brand-blue/30 hover:text-white border-white/5"
-            }`}
-          >
-            {t.nav.trainingList}
-          </a>
-          <a
             href="/info/berkas-haccp"
             className={`px-4 py-2.5 text-xs font-semibold transition-colors ${
               showSolid
@@ -156,14 +146,6 @@ export default function DesktopNav({ showSolid }: DesktopNavProps) {
         }`}
       >
         {t.nav.timeline}
-      </a>
-      <a
-        href="/info/pelatihan"
-        className={`transition-colors duration-200 ${
-          showSolid ? "text-slate-700 hover:text-brand-blue" : "text-slate-200 hover:text-white"
-        }`}
-      >
-        {t.nav.projects}
       </a>
       <a
         href="/#faq"

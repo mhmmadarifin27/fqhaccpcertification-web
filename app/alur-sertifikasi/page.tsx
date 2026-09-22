@@ -31,7 +31,7 @@ export default function AlurSertifikasiPage() {
         <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-8">
           <div className="space-y-4">
             <span className="inline-block bg-brand-navy/10 text-brand-navy border border-brand-navy/20 px-3.5 py-1 text-xs font-black uppercase tracking-widest rounded-full">
-              {lang === "en" ? "OFFICIAL AUDIT WORKFLOW • KAN LSHACCP-009-IDN" : "STANDAR RESMI AUDIT KEAMANAN PANGAN • KAN LSHACCP-009-IDN"}
+              {lang === "en" ? "OFFICIAL AUDIT WORKFLOW • STANDARDS" : "STANDAR RESMI AUDIT KEAMANAN PANGAN • SNI CXC 1:1969"}
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-brand-navy leading-tight font-heading">
               {lang === "en" ? "Complete HACCP Certification Process Flowchart" : "Alur Lengkap Proses Sertifikasi HACCP"}
@@ -39,7 +39,7 @@ export default function AlurSertifikasiPage() {
             <p className="text-base sm:text-lg text-slate-600 max-w-4xl leading-relaxed">
               {lang === "en"
                 ? "Comprehensive visual guide and explanation of the HACCP Food Safety Management System certification stages, from application submission, document review, on-site audit, to official certificate issuance."
-                : "Panduan visual komprehensif tahapan sertifikasi Sistem Manajemen Keamanan Pangan HACCP, mulai dari pengajuan permohonan, kajian dokumen SNI CXC 1:1969, audit lapangan, hingga penerbitan sertifikat resmi terakreditasi KAN."}
+                : "Panduan visual komprehensif tahapan sertifikasi Sistem Manajemen Keamanan Pangan HACCP, mulai dari pengajuan permohonan, kajian dokumen SNI CXC 1:1969, audit lapangan, hingga penerbitan sertifikat resmi."}
             </p>
           </div>
         </section>
@@ -98,7 +98,7 @@ export default function AlurSertifikasiPage() {
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {lang === "en"
                   ? "Contact our team or register online now for expert guidance through each step of the certification process."
-                  : "Daftarkan fasilitas usaha pangan Anda sekarang untuk pendampingan audit profesional bersama Lembaga Sertifikasi HACCP terakreditasi KAN."}
+                  : "Daftarkan fasilitas usaha pangan Anda sekarang untuk audit profesional bersama Lembaga Sertifikasi HACCP independen & terpercaya."}
               </p>
             </div>
 

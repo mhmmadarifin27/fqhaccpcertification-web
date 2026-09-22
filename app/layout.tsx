@@ -8,25 +8,24 @@ const siteUrl = "https://www.foodqualitycertification.id";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Terakreditasi KAN",
+    default: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Indonesia",
     template: "%s | PT FOOD QUALITY CERTIFICATION",
   },
   description:
-    "PT FOOD QUALITY CERTIFICATION (foodqualitycertification.id) - Lembaga Sertifikasi HACCP Terakreditasi Komite Akreditasi Nasional (KAN) LSHACCP-009-IDN. Layanan audit, sertifikasi keamanan pangan SNI CXC 1:1969, dan pelatihan resmi HACCP.",
+    "PT FOOD QUALITY CERTIFICATION (foodqualitycertification.id) - Lembaga Sertifikasi HACCP Independen & Profesional. Layanan audit dan sertifikasi sistem manajemen keamanan pangan SNI CXC 1:1969 di Indonesia.",
   keywords: [
     "food quality certification",
     "food quality certification indonesia",
     "PT FOOD QUALITY CERTIFICATION",
     "foodqualitycertification.id",
     "Lembaga Sertifikasi HACCP",
-    "Sertifikasi HACCP Terakreditasi KAN",
+    "Sertifikasi HACCP Indonesia",
     "Sertifikasi Keamanan Pangan",
     "HACCP Indonesia",
     "Audit HACCP",
     "SNI CXC 1:1969",
     "Sertifikasi Industri Pangan",
     "Sertifikasi Food Safety",
-    "Pelatihan HACCP",
     "Lembaga Sertifikasi Pangan Yogyakarta",
   ].join(", "),
   authors: [{ name: "PT FOOD QUALITY CERTIFICATION", url: siteUrl }],
@@ -52,9 +51,9 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     url: siteUrl,
     siteName: "PT FOOD QUALITY CERTIFICATION",
-    title: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Terakreditasi KAN",
+    title: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Indonesia",
     description:
-      "Lembaga Sertifikasi HACCP Terakreditasi KAN LSHACCP-009-IDN. Audit dan sertifikasi sistem manajemen mutu & keamanan pangan terpercaya di Indonesia.",
+      "Lembaga Sertifikasi HACCP Independen & Profesional. Audit dan sertifikasi sistem manajemen mutu & keamanan pangan SNI CXC 1:1969 terpercaya di Indonesia.",
     images: [
       {
         url: "/hero1.jpg",
@@ -66,9 +65,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Terakreditasi KAN",
+    title: "PT FOOD QUALITY CERTIFICATION | Lembaga Sertifikasi HACCP Indonesia",
     description:
-      "Lembaga Sertifikasi HACCP Terakreditasi Komite Akreditasi Nasional (KAN). Sertifikasi mutu & keamanan pangan terpercaya.",
+      "Lembaga Sertifikasi HACCP Independen & Profesional. Sertifikasi mutu & keamanan pangan SNI CXC 1:1969 terpercaya.",
     images: ["/hero1.jpg"],
   },
   icons: {
@@ -107,7 +106,7 @@ const jsonLd = {
       logo: `${siteUrl}/logo2.png`,
       image: `${siteUrl}/hero1.jpg`,
       description:
-        "Lembaga Sertifikasi HACCP Terakreditasi Komite Akreditasi Nasional (KAN) LSHACCP-009-IDN di Indonesia.",
+        "Lembaga Sertifikasi HACCP Independen dan Profesional berstandar SNI CXC 1:1969 di Indonesia.",
       email: "fqhaccpcertification@gmail.com",
       telephone: "+62-822-4793-6392",
       address: {

@@ -117,12 +117,12 @@ VALUES
 ('Audit Lapangan di Pabrik Pengolahan Susu Yogyakarta', 'Auditor PT Food Quality Certification mengecek tangki pasteurisasi dan titik kendali kritis suhu susu.', 'Audit', '/hero1.jpg'),
 ('Penyerahan Sertifikat HACCP PT Segar Minuman Nusantara', 'Prosesi penyerahan sertifikat kelayakan sistem HACCP pasca pemenuhan audit kesesuaian.', 'Event', '/hero2.jpg'),
 ('Pelatihan Internal Calon Auditor Angkatan IV', 'Kegiatan peningkatan kompetensi teknis bagi para auditor internal keamanan pangan.', 'Pelatihan', '/iso.jpg'),
-('Piagam Akreditasi Lembaga Sertifikasi KAN Resmi', 'Sertifikat akreditasi LSHACCP-009-IDN yang diserahkan oleh ketua KAN pusat.', 'Penghargaan', '/kan-logo.png')
+('Sertifikat Sistem Manajemen Keamanan Pangan SNI CXC 1:1969', 'Dokumentasi standar sistem manajemen keamanan pangan dan penerapan pedoman Codex Alimentarius.', 'Penghargaan', '/iso.jpg')
 ON CONFLICT DO NOTHING;
 
 -- Data awal Berita
 INSERT INTO public.berita (title, content, category, image_url)
 VALUES
-('PT Food Quality Certification Dapatkan Akreditasi Penuh dari KAN', 'Kami dengan bangga mengumumkan bahwa PT FOOD QUALITY CERTIFICATION secara resmi telah terakreditasi penuh oleh Komite Akreditasi Nasional (KAN) dengan nomor registrasi LSHACCP-009-IDN.', 'Pengumuman', '/hero1.jpg'),
+('PT Food Quality Certification Siap Layani Sertifikasi HACCP Nasional', 'Kami dengan bangga mengumumkan kesiapan penuh PT FOOD QUALITY CERTIFICATION dalam melayani audit dan sertifikasi sistem manajemen keamanan pangan berbasis HACCP SNI CXC 1:1969.', 'Pengumuman', '/hero1.jpg'),
 ('Pentingnya Penerapan HACCP pada UMKM Kuliner Modern', 'Sistem Hazard Analysis and Critical Control Points (HACCP) kini tidak lagi hanya diperuntukkan bagi industri skala besar.', 'Edukasi', '/hero2.jpg')
 ON CONFLICT DO NOTHING;

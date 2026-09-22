@@ -38,10 +38,10 @@ export default function Footer() {
             </p>
             <div className="pt-2 flex items-center gap-3">
               <span className="bg-white/10 text-slate-300 border border-white/20 text-[9px] px-2.5 py-0.5 font-bold tracking-wide uppercase">
-                KAN LSHACCP-009-IDN
+                SNI CXC 1:1969 (2024)
               </span>
               <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
-                ISO/IEC 17021
+                CODEX ALIMENTARIUS
               </span>
             </div>
           </div>
@@ -52,10 +52,8 @@ export default function Footer() {
             <nav className="flex flex-col gap-2.5 text-xs text-slate-400">
               <a href="/" className="hover:text-white transition-colors">{t.nav.home}</a>
               <a href="/profile/tentang-kami" className="hover:text-white transition-colors">{t.nav.profile}</a>
-              <a href="/info/pelatihan" className="hover:text-white transition-colors">{t.nav.trainingList}</a>
               <a href="/info/berkas-haccp" className="hover:text-white transition-colors">{t.nav.haccpDocs}</a>
               <a href="/alur-sertifikasi" className="hover:text-white transition-colors">{t.nav.timeline}</a>
-              <a href="/info/pelatihan" className="hover:text-white transition-colors">{t.nav.projects}</a>
               <a href="/#faq" className="hover:text-white transition-colors">{t.nav.faq}</a>
             </nav>
           </div>

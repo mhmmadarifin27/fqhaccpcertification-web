@@ -51,7 +51,7 @@ export const SEED_INQUIRIES: SertifikasiInquiry[] = [
     email: "budi@nutrisimedika.com",
     industry: "Pangan Olahan untuk Keperluan Gizi Khusus",
     haccpStatus: "Sudah Diterapkan",
-    message: "Kami memproduksi pangan formula diet khusus dan MP-ASI, memerlukan sertifikasi resmi dari LSHACCP terakreditasi KAN.",
+    message: "Kami memproduksi pangan formula diet khusus dan MP-ASI, memerlukan sertifikasi resmi standar SNI CXC 1:1969.",
     ticketNumber: "HACCP-2026-8812",
     createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
   },

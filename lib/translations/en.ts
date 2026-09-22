@@ -20,15 +20,15 @@ export const en: TranslationDictionary = {
       haccpDocs: "HACCP Documents",
       adminPortal: "Admin Portal",
       applyCertification: "Apply for Certification",
-      accreditationTag: "KAN Accredited • LSHACCP-009-IDN",
+      accreditationTag: "SNI CXC 1:1969 Standard • Food Safety",
     },
     hero: {
       slides: [
         {
-          tagline: "KAN ACCREDITED HACCP CERTIFICATION BODY",
+          tagline: "INDEPENDENT HACCP CERTIFICATION BODY",
           title: "Trusted Partner in Food Safety Certification",
           description:
-            "PT FOOD QUALITY CERTIFICATION is a KAN Accredited HACCP Certification Body (No. LSHACCP-009-IDN) committed to helping the food industry implement Hazard Analysis and Critical Control Points (HACCP) systems according to national and international standards.",
+            "PT FOOD QUALITY CERTIFICATION is an independent HACCP Certification Body committed to helping the food industry implement Hazard Analysis and Critical Control Points (HACCP) systems according to national and international SNI CXC 1:1969 standards.",
           ctaText: "Apply for Certification",
         },
         {
@@ -42,11 +42,11 @@ export const en: TranslationDictionary = {
           tagline: "FOOD SAFETY • QUALITY • TRUST",
           title: "National Recognition & Consumer Trust",
           description:
-            "KAN accredited HACCP certification delivers high quality assurance while reinforcing customer confidence in your food and beverage products.",
+            "HACCP certification delivers high quality assurance while reinforcing customer confidence in your food and beverage products.",
           ctaText: "Apply for Certification",
         },
       ],
-      accreditedNotice: "KAN Accredited Certification • Independent & Objective Assessment",
+      accreditedNotice: "HACCP System Certification • Independent & Objective Assessment",
     },
     trust: {
       activeClients: "REGISTERED CLIENTS",
@@ -55,16 +55,16 @@ export const en: TranslationDictionary = {
       leadAuditorsDesc: "Professional & Experienced Auditors",
       satisfaction: "CLIENT SATISFACTION",
       satisfactionDesc: "Transparent Audit Process",
-      kanStatus: "KAN ACCREDITATION",
-      kanStatusDesc: "Official LSHACCP-009-IDN",
+      kanStatus: "OFFICIAL STANDARD",
+      kanStatusDesc: "SNI CXC 1:1969",
     },
     mainServices: {
       tagline: "PRIMARY SERVICES",
       title: "HACCP Food Safety Certification",
-      p1: "We provide National Accreditation Committee (KAN) accredited HACCP (Hazard Analysis and Critical Control Points) Certification services for various food industry sectors across Indonesia.",
+      p1: "We provide professional HACCP (Hazard Analysis and Critical Control Points) Certification services based on SNI CXC 1:1969 standards for various food industry sectors across Indonesia.",
       p2: "The certification process includes document adequacy audits, comprehensive on-site verification audits, and the issuance of official certificates to ensure your products meet national regulatory standards and global market demands.",
       slogan1: "Food Quality Standards.",
-      slogan2: "Official KAN Recognition.",
+      slogan2: "SNI CXC 1:1969 Standard.",
     },
     whyUs: {
       tagline: "OUR ADVANTAGES",
@@ -73,9 +73,9 @@ export const en: TranslationDictionary = {
         "As your trusted partner of choice, we offer quality assurance and the following advantages to support food safety management certification in your company.",
       ctaButton: "Apply for HACCP Certification",
       card1Tag: "Certification Body",
-      card1Title: "KAN Accredited",
+      card1Title: "SNI CXC 1:1969 Standard",
       card1Desc:
-        "All our audit conformity assessment procedures are evaluated strictly and independently according to National Accreditation Committee (KAN) guidelines.",
+        "All our audit conformity assessment procedures are evaluated strictly and independently according to international food safety system standard guidelines SNI CXC 1:1969.",
       card2Tag: "Expert Team",
       card2Title: "Competent Lead Auditors",
       card2Desc:
@@ -111,7 +111,7 @@ export const en: TranslationDictionary = {
       ],
     },
     scope: {
-      tagline: "LSHACCP-009-IDN • 4 OFFICIAL AUDIT SCOPE SECTORS",
+      tagline: "4 OFFICIAL AUDIT SCOPE SECTORS",
       title: "HACCP Certification Scope",
       description:
         "PT Food Quality Certification provides HACCP Food Safety Management System compliance audit and certification services for 4 official sectors:",
@@ -183,17 +183,17 @@ export const en: TranslationDictionary = {
         {
           badge: "Stage 5",
           title: "Certificate Issuance",
-          subtitle: "Official KAN certificate",
+          subtitle: "Official certificate",
           description:
-            "Issuance of Official KAN Accredited HACCP Certificate upon successful resolution of all audit findings.",
+            "Issuance of Official HACCP Certificate upon successful resolution of all audit findings.",
         },
       ],
     },
     form: {
-      tagline: "LSHACCP-009-IDN • ONLINE REGISTRATION",
+      tagline: "OFFICIAL ONLINE REGISTRATION",
       title: "HACCP Certification Application Form",
       description:
-        "Fill in your company details below to initiate your KAN accredited HACCP certification request. Our team will contact you within 1x24 business hours.",
+        "Fill in your company details below to initiate your HACCP certification request. Our team will contact you within 1x24 business hours.",
       companyName: "COMPANY NAME / APPLICANT ORGANIZATION *",
       companyNamePlaceholder: "Example: PT Boga Sejahtera Indonesia",
       picName: "FULL NAME OF PERSON IN CHARGE (PIC) *",
@@ -217,8 +217,8 @@ export const en: TranslationDictionary = {
       newSubmissionButton: "+ Submit Another Application",
       haccpOptions: {
         notImplemented: "HACCP Not Yet Implemented (Need Initial Guidance)",
-        implementedNotCertified: "HACCP Implemented (Not Yet KAN Certified)",
-        recertification: "Recertification / Renewal of KAN Certificate Validity",
+        implementedNotCertified: "HACCP Implemented (Not Yet Certified)",
+        recertification: "Recertification / Renewal of Certificate Validity",
       },
       industryOptions: {
         bakery: "Bakery Products",
@@ -259,7 +259,7 @@ export const en: TranslationDictionary = {
       filterAudit: "Field Audit",
       filterCertificate: "Certificate Handover",
       filterTraining: "Training",
-      filterKan: "KAN Accreditation",
+      filterKan: "Awards",
       spotlightBadge: "★ SPOTLIGHT DOCUMENTATION",
       noPhotos: "No photo documentation in this category.",
       closePhoto: "Close photo",
@@ -342,21 +342,21 @@ export const en: TranslationDictionary = {
     },
     footer: {
       companyDesc:
-        "KAN Accredited HACCP Certification Body (No. LSHACCP-009-IDN). Committed to providing independent, professional, and trusted food safety certification services.",
+        "Independent and Professional HACCP Certification Body. Committed to providing independent, professional, and trusted food safety certification services.",
       quickLinks: "Quick Links",
       contactInfo: "Contact & Head Office",
       addressLabel: "HEAD OFFICE ADDRESS:",
       phoneLabel: "WHATSAPP / PHONE:",
       emailLabel: "OFFICIAL EMAIL:",
-      kanLabel: "KAN ACCREDITATION STATUS:",
+      kanLabel: "REFERENCE STANDARDS:",
       copyright: "© 2026 PT Food Quality Certification. All Rights Reserved.",
     },
     profilePages: {
       tentangKami: {
         title: "About PT Food Quality Certification",
-        subtitle: "KAN Accredited HACCP Certification Body (LSHACCP-009-IDN)",
+        subtitle: "Independent & Professional HACCP Certification Body",
         legalDesc:
-          "PT Food Quality Certification operates legally under the laws of the Republic of Indonesia and is officially accredited by the National Accreditation Committee (KAN) as a Hazard Analysis and Critical Control Points Certification Body (LSHACCP-009-IDN).",
+          "PT Food Quality Certification operates legally under the laws of the Republic of Indonesia as an independent Hazard Analysis and Critical Control Points (HACCP) Certification Body based on SNI CXC 1:1969 standards.",
         commitmentDesc:
           "We prioritize independence, impartiality, and high technical competence throughout all stages of food safety management conformity assessment.",
       },
@@ -405,7 +405,7 @@ export const en: TranslationDictionary = {
       subtitle:
         "Enhance your team's knowledge of HACCP implementation, CPPOB/GMP, and food safety documentation with certified instructors from PT Food Quality Certification.",
       catalogTitle: "Official Training Curriculum",
-      catalogSubtitle: "Structured curriculum based on SNI CXC 1:1969, BPOM RI regulations, and KAN guidelines.",
+      catalogSubtitle: "Structured curriculum based on SNI CXC 1:1969 and BPOM RI regulations.",
       formTitle: "Online Training Registration Form",
       formSubtitle: "Complete participant or company details below to register for training programs.",
       registeredCount: "Registered Participants",

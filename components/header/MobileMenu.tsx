@@ -105,13 +105,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         {mobileVisitorInfoOpen && (
           <div className="pl-3 mt-1.5 space-y-2 border-l border-brand-navy/30 animate-fade-in">
             <a
-              href="/info/pelatihan"
-              onClick={onClose}
-              className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
-            >
-              {t.nav.trainingList}
-            </a>
-            <a
               href="/info/berkas-haccp"
               onClick={onClose}
               className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
@@ -128,13 +121,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
       >
         {t.nav.timeline}
-      </a>
-      <a
-        href="/info/pelatihan"
-        onClick={onClose}
-        className="block py-2.5 text-sm font-bold text-slate-800 border-b border-slate-100 hover:text-brand-blue transition-colors"
-      >
-        {t.nav.projects}
       </a>
       <a
         href="/#faq"

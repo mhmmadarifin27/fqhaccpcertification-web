@@ -160,8 +160,8 @@ export default function InquiryForm() {
                 </AlertTitle>
                 <AlertDescription className="text-slate-500 text-[11px]">
                   {lang === "en"
-                    ? "Direct application to KAN-accredited certification body LSHACCP-009-IDN."
-                    : "Pendaftaran langsung ke Lembaga Sertifikasi terakreditasi KAN No. LSHACCP-009-IDN."}
+                    ? "Direct application to official HACCP certification body."
+                    : "Pendaftaran langsung ke Lembaga Sertifikasi HACCP resmi."}
                 </AlertDescription>
               </Alert>
               <div className="space-y-1">

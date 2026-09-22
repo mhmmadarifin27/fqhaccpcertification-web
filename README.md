@@ -1,10 +1,10 @@
 # PT Food Quality Certification - Official Web Application
 
-Official KAN-Accredited HACCP Certification Body Web Portal (No. LSHACCP-009-IDN).
+Official HACCP Food Safety Management Certification Body Web Portal (SNI CXC 1:1969).
 
 ## Features
 - 🌐 **Bilingual (Indonesian & English)** with instant seamless translation toggle
-- 🛡️ **KAN-Accredited HACCP Scope & Timeline Workflow Showcase**
+- 🛡️ **HACCP Scope & Timeline Workflow Showcase**
 - 📸 **Dynamic Photo Gallery & Lightbox Viewer**
 - 🚀 **Our Latest Projects & Verified Client Showcase**
 - 📋 **Online HACCP Certification Application Form & Ticket Voucher Generation**

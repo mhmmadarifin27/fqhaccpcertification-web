@@ -15,7 +15,7 @@ export default function WhyUsSection() {
           <div className="md:col-span-7 relative group min-h-[380px] flex flex-col justify-end p-6 border border-white/10 overflow-hidden bg-slate-950 rounded-2xl">
             <img
               src="/hccp1.jpg"
-              alt="Terakreditasi KAN"
+              alt="Standar Keamanan Pangan SNI CXC 1:1969"
               className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent pointer-events-none" />

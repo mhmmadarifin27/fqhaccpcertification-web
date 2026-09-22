@@ -13,8 +13,8 @@ export interface NewsItem {
 export const SEED_NEWS: NewsItem[] = [
   {
     id: "news-1",
-    title: "PT Food Quality Certification Dapatkan Akreditasi Penuh dari KAN",
-    content: "Kami dengan bangga mengumumkan bahwa PT FOOD QUALITY CERTIFICATION secara resmi telah terakreditasi penuh oleh Komite Akreditasi Nasional (KAN) dengan nomor registrasi LSHACCP-009-IDN. Dengan pencapaian akreditasi ini, kami siap menerbitkan sertifikat HACCP yang diakui secara nasional maupun internasional guna meningkatkan standar keamanan pangan produk Anda di kancah pasar global.",
+    title: "PT Food Quality Certification Siap Layani Sertifikasi HACCP Nasional",
+    content: "Kami dengan bangga mengumumkan kesiapan penuh PT FOOD QUALITY CERTIFICATION dalam melayani audit dan sertifikasi sistem manajemen keamanan pangan berbasis HACCP SNI CXC 1:1969. Dengan dukungan Lead Auditor berpengalaman dan kompeten, kami siap menerbitkan sertifikat HACCP guna meningkatkan standar keamanan dan daya saing produk Anda di kancah pasar global.",
     category: "Pengumuman",
     imageUrl: "/hero1.jpg",
     date: "12 Jul 2026"
@@ -30,7 +30,7 @@ export const SEED_NEWS: NewsItem[] = [
   {
     id: "news-3",
     title: "Workshop Keamanan Pangan Sukses Diselenggarakan di Yogyakarta",
-    content: "PT FOOD QUALITY CERTIFICATION menyelenggarakan workshop intensif keamanan pangan yang dihadiri oleh lebih dari 40 perwakilan pelaku usaha kuliner dan catering se-Provinsi DIY. Workshop membahas tentang penyusunan manual HACCP, cara identifikasi titik kendali kritis (CCP), dan sosialisasi alur sertifikasi resmi terakreditasi KAN.",
+    content: "PT FOOD QUALITY CERTIFICATION menyelenggarakan workshop intensif keamanan pangan yang dihadiri oleh lebih dari 40 perwakilan pelaku usaha kuliner dan catering se-Provinsi DIY. Workshop membahas tentang penyusunan manual HACCP, cara identifikasi titik kendali kritis (CCP), dan sosialisasi alur sertifikasi resmi sistem manajemen keamanan pangan.",
     category: "Kegiatan",
     imageUrl: "/iso.jpg",
     date: "05 Jul 2026"

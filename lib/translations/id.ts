@@ -20,15 +20,15 @@ export const id: TranslationDictionary = {
       haccpDocs: "Berkas HACCP",
       adminPortal: "Portal Admin",
       applyCertification: "Ajukan Sertifikasi",
-      accreditationTag: "Akreditasi KAN • LSHACCP-009-IDN",
+      accreditationTag: "Standar SNI CXC 1:1969 • Keamanan Pangan",
     },
     hero: {
       slides: [
         {
-          tagline: "LEMBAGA SERTIFIKASI HACCP TERAKREDITASI KAN",
+          tagline: "LEMBAGA SERTIFIKASI HACCP INDEPENDEN",
           title: "Mitra Terpercaya dalam Sertifikasi Keamanan Pangan",
           description:
-            "PT FOOD QUALITY CERTIFICATION hadir sebagai Lembaga Sertifikasi HACCP Terakreditasi Komite Akreditasi Nasional (KAN) yang berkomitmen membantu industri pangan menerapkan Sistem Hazard Analysis and Critical Control Points (HACCP) sesuai standar nasional dan internasional.",
+            "PT FOOD QUALITY CERTIFICATION hadir sebagai Lembaga Sertifikasi HACCP yang berkomitmen membantu industri pangan menerapkan Sistem Hazard Analysis and Critical Control Points (HACCP) sesuai standar nasional dan internasional SNI CXC 1:1969.",
           ctaText: "Ajukan Sertifikasi",
         },
         {
@@ -42,11 +42,11 @@ export const id: TranslationDictionary = {
           tagline: "FOOD SAFETY • QUALITY • TRUST",
           title: "Pengakuan Nasional & Kepercayaan Pelanggan",
           description:
-            "Sertifikasi HACCP terakreditasi KAN memberikan jaminan mutu tinggi serta memperkuat kepercayaan pelanggan terhadap produk makanan dan minuman yang Anda hasilkan.",
+            "Sertifikasi HACCP memberikan jaminan mutu tinggi serta memperkuat kepercayaan pelanggan terhadap produk makanan dan minuman yang Anda hasilkan.",
           ctaText: "Ajukan Sertifikasi",
         },
       ],
-      accreditedNotice: "Sertifikasi Terakreditasi KAN • Pengujian Independen & Objektif",
+      accreditedNotice: "Sertifikasi Sistem HACCP • Pengujian Independen & Objektif",
     },
     trust: {
       activeClients: "KLIEN TERDAFTAR",
@@ -55,16 +55,16 @@ export const id: TranslationDictionary = {
       leadAuditorsDesc: "Auditor Profesional & Berpengalaman",
       satisfaction: "KEPUASAN KLIEN",
       satisfactionDesc: "Proses Audit Transparan",
-      kanStatus: "AKREDITASI KAN",
-      kanStatusDesc: "LSHACCP-009-IDN Resmi",
+      kanStatus: "STANDAR RESMI",
+      kanStatusDesc: "SNI CXC 1:1969",
     },
     mainServices: {
       tagline: "LAYANAN UTAMA",
       title: "Sertifikasi Keamanan Pangan HACCP",
-      p1: "Kami menyediakan layanan Sertifikasi HACCP (Hazard Analysis and Critical Control Points) terakreditasi Komite Akreditasi Nasional (KAN) bagi berbagai sektor industri pangan di seluruh Indonesia.",
+      p1: "Kami menyediakan layanan Sertifikasi HACCP (Hazard Analysis and Critical Control Points) berbasis standar SNI CXC 1:1969 bagi berbagai sektor industri pangan di seluruh Indonesia.",
       p2: "Proses sertifikasi mencakup audit kecukupan dokumen, verifikasi audit lapangan secara komprehensif, hingga penerbitan sertifikat resmi untuk memastikan produk Anda memenuhi standar regulasi nasional dan pasar global.",
       slogan1: "Standar Mutu Pangan.",
-      slogan2: "Pengakuan Resmi KAN.",
+      slogan2: "Standar SNI CXC 1:1969.",
     },
     whyUs: {
       tagline: "KEUNGGULAN KAMI",
@@ -73,9 +73,9 @@ export const id: TranslationDictionary = {
         "Sebagai mitra pilihan terpercaya, kami menawarkan jaminan mutu serta keunggulan berikut untuk mendukung sertifikasi sistem keamanan pangan di perusahaan Anda.",
       ctaButton: "Ajukan Sertifikasi HACCP",
       card1Tag: "Lembaga Sertifikasi",
-      card1Title: "Terakreditasi KAN",
+      card1Title: "Standar SNI CXC 1:1969",
       card1Desc:
-        "Seluruh rangkaian penilaian kesesuaian audit kami dievaluasi secara ketat dan independen berdasarkan pedoman Komite Akreditasi Nasional (KAN).",
+        "Seluruh rangkaian penilaian kesesuaian audit kami dievaluasi secara ketat dan independen berdasarkan pedoman standar sistem keamanan pangan internasional SNI CXC 1:1969.",
       card2Tag: "Tenaga Ahli",
       card2Title: "Auditor Kompeten",
       card2Desc:
@@ -111,7 +111,7 @@ export const id: TranslationDictionary = {
       ],
     },
     scope: {
-      tagline: "LSHACCP-009-IDN • 4 SEKTOR RUANG LINGKUP AUDIT",
+      tagline: "4 SEKTOR RUANG LINGKUP AUDIT",
       title: "Ruang Lingkup Sertifikasi HACCP",
       description:
         "PT Food Quality Certification melayani audit kesesuaian dan sertifikasi Sistem Manajemen Keamanan Pangan HACCP untuk 4 sektor ruang lingkup resmi:",
@@ -183,17 +183,17 @@ export const id: TranslationDictionary = {
         {
           badge: "Tahapan 5",
           title: "Penerbitan Sertifikat Resmi",
-          subtitle: "Sertifikat resmi KAN",
+          subtitle: "Sertifikat resmi",
           description:
-            "Penerbitan Sertifikat HACCP Resmi Berlogo KAN setelah seluruh rekomendasi audit dinyatakan sesuai dan lengkap.",
+            "Penerbitan Sertifikat HACCP Resmi setelah seluruh rekomendasi audit dinyatakan sesuai dan lengkap.",
         },
       ],
     },
     form: {
-      tagline: "LSHACCP-009-IDN • PENDAFTARAN ONLINE",
+      tagline: "PENDAFTARAN ONLINE RESMI",
       title: "Formulir Permohonan Sertifikasi HACCP",
       description:
-        "Isi data perusahaan Anda di bawah ini untuk memulai pengajuan sertifikasi HACCP terakreditasi KAN. Tim kami akan menghubungi Anda dalam waktu 1x24 jam kerja.",
+        "Isi data perusahaan Anda di bawah ini untuk memulai pengajuan sertifikasi HACCP. Tim kami akan menghubungi Anda dalam waktu 1x24 jam kerja.",
       companyName: "NAMA PERUSAHAAN / PERUSAHAAN PEMOHON *",
       companyNamePlaceholder: "Contoh: PT Boga Sejahtera Indonesia",
       picName: "NAMA LENGKAP PENANGGUNG JAWAB (PIC) *",
@@ -217,8 +217,8 @@ export const id: TranslationDictionary = {
       newSubmissionButton: "+ Buat Pengajuan Baru",
       haccpOptions: {
         notImplemented: "Belum Menerapkan HACCP (Perlu Pendampingan Awal)",
-        implementedNotCertified: "Sudah Menerapkan HACCP (Belum Bersertifikat KAN)",
-        recertification: "Resertifikasi / Perpanjangan Masa Berlaku Sertifikat KAN",
+        implementedNotCertified: "Sudah Menerapkan HACCP (Belum Bersertifikat)",
+        recertification: "Resertifikasi / Perpanjangan Masa Berlaku Sertifikat",
       },
       industryOptions: {
         bakery: "Produk Bakeri",
@@ -259,7 +259,7 @@ export const id: TranslationDictionary = {
       filterAudit: "Audit Lapangan",
       filterCertificate: "Penyerahan Sertifikat",
       filterTraining: "Pelatihan",
-      filterKan: "Akreditasi KAN",
+      filterKan: "Penghargaan",
       spotlightBadge: "★ DOKUMENTASI UTAMA",
       noPhotos: "Tidak ada dokumentasi foto dalam kategori ini.",
       closePhoto: "Tutup foto",
@@ -342,21 +342,21 @@ export const id: TranslationDictionary = {
     },
     footer: {
       companyDesc:
-        "Lembaga Sertifikasi HACCP Terakreditasi Komite Akreditasi Nasional (KAN) No. LSHACCP-009-IDN. Berkomitmen memberikan layanan sertifikasi keamanan pangan yang independen, profesional, dan terpercaya.",
+        "Lembaga Sertifikasi HACCP Independen dan Profesional. Berkomitmen memberikan layanan sertifikasi sistem manajemen keamanan pangan yang terpercaya dan berintegritas.",
       quickLinks: "Tautan Cepat",
       contactInfo: "Kontak & Alamat Kantor",
       addressLabel: "ALAMAT RESMI:",
       phoneLabel: "WHATSAPP / TELEPON:",
       emailLabel: "EMAIL RESMI:",
-      kanLabel: "STATUS AKREDITASI KAN:",
+      kanLabel: "STANDAR ACUAN:",
       copyright: "© 2026 PT Food Quality Certification. All Rights Reserved.",
     },
     profilePages: {
       tentangKami: {
         title: "Tentang PT Food Quality Certification",
-        subtitle: "Lembaga Sertifikasi HACCP Terakreditasi KAN (LSHACCP-009-IDN)",
+        subtitle: "Lembaga Sertifikasi HACCP Independen & Profesional",
         legalDesc:
-          "PT Food Quality Certification beroperasi secara sah berdasarkan hukum Republik Indonesia dan terakreditasi resmi oleh Komite Akreditasi Nasional (KAN) sebagai Lembaga Sertifikasi Sistem Hazard Analysis and Critical Control Points (LSHACCP-009-IDN).",
+          "PT Food Quality Certification beroperasi secara sah berdasarkan hukum Republik Indonesia sebagai Lembaga Sertifikasi Sistem Hazard Analysis and Critical Control Points (HACCP) berstandar SNI CXC 1:1969.",
         commitmentDesc:
           "Kami mengutamakan independensi, ketidakberpihakan, dan keahlian teknis tinggi dalam setiap tahap penilaian kesesuaian sistem keamanan pangan.",
       },
@@ -405,7 +405,7 @@ export const id: TranslationDictionary = {
       subtitle:
         "Tingkatkan pemahaman tim Anda mengenai implementasi sistem HACCP, CPPOB/GMP, dan penyusunan dokumen keamanan pangan bersama instruktur ahli bersertifikasi PT Food Quality Certification.",
       catalogTitle: "Pilihan Program Pelatihan Resmi",
-      catalogSubtitle: "Kurikulum terstruktur berbasis standar SNI CXC 1:1969, regulasi BPOM RI, dan pedoman KAN.",
+      catalogSubtitle: "Kurikulum terstruktur berbasis standar SNI CXC 1:1969 dan regulasi BPOM RI.",
       formTitle: "Formulir Pendaftaran Pelatihan Online",
       formSubtitle: "Lengkapi data peserta atau perusahaan Anda di bawah ini untuk pendaftaran program pelatihan.",
       registeredCount: "Peserta Terdaftar",

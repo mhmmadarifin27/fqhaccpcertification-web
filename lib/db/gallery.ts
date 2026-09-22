@@ -37,10 +37,10 @@ export const SEED_GALLERY: GalleryItem[] = [
   },
   {
     id: "gal-4",
-    title: "Piagam Akreditasi Lembaga Sertifikasi KAN Resmi",
-    description: "Sertifikat akreditasi LSHACCP-009-IDN yang diserahkan oleh ketua KAN pusat.",
+    title: "Sertifikat Sistem Manajemen Keamanan Pangan SNI CXC 1:1969",
+    description: "Dokumentasi standar sistem manajemen keamanan pangan dan penerapan pedoman Codex Alimentarius.",
     category: "Penghargaan",
-    imageUrl: "/kan-logo.png",
+    imageUrl: "/iso.jpg",
     date: "01 Jul 2026"
   }
 ];

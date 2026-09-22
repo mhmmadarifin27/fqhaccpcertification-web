@@ -9,7 +9,6 @@ import AboutSection from "../components/sections/AboutSection";
 import ServicesCallout from "../components/sections/ServicesCallout";
 import WhyUsSection from "../components/sections/WhyUsSection";
 import TimelineSection from "../components/sections/TimelineSection";
-import TrainingCallout from "../components/sections/TrainingCallout";
 import GallerySection from "../components/sections/GallerySection";
 import FaqSection from "../components/sections/FaqSection";
 import InquiryForm from "../components/sections/InquiryForm";
@@ -37,7 +36,6 @@ export default function Home() {
       <ServicesCallout />
       <WhyUsSection />
       <TimelineSection />
-      <TrainingCallout />
       <GallerySection />
       <FaqSection />
       <InquiryForm />

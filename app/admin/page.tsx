@@ -351,14 +351,14 @@ export default function AdminPage() {
               MITRA TERPERCAYA SERTIFIKASI KEAMANAN PANGAN
             </h2>
             <p className="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed italic">
-              &ldquo;Mewujudkan industri pangan Indonesia yang aman, higienis, dan bermutu tinggi melalui pengujian dan akreditasi sertifikasi HACCP terakreditasi Komite Akreditasi Nasional (KAN).&rdquo;
+              &ldquo;Mewujudkan industri pangan Indonesia yang aman, higienis, dan bermutu tinggi melalui audit dan sertifikasi sistem manajemen keamanan pangan standar SNI CXC 1:1969.&rdquo;
             </p>
             <div className="w-14 h-1.5 bg-amber-400 rounded-full mt-4" />
           </div>
 
           {/* Right Bottom Footer Tag */}
           <div className="relative z-20 text-slate-400 text-[11px] font-semibold tracking-wider uppercase">
-            Lembaga Sertifikasi HACCP Terakreditasi KAN (LSHACCP-009-IDN)
+            Lembaga Sertifikasi HACCP Independen & Profesional (SNI CXC 1:1969)
           </div>
 
         </div>

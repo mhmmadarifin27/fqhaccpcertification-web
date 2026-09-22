@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "PT FOOD QUALITY CERTIFICATION",
     short_name: "PT FQC",
-    description: "Lembaga Sertifikasi HACCP Terakreditasi KAN di Indonesia",
+    description: "Lembaga Sertifikasi HACCP Terpercaya dan Profesional di Indonesia",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

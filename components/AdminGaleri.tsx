@@ -36,7 +36,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
     { label: "Pabrik Susu", url: "/hero1.jpg" },
     { label: "Auditor Training", url: "/hero2.jpg" },
     { label: "Serah Terima", url: "/iso.jpg" },
-    { label: "Piagam/Sertifikat", url: "/kan-logo.png" }
+    { label: "Piagam/Sertifikat", url: "/iso.jpg" }
   ];
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

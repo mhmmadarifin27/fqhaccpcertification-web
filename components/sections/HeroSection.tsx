@@ -111,11 +111,7 @@ export default function HeroSection() {
           </div>
         </div>
         <div className="p-6 lg:p-8 space-y-1 min-w-[170px] text-center flex flex-col items-center justify-center">
-          <img
-            src="/kan-logo.png"
-            alt="KAN - Komite Akreditasi Nasional"
-            className="h-10 lg:h-12 w-auto object-contain mb-1"
-          />
+          <div className="text-3xl font-extrabold font-heading text-brand-navy">SNI</div>
           <div className="text-[10px] font-extrabold uppercase tracking-wider leading-tight text-slate-600">
             {t.trust.kanStatus}
             <br />
