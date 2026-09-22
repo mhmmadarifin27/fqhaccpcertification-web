@@ -39,7 +39,7 @@ export default function StrukturPage() {
 
             <div className="flex justify-center items-center overflow-hidden rounded-2xl bg-white">
               <img
-                src="/struktur-organisasi.jpeg"
+                src="/struktur fqc.png"
                 alt="Struktur Organisasi PT Food Quality Certification"
                 className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-101"
                 loading="eager"
