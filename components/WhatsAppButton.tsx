@@ -1,11 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function WhatsAppButton() {
+  const pathname = usePathname();
   const { lang } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
+
+  // Jangan tampilkan di halaman login admin maupun dashboard internal
+  if (
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/login") ||
+    pathname?.startsWith("/dashboard")
+  ) {
+    return null;
+  }
 
   const phoneNumber = "6281398987655";
   const message =
