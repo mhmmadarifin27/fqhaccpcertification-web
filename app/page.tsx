@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeroSection from "../components/sections/HeroSection";
@@ -9,10 +10,11 @@ import AboutSection from "../components/sections/AboutSection";
 import ServicesCallout from "../components/sections/ServicesCallout";
 import WhyUsSection from "../components/sections/WhyUsSection";
 import TimelineSection from "../components/sections/TimelineSection";
-import GallerySection from "../components/sections/GallerySection";
-import FaqSection from "../components/sections/FaqSection";
-import InquiryForm from "../components/sections/InquiryForm";
-import OfficeLocation from "../components/sections/OfficeLocation";
+
+const GallerySection = dynamic(() => import("../components/sections/GallerySection"));
+const FaqSection = dynamic(() => import("../components/sections/FaqSection"));
+const InquiryForm = dynamic(() => import("../components/sections/InquiryForm"));
+const OfficeLocation = dynamic(() => import("../components/sections/OfficeLocation"));
 
 export default function Home() {
   // Ensure page always starts at the top (0,0) on refresh if no hash target is specified

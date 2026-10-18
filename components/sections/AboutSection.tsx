@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
 
 export default function AboutSection() {
@@ -17,9 +18,13 @@ export default function AboutSection() {
 
       {/* Centered Image Frame */}
       <div className="max-w-3xl mx-auto flex items-center justify-center p-4 sm:p-6 bg-white border border-slate-200 shadow-sm relative overflow-hidden rounded-2xl">
-        <img
+        <Image
           src="/hero1.jpg"
           alt="Food Quality team working together"
+          width={768}
+          height={432}
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, 768px"
           className="w-full h-auto max-h-[440px] object-cover filter drop-shadow-sm transition-transform duration-300 hover:scale-102 rounded-xl"
         />
       </div>

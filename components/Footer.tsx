@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Footer() {
@@ -18,9 +19,12 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <a href="/admin" className="flex items-center gap-3">
               <div className="h-10 w-auto flex items-center justify-center">
-                <img
+                <Image
                   src="/logo2.png"
                   alt="Logo PT Food Quality Certification"
+                  width={40}
+                  height={40}
+                  loading="lazy"
                   className="h-full w-auto object-contain filter drop-shadow-sm"
                 />
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
 
 export default function WhyUsSection() {
@@ -13,10 +14,13 @@ export default function WhyUsSection() {
         <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-12 gap-3 h-auto">
           {/* Big Card on Left */}
           <div className="md:col-span-7 relative group min-h-[380px] flex flex-col justify-end p-6 border border-white/10 overflow-hidden bg-slate-950 rounded-2xl">
-            <img
+            <Image
               src="/hccp1.jpg"
               alt="Standar Keamanan Pangan SNI CXC 1:1969"
-              className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:scale-105 transition-transform duration-500"
+              fill
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover opacity-45 group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent pointer-events-none" />
             <div className="relative z-10 space-y-2">
@@ -32,10 +36,13 @@ export default function WhyUsSection() {
           <div className="md:col-span-5 flex flex-col gap-3">
             {/* Small Card 1 */}
             <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-950 rounded-xl">
-              <img
+              <Image
                 src="/hccp2.jpg"
                 alt="Auditor Kompeten"
-                className="absolute inset-0 w-full h-full object-cover object-center opacity-35 group-hover:scale-105 transition-transform duration-500"
+                fill
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 30vw"
+                className="object-cover object-center opacity-35 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent pointer-events-none" />
               <div className="relative z-10">
@@ -49,10 +56,13 @@ export default function WhyUsSection() {
 
             {/* Small Card 2 */}
             <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-950 rounded-xl">
-              <img
+              <Image
                 src="/hccp3.jpg"
                 alt="Independensi"
-                className="absolute inset-0 w-full h-full object-cover object-center opacity-35 group-hover:scale-105 transition-transform duration-500"
+                fill
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 30vw"
+                className="object-cover object-center opacity-35 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent pointer-events-none" />
               <div className="relative z-10">
@@ -66,10 +76,13 @@ export default function WhyUsSection() {
 
             {/* Small Card 3 */}
             <div className="relative group min-h-[130px] flex flex-col justify-end p-4 border border-white/10 overflow-hidden bg-slate-950 rounded-xl">
-              <img
+              <Image
                 src="/hccp4.jpg"
                 alt="Pelayanan Profesional"
-                className="absolute inset-0 w-full h-full object-cover object-center opacity-35 group-hover:scale-105 transition-transform duration-500"
+                fill
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 30vw"
+                className="object-cover object-center opacity-35 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent pointer-events-none" />
               <div className="relative z-10">

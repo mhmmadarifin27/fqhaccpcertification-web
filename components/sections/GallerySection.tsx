@@ -140,6 +140,8 @@ export default function GallerySection() {
                     <img
                       src={item.imageUrl}
                       alt={item.title}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent p-5 flex flex-col justify-between">
@@ -176,6 +178,8 @@ export default function GallerySection() {
                   <img
                     src={filteredGallery[0].imageUrl}
                     alt={filteredGallery[0].title}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent p-6 sm:p-8 flex flex-col justify-between">
@@ -210,6 +214,8 @@ export default function GallerySection() {
                     <img
                       src={item.imageUrl}
                       alt={item.title}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-5 flex flex-col justify-between">
@@ -237,6 +243,8 @@ export default function GallerySection() {
                   <img
                     src={item.imageUrl}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent p-4 flex flex-col justify-between">

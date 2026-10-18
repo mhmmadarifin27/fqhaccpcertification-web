@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
 
 const HERO_IMAGES = [
@@ -16,6 +17,13 @@ export default function HeroSection() {
   const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [carouselPlaying] = useState(true);
+  const [loadedSlides, setLoadedSlides] = useState<number[]>([0]);
+
+  useEffect(() => {
+    if (!loadedSlides.includes(currentSlide)) {
+      setLoadedSlides((prev) => [...prev, currentSlide]);
+    }
+  }, [currentSlide, loadedSlides]);
 
   // Auto play carousel
   useEffect(() => {
@@ -35,12 +43,20 @@ export default function HeroSection() {
           className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
             currentSlide === idx ? "opacity-35 scale-105" : "opacity-0 pointer-events-none scale-100"
           }`}
-          style={{
-            backgroundImage: `url(${img})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        >
+          {loadedSlides.includes(idx) && (
+            <Image
+              src={img}
+              alt="PT Food Quality Certification HACCP"
+              fill
+              priority={idx === 0}
+              loading={idx === 0 ? "eager" : "lazy"}
+              sizes="100vw"
+              className="object-cover object-center"
+              quality={75}
+            />
+          )}
+        </div>
       ))}
 
       {/* Linear Dark Overlay */}
