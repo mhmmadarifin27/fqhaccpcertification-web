@@ -181,9 +181,6 @@ export default function GallerySection() {
                         <h3 className="text-base font-bold text-white font-heading leading-snug line-clamp-2">
                           {item.title}
                         </h3>
-                        <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed font-normal">
-                          {item.description}
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -219,9 +216,6 @@ export default function GallerySection() {
                       <h3 className="text-xl sm:text-2xl font-extrabold text-white font-heading leading-tight">
                         {filteredGallery[0].title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-2xl">
-                        {filteredGallery[0].description}
-                      </p>
                     </div>
                   </div>
                 </div>
