@@ -23,7 +23,7 @@ export default function Home() {
       if ("scrollRestoration" in window.history) {
         window.history.scrollRestoration = "manual";
       }
-      if (!window.location.hash) {
+      if (!window.location.hash && window.scrollY > 0) {
         window.scrollTo(0, 0);
       }
     }

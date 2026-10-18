@@ -24,6 +24,7 @@ export default function AboutSection() {
           width={768}
           height={432}
           loading="lazy"
+          quality={70}
           sizes="(max-width: 768px) 100vw, 768px"
           className="w-full h-auto max-h-[440px] object-cover filter drop-shadow-sm transition-transform duration-300 hover:scale-102 rounded-xl"
         />

@@ -8,9 +8,6 @@ const HERO_IMAGES = [
   "/hero1.jpg",
   "/hero2.jpg",
   "/hccp1.jpg",
-  "/hccp2.jpg",
-  "/hccp3.jpg",
-  "/hccp4.jpg",
 ];
 
 export default function HeroSection() {
@@ -25,13 +22,20 @@ export default function HeroSection() {
     }
   }, [currentSlide, loadedSlides]);
 
-  // Auto play carousel
+  // Auto play carousel after initial 8s delay so LCP settles cleanly on initial page load
   useEffect(() => {
     if (!carouselPlaying) return;
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 6000);
-    return () => clearInterval(interval);
+    let interval: NodeJS.Timeout | null = null;
+    const initialDelay = setTimeout(() => {
+      interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
+      }, 7000);
+    }, 8000);
+
+    return () => {
+      clearTimeout(initialDelay);
+      if (interval) clearInterval(interval);
+    };
   }, [carouselPlaying]);
 
   return (

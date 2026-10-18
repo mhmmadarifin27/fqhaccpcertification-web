@@ -1,10 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 
 export default function OfficeLocation() {
   const { t } = useLanguage();
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoadMap(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="lokasi-kantor" className="py-16 md:py-24 bg-white border-t border-slate-200">
@@ -20,15 +37,21 @@ export default function OfficeLocation() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-slate-50 border border-slate-200 p-4 sm:p-6 shadow-sm rounded-2xl">
           {/* Left Column: Interactive Google Maps Iframe */}
-          <div className="lg:col-span-8 relative min-h-[350px] sm:min-h-[420px] border border-slate-300 overflow-hidden bg-slate-200 shadow-inner rounded-xl">
-            <iframe
-              title="Lokasi Kantor PT Food Quality Certification - Maguwoharjo Sleman Yogyakarta"
-              src="https://maps.google.com/maps?q=Maguwoharjo,+Depok,+Sleman,+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              className="absolute inset-0 w-full h-full border-0"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          <div ref={containerRef} className="lg:col-span-8 relative min-h-[350px] sm:min-h-[420px] border border-slate-300 overflow-hidden bg-slate-200 shadow-inner rounded-xl">
+            {shouldLoadMap ? (
+              <iframe
+                title="Lokasi Kantor PT Food Quality Certification - Maguwoharjo Sleman Yogyakarta"
+                src="https://maps.google.com/maps?q=Maguwoharjo,+Depok,+Sleman,+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                className="absolute inset-0 w-full h-full border-0"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center text-slate-400 text-xs">
+                Memuat peta lokasi...
+              </div>
+            )}
           </div>
 
           {/* Right Column: Office Address Details Card */}

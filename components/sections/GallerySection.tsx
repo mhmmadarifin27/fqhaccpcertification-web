@@ -1,17 +1,19 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { getGallery, GalleryItem } from "../../lib/db";
+import { getGallery, GalleryItem, SEED_GALLERY } from "../../lib/db";
 import { useLanguage } from "../../context/LanguageContext";
 import { autoTranslateText } from "../../lib/autoTranslator";
 
 export default function GallerySection() {
   const { lang, t } = useLanguage();
-  const [galleryList, setGalleryList] = useState<GalleryItem[]>([]);
-  const [displayGallery, setDisplayGallery] = useState<GalleryItem[]>([]);
+  const [galleryList, setGalleryList] = useState<GalleryItem[]>(SEED_GALLERY);
+  const [displayGallery, setDisplayGallery] = useState<GalleryItem[]>(SEED_GALLERY);
   const [galleryCategory, setGalleryCategory] = useState("all");
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null);
+  const [hasEnteredView, setHasEnteredView] = useState(false);
 
+  const sectionRef = useRef<HTMLElement>(null);
   const galleryScrollRef = useRef<HTMLDivElement>(null);
 
   const scrollGallery = (direction: "left" | "right") => {
@@ -22,13 +24,35 @@ export default function GallerySection() {
   };
 
   useEffect(() => {
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setHasEnteredView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px" }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasEnteredView) return;
+    let isMounted = true;
     const loadGallery = async () => {
       const data = await getGallery();
-      setGalleryList(data);
-      setDisplayGallery(data);
+      if (isMounted && data && data.length > 0) {
+        setGalleryList(data);
+        setDisplayGallery(data);
+      }
     };
     loadGallery();
-  }, []);
+    return () => {
+      isMounted = false;
+    };
+  }, [hasEnteredView]);
 
   // Automatic translation for gallery content when language changes
   useEffect(() => {
@@ -63,7 +87,7 @@ export default function GallerySection() {
   );
 
   return (
-    <section id="galeri" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-950 text-white relative overflow-hidden">
+    <section ref={sectionRef} id="galeri" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-950 text-white relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto space-y-10">
         {/* Header & Filter Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800 pb-8">
