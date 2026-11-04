@@ -106,7 +106,7 @@ export const en: TranslationDictionary = {
       targetList: [
         "Bakery products",
         "Salt, spices, soups, sauces, salads, protein products",
-        "Processed food for special dietary needs",
+        "Ready-to-eat snacks",
         "Food Services / Catering / SPPG",
       ],
     },
@@ -293,7 +293,7 @@ export const en: TranslationDictionary = {
         },
         {
           q: "3. Who can apply for HACCP certification?",
-          a: "HACCP certification can be applied for by organizations and food businesses operating in our 4 official scope sectors: Bakery products, Salt, spices, soups, sauces, salads, protein products, Processed food for special dietary needs, and Food Services / Catering / SPPG.",
+          a: "HACCP certification can be applied for by organizations and food businesses operating in our 4 official scope sectors: Bakery products, Salt, spices, soups, sauces, salads, protein products, Ready-to-eat snacks, and Food Services / Catering / SPPG.",
         },
         {
           q: "4. What needs to be prepared for HACCP certification?",
