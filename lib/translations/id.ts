@@ -105,7 +105,7 @@ export const id: TranslationDictionary = {
         "Sertifikasi HACCP diwajibkan dan direkomendasikan bagi 4 sektor ruang lingkup industri pengolahan pangan berikut:",
       targetList: [
         "Produk bakeri",
-        "Daging dan produk daging",
+        "Garam, rempah, sup, saus, salad, produk protein",
         "Pangan olahan untuk keperluan gizi khusus",
         "Jasa Boga / Pelayanan Pangan / SPPG",
       ],
@@ -293,7 +293,7 @@ export const id: TranslationDictionary = {
         },
         {
           q: "3. Siapa yang dapat mengajukan sertifikasi HACCP?",
-          a: "Sertifikasi HACCP dapat diajukan oleh organisasi dan pelaku usaha yang bergerak dalam 4 sektor ruang lingkup kami, yaitu: Produk bakeri, Daging dan produk daging, Pangan olahan untuk keperluan gizi khusus, serta Jasa Boga / Pelayanan Pangan / SPPG.",
+          a: "Sertifikasi HACCP dapat diajukan oleh organisasi dan pelaku usaha yang bergerak dalam 4 sektor ruang lingkup kami, yaitu: Produk bakeri, Garam, rempah, sup, saus, salad, produk protein, Pangan olahan untuk keperluan gizi khusus, serta Jasa Boga / Pelayanan Pangan / SPPG.",
         },
         {
           q: "4. Apa saja yang perlu disiapkan untuk sertifikasi HACCP?",

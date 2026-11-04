@@ -105,7 +105,7 @@ export const en: TranslationDictionary = {
         "HACCP Certification is mandatory and strongly recommended for the following 4 food industry scope sectors:",
       targetList: [
         "Bakery products",
-        "Meat and meat products",
+        "Salt, spices, soups, sauces, salads, protein products",
         "Processed food for special dietary needs",
         "Food Services / Catering / SPPG",
       ],
@@ -293,7 +293,7 @@ export const en: TranslationDictionary = {
         },
         {
           q: "3. Who can apply for HACCP certification?",
-          a: "HACCP certification can be applied for by organizations and food businesses operating in our 4 official scope sectors: Bakery products, Meat and meat products, Processed food for special dietary needs, and Food Services / Catering / SPPG.",
+          a: "HACCP certification can be applied for by organizations and food businesses operating in our 4 official scope sectors: Bakery products, Salt, spices, soups, sauces, salads, protein products, Processed food for special dietary needs, and Food Services / Catering / SPPG.",
         },
         {
           q: "4. What needs to be prepared for HACCP certification?",
