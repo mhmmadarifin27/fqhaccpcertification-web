@@ -1,5 +1,7 @@
 // Re-export storage & helper utilities
 export * from "./db/storage";
+export * from "./db/fileStorage";
+export * from "./db/fileUtils";
 
 // Re-export domain modules
 export * from "./db/inquiry";

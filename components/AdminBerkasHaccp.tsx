@@ -1,7 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { HaccpDocSubmission, updateHaccpDocStatus, deleteHaccpDocSubmission } from "../lib/db";
+import React, { useState, useEffect } from "react";
+import {
+  HaccpDocSubmission,
+  updateHaccpDocStatus,
+  deleteHaccpDocSubmission,
+  openDocumentInNewTab,
+  downloadDocumentFile,
+  getDocumentBlob,
+  getFileTypeInfo
+} from "../lib/db";
 import { useToast } from "../context/ToastContext";
 import ConfirmModal from "./ConfirmModal";
 
@@ -16,6 +24,29 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [selectedItem, setSelectedItem] = useState<HaccpDocSubmission | null>(null);
+
+  // Document preview state
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showInlinePreview, setShowInlinePreview] = useState<boolean>(true);
+
+  // Generate and manage temporary Blob URL whenever selectedItem changes
+  useEffect(() => {
+    if (selectedItem) {
+      try {
+        const blob = getDocumentBlob(selectedItem);
+        const url = URL.createObjectURL(blob);
+        setPreviewUrl(url);
+        return () => {
+          URL.revokeObjectURL(url);
+        };
+      } catch (err) {
+        console.error("Failed to generate preview URL:", err);
+        setPreviewUrl(null);
+      }
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [selectedItem]);
 
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
@@ -70,6 +101,9 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
         type: "success"
       });
       setDeleteModal({ isOpen: false, id: "", ticket: "", company: "" });
+      if (selectedItem?.id === deleteModal.id) {
+        setSelectedItem(null);
+      }
       onRefresh();
     } catch (err) {
       console.error("Delete doc error:", err);
@@ -94,6 +128,10 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
     }
   };
 
+  const selectedFileInfo = selectedItem
+    ? getFileTypeInfo(selectedItem.fileName, selectedItem.fileData)
+    : null;
+
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Header Card */}
@@ -104,7 +142,7 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
               Kelola Berkas Persiapan Audit HACCP
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Dokumen pra-audit (Manual HACCP, CCP Matrix, Flow Diagram, SK Tim) yang diunggah pemohon sebelum audit tahap 1.
+              Dokumen pra-audit (Manual HACCP, CCP Matrix, Flow Diagram, SK Tim) yang diunggah pemohon sebelum audit tahap 1. Admin dapat langsung membuka pratinjau dan mengunduh berkas.
             </p>
           </div>
           <div className="bg-slate-100 text-slate-700 px-4 py-2 rounded-2xl text-xs font-bold shrink-0 self-start sm:self-auto">
@@ -132,6 +170,7 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
               className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 text-xs sm:text-sm font-bold focus:bg-white focus:outline-brand-blue rounded-xl transition-all"
             >
               <option value="all">Semua Kategori Dokumen</option>
+              <option value="sni-cxc-1-2024">Dokumen SNI CXC 1:1969 (2024)</option>
               <option value="bundle-sni-cxc-1">Bundel Lengkap SNI CXC 1:1969</option>
               <option value="ghp-gmp-section1">Bagian 1: GHP / GMP</option>
               <option value="haccp-plan-section2">Bagian 2: Rencana HACCP</option>
@@ -160,97 +199,130 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
 
       {/* Table */}
       <div className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs">
-        <table className="min-w-full divide-y divide-slate-100 text-left border-collapse text-xs">
-          <thead className="bg-slate-50/80 uppercase font-black text-slate-400 tracking-wider">
-            <tr>
-              <th className="px-6 py-4">Tiket & Tanggal</th>
-              <th className="px-6 py-4">Perusahaan & PIC</th>
-              <th className="px-6 py-4">Kategori & Lampiran Berkas</th>
-              <th className="px-6 py-4">Status Review</th>
-              <th className="px-6 py-4 text-right">Aksi</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
-            {filteredDocs.length === 0 ? (
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-slate-100 text-left border-collapse text-xs">
+            <thead className="bg-slate-50/80 uppercase font-black text-slate-400 tracking-wider">
               <tr>
-                <td colSpan={5} className="py-12 text-center text-slate-400 font-normal">
-                  Tidak ada berkas persiapan audit yang sesuai.
-                </td>
+                <th className="px-6 py-4">Tiket & Tanggal</th>
+                <th className="px-6 py-4">Perusahaan & PIC</th>
+                <th className="px-6 py-4">Kategori & Lampiran Berkas</th>
+                <th className="px-6 py-4">Status Review</th>
+                <th className="px-6 py-4 text-right">Aksi</th>
               </tr>
-            ) : (
-              filteredDocs.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="px-6 py-4">
-                    <p className="font-extrabold text-brand-navy font-mono text-xs">{item.ticketNumber}</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">
-                      {new Date(item.createdAt).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="font-extrabold text-slate-900 text-sm leading-snug">{item.companyName}</p>
-                    <p className="text-[11px] text-slate-500 font-normal">PIC: {item.picName} ({item.picPhone})</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">📦 Ruang Lingkup: {item.productScope}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="font-bold text-slate-800 text-xs">{item.documentCategoryLabel}</p>
-                    <div className="flex items-center gap-1.5 mt-1 text-[11px] text-brand-blue font-mono font-medium">
-                      <span>📄</span>
-                      <span className="truncate max-w-xs">{item.fileName}</span>
-                      {item.fileSize && <span className="text-slate-400 text-[10px]">({item.fileSize})</span>}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <select
-                      value={item.status}
-                      onChange={(e) => handleStatusChange(item.id, e.target.value as HaccpDocSubmission["status"])}
-                      className="text-[11px] font-bold py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer focus:outline-brand-blue"
-                    >
-                      <option value="submitted">📥 Diterima</option>
-                      <option value="under_review">🔍 Ditinjau</option>
-                      <option value="verified">✓ Lolos</option>
-                      <option value="need_revision">⚠️ Revisi</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 text-right space-x-2">
-                    <button
-                      onClick={() => setSelectedItem(item)}
-                      className="px-3 py-1.5 bg-brand-navy text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs hover:bg-brand-navy-dark"
-                    >
-                      Detail & Unduh
-                    </button>
-                    <button
-                      onClick={() => setDeleteModal({ isOpen: true, id: item.id, ticket: item.ticketNumber, company: item.companyName })}
-                      className="px-3 py-1.5 bg-rose-600 text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs hover:bg-rose-700"
-                    >
-                      Hapus
-                    </button>
+            </thead>
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+              {filteredDocs.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-12 text-center text-slate-400 font-normal">
+                    Tidak ada berkas persiapan audit yang sesuai.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredDocs.map((item) => {
+                  const typeInfo = getFileTypeInfo(item.fileName, item.fileData);
+                  return (
+                    <tr key={item.id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="px-6 py-4">
+                        <p className="font-extrabold text-brand-navy font-mono text-xs">{item.ticketNumber}</p>
+                        <p className="text-[10px] text-slate-400 mt-0.5">
+                          {new Date(item.createdAt).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
+                        </p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <p className="font-extrabold text-slate-900 text-sm leading-snug">{item.companyName}</p>
+                        <p className="text-[11px] text-slate-500 font-normal">PIC: {item.picName} ({item.picPhone})</p>
+                        <p className="text-[10px] text-slate-400 mt-0.5">📦 Ruang Lingkup: {item.productScope}</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <p className="font-bold text-slate-800 text-xs">{item.documentCategoryLabel}</p>
+                        <div className="flex items-center gap-1.5 mt-1 text-[11px] text-brand-blue font-mono font-medium">
+                          <span>{typeInfo.icon}</span>
+                          <span className="truncate max-w-xs">{item.fileName}</span>
+                          {item.fileSize && <span className="text-slate-400 text-[10px]">({item.fileSize})</span>}
+                        </div>
+
+                        {/* Quick action buttons right inside the table row */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <button
+                            type="button"
+                            onClick={() => openDocumentInNewTab(item)}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200/80 rounded-md text-[10px] font-bold transition-colors cursor-pointer"
+                            title="Buka pratinjau dokumen di tab baru browser"
+                          >
+                            <span>👁️</span> Buka Berkas
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => downloadDocumentFile(item)}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-md text-[10px] font-bold transition-colors cursor-pointer"
+                            title="Unduh file dokumen ke komputer"
+                          >
+                            <span>⬇️</span> Unduh
+                          </button>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <select
+                          value={item.status}
+                          onChange={(e) => handleStatusChange(item.id, e.target.value as HaccpDocSubmission["status"])}
+                          className="text-[11px] font-bold py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer focus:outline-brand-blue"
+                        >
+                          <option value="submitted">📥 Diterima</option>
+                          <option value="under_review">🔍 Ditinjau</option>
+                          <option value="verified">✓ Lolos</option>
+                          <option value="need_revision">⚠️ Revisi</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedItem(item);
+                            setShowInlinePreview(true);
+                          }}
+                          className="px-3 py-1.5 bg-brand-navy text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs hover:bg-brand-navy-dark inline-flex items-center gap-1"
+                        >
+                          <span>👁️</span> Detail & Buka
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeleteModal({ isOpen: true, id: item.id, ticket: item.ticketNumber, company: item.companyName })}
+                          className="px-3 py-1.5 bg-rose-600 text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs hover:bg-rose-700"
+                        >
+                          Hapus
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {/* Detail Modal */}
-      {selectedItem && (
+      {/* Detail & Full Document Preview Modal */}
+      {selectedItem && selectedFileInfo && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
-          <div className="bg-white border border-slate-200/80 shadow-2xl w-full max-w-xl overflow-hidden my-8 rounded-3xl">
+          <div className="bg-white border border-slate-200/80 shadow-2xl w-full max-w-3xl overflow-hidden my-8 rounded-3xl animate-in zoom-in-95 duration-200">
+            {/* Modal Header */}
             <div className="bg-brand-navy text-white py-5 px-6 flex items-center justify-between border-b border-white/10">
               <div className="space-y-0.5">
-                <span className="text-[10px] text-brand-cyan uppercase font-bold tracking-widest">Detail Berkas Persiapan Audit</span>
+                <span className="text-[10px] text-brand-cyan uppercase font-bold tracking-widest">Detail & Berkas Persiapan Audit</span>
                 <h3 className="font-extrabold text-base font-heading">{selectedItem.ticketNumber}</h3>
               </div>
               <button
+                type="button"
                 onClick={() => setSelectedItem(null)}
-                className="text-white hover:text-brand-cyan border-none bg-transparent cursor-pointer text-lg font-bold"
+                className="text-white hover:text-brand-cyan border-none bg-transparent cursor-pointer text-lg font-bold p-1"
               >
                 ✕
               </button>
             </div>
 
-            <div className="p-6 space-y-4 text-xs text-slate-700">
-              <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+            <div className="p-6 space-y-5 text-xs text-slate-700 max-h-[80vh] overflow-y-auto">
+              {/* Company Info Box */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                 <div>
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Nama Perusahaan:</span>
                   <span className="font-extrabold text-slate-900 text-sm">{selectedItem.companyName}</span>
@@ -269,40 +341,130 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Ruang Lingkup Produk Pangan:</span>
-                <p className="font-bold text-slate-900 text-sm bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  📦 {selectedItem.productScope}
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Kategori Dokumen:</span>
-                <p className="font-bold text-brand-blue text-sm">
-                  {selectedItem.documentCategoryLabel}
-                </p>
-              </div>
-
-              {/* File Attachment Box with Download Button */}
-              <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-200 flex items-center justify-between gap-4">
-                <div className="min-w-0">
-                  <span className="text-[10px] text-slate-500 font-bold uppercase block">File Dokumen Terlampir:</span>
-                  <p className="font-mono font-bold text-slate-900 text-xs truncate mt-0.5">{selectedItem.fileName}</p>
-                  {selectedItem.fileSize && <span className="text-[10px] text-slate-400">Ukuran: {selectedItem.fileSize}</span>}
+              {/* Product Scope & Category */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Ruang Lingkup Produk Pangan:</span>
+                  <p className="font-bold text-slate-900 text-xs sm:text-sm bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    📦 {selectedItem.productScope}
+                  </p>
                 </div>
-                {selectedItem.fileData ? (
-                  <a
-                    href={selectedItem.fileData}
-                    download={selectedItem.fileName}
-                    className="px-4 py-2 bg-brand-navy hover:bg-brand-navy-dark text-white font-extrabold text-xs rounded-xl transition-all shrink-0 flex items-center gap-1.5"
-                  >
-                    <span>⬇️ Unduh Berkas</span>
-                  </a>
-                ) : (
-                  <span className="text-[10px] text-slate-400 italic">File data simulasi</span>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Kategori Dokumen:</span>
+                  <p className="font-bold text-brand-blue text-xs sm:text-sm bg-blue-50/50 p-3 rounded-xl border border-blue-100">
+                    {selectedItem.documentCategoryLabel}
+                  </p>
+                </div>
+              </div>
+
+              {/* Interactive File Attachment Box with Direct Action Buttons */}
+              <div className="bg-blue-50/60 p-4 sm:p-5 rounded-2xl border border-blue-200 space-y-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Berkas Lampiran Audit:</span>
+                      <span className="bg-blue-100 text-brand-navy text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase">
+                        {selectedFileInfo.label}
+                      </span>
+                      {selectedItem.fileData ? (
+                        <span className="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase">
+                          ✓ Berkas Diunggah
+                        </span>
+                      ) : (
+                        <span className="bg-cyan-100 text-cyan-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase">
+                          📋 Dokumen Resmi Standar
+                        </span>
+                      )}
+                    </div>
+                    <p className="font-mono font-extrabold text-slate-900 text-sm truncate flex items-center gap-1.5">
+                      <span className="text-base">{selectedFileInfo.icon}</span>
+                      <span className="truncate">{selectedItem.fileName}</span>
+                    </p>
+                    {selectedItem.fileSize && (
+                      <span className="text-[11px] text-slate-500 mt-0.5 block">
+                        Ukuran File: {selectedItem.fileSize}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Buttons: Buka, Unduh, Toggle Pratinjau */}
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => openDocumentInNewTab(selectedItem)}
+                      className="px-3.5 py-2 bg-brand-navy hover:bg-brand-navy-dark text-white font-extrabold text-xs rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      title="Buka dokumen secara penuh di tab baru browser"
+                    >
+                      <span>👁️ Buka di Tab Baru</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => downloadDocumentFile(selectedItem)}
+                      className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      title="Unduh file dokumen ke penyimpanan lokal"
+                    >
+                      <span>⬇️ Unduh Berkas</span>
+                    </button>
+                    {selectedFileInfo.canPreviewInline && (
+                      <button
+                        type="button"
+                        onClick={() => setShowInlinePreview(!showInlinePreview)}
+                        className="px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs rounded-xl transition-all flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>{showInlinePreview ? "✕ Tutup Pratinjau" : "🔍 Pratinjau"}</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Inline Preview Container */}
+                {showInlinePreview && previewUrl && (
+                  <div className="mt-3 pt-4 border-t border-blue-200/70 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+                        <span>🔍</span> Pratinjau Isi Dokumen:
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => openDocumentInNewTab(selectedItem)}
+                        className="text-[11px] text-brand-blue hover:underline font-bold"
+                      >
+                        Buka Layar Penuh ↗
+                      </button>
+                    </div>
+
+                    {selectedFileInfo.isPdf || !selectedItem.fileData ? (
+                      <div className="w-full h-80 sm:h-96 rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner">
+                        <iframe
+                          src={previewUrl}
+                          className="w-full h-full border-none"
+                          title={`Pratinjau ${selectedItem.fileName}`}
+                        />
+                      </div>
+                    ) : selectedFileInfo.isImage ? (
+                      <div className="w-full max-h-96 rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 p-2 flex items-center justify-center">
+                        <img
+                          src={previewUrl}
+                          alt={selectedItem.fileName}
+                          className="max-h-88 max-w-full object-contain rounded-xl shadow-xs"
+                        />
+                      </div>
+                    ) : (
+                      <div className="p-5 bg-white border border-slate-200 rounded-2xl text-center space-y-2">
+                        <div className="text-3xl">📁</div>
+                        <p className="text-xs font-bold text-slate-800">
+                          Berkas {selectedFileInfo.label} ({selectedItem.fileName.split(".").pop()?.toUpperCase()})
+                        </p>
+                        <p className="text-[11px] text-slate-500 max-w-md mx-auto leading-relaxed">
+                          Format file ini memerlukan aplikasi desktop eksternal (Microsoft Word atau Archive Viewer). Silakan klik tombol <strong>Unduh Berkas</strong> di atas untuk membuka dan mengevaluasi dokumen di komputer Anda.
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
 
+              {/* Notes */}
               {selectedItem.notes && (
                 <div className="space-y-1">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Keterangan / Catatan Tambahan:</span>
@@ -312,19 +474,29 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+              {/* Footer Actions */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-slate-100">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-500 font-bold">Status:</span>
                   {getStatusBadge(selectedItem.status)}
                 </div>
-                <a
-                  href={`https://wa.me/${selectedItem.picPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Halo Bapak/Ibu ${selectedItem.picName} dari ${selectedItem.companyName}, kami dari Tim Verifikator PT Food Quality Certification terkait dokumen persiapan audit ${selectedItem.documentCategoryLabel} (Tiket: ${selectedItem.ticketNumber}).`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl flex items-center gap-1.5 transition-all"
-                >
-                  <span>💬 Chat PIC WhatsApp</span>
-                </a>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={`https://wa.me/${selectedItem.picPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Halo Bapak/Ibu ${selectedItem.picName} dari ${selectedItem.companyName}, kami dari Tim Verifikator PT Food Quality Certification terkait dokumen persiapan audit ${selectedItem.documentCategoryLabel} (Tiket: ${selectedItem.ticketNumber}).`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl flex items-center gap-1.5 transition-all"
+                  >
+                    <span>💬 Hubungi PIC WhatsApp</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedItem(null)}
+                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all"
+                  >
+                    Tutup
+                  </button>
+                </div>
               </div>
             </div>
           </div>
