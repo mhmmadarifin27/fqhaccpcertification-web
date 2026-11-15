@@ -535,7 +535,11 @@ export default function AdminPage() {
 
           {/* TAB 2: CERTIFICATION MANAGEMENTS */}
           {activeTab === "sertifikasi" && (
-            <AdminSertifikasi inquiries={inquiries} onUpdateStatus={handleUpdateStatus} />
+            <AdminSertifikasi
+              inquiries={inquiries}
+              onUpdateStatus={handleUpdateStatus}
+              onRefresh={fetchData}
+            />
           )}
 
           {/* TAB: PRE-AUDIT HACCP DOCUMENTS */}

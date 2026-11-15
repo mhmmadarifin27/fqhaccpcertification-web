@@ -190,3 +190,29 @@ export const updateInquiryStatus = async (id: string, status: string): Promise<b
 
   return true;
 };
+
+export const deleteInquiry = async (id: string): Promise<boolean> => {
+  // 1. LocalStorage
+  const localList = getLocal<SertifikasiInquiry>("hacpp_inquiries", SEED_INQUIRIES);
+  const targetItem = localList.find((item) => item.id === id);
+  const updatedList = localList.filter((item) => item.id !== id);
+  setLocal("hacpp_inquiries", updatedList);
+
+  // 2. Supabase
+  if (isSupabaseConfigured && supabase && targetItem) {
+    try {
+      const dbId = id.startsWith("inq-") ? -1 : parseInt(id, 10);
+      if (dbId !== -1 && !isNaN(dbId)) {
+        const { error } = await supabase.from("sertifikasi").delete().eq("id", dbId);
+        if (error) console.error("Error deleting inquiry from Supabase:", error);
+      } else {
+        const { error } = await supabase.from("sertifikasi").delete().eq("ticket_number", targetItem.ticketNumber);
+        if (error) console.error("Error deleting inquiry from Supabase:", error);
+      }
+    } catch (e) {
+      console.error("Connection failed during Supabase inquiry deletion:", e);
+    }
+  }
+
+  return true;
+};

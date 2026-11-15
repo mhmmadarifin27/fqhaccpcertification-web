@@ -1,20 +1,62 @@
 "use client";
 
 import React, { useState } from "react";
-import { SertifikasiInquiry } from "../lib/db";
+import { SertifikasiInquiry, deleteInquiry } from "../lib/db";
 import { useToast } from "../context/ToastContext";
+import ConfirmModal from "./ConfirmModal";
 
 interface AdminSertifikasiProps {
   inquiries: SertifikasiInquiry[];
   onUpdateStatus: (id: string, newStatus: string) => void;
+  onRefresh?: () => void;
+  onDelete?: (id: string) => void;
 }
 
-export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSertifikasiProps) {
+export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh, onDelete }: AdminSertifikasiProps) {
   const { showToast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    id: string;
+    ticket: string;
+    company: string;
+  }>({
+    isOpen: false,
+    id: "",
+    ticket: "",
+    company: "",
+  });
+
+  const handleConfirmDelete = async () => {
+    try {
+      if (onDelete) {
+        onDelete(deleteModal.id);
+      } else {
+        await deleteInquiry(deleteModal.id);
+        showToast({
+          title: "Pengajuan Dihapus",
+          message: `Data pengajuan ${deleteModal.ticket} dari "${deleteModal.company}" berhasil dihapus.`,
+          type: "success",
+        });
+        onRefresh?.();
+      }
+      setDeleteModal({ isOpen: false, id: "", ticket: "", company: "" });
+      if (expandedId === deleteModal.id) {
+        setExpandedId(null);
+      }
+    } catch (err) {
+      console.error("Delete inquiry error:", err);
+      showToast({
+        title: "Gagal Menghapus",
+        message: "Terjadi kesalahan saat menghapus data permohonan.",
+        type: "error",
+      });
+    }
+  };
 
   // Filter inquiries based on search term, industry, and status sub-tab
   const filteredInquiries = inquiries.filter((inq) => {
@@ -336,9 +378,28 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSer
                           year: "numeric"
                         })}
                       </td>
-                      <td className="px-6 py-4 text-right">
-                        <button className="text-[11px] font-extrabold uppercase tracking-widest text-[#0a5c36] hover:underline cursor-pointer border-none bg-transparent">
+                      <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          type="button"
+                          onClick={() => toggleExpand(inq.id)}
+                          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border border-slate-200 transition-colors"
+                        >
                           {expandedId === inq.id ? "Tutup ▲" : "Detail ▼"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setDeleteModal({
+                              isOpen: true,
+                              id: inq.id,
+                              ticket: inq.ticketNumber,
+                              company: inq.companyName,
+                            })
+                          }
+                          className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs transition-colors"
+                          title="Hapus data pengajuan sertifikasi"
+                        >
+                          Hapus
                         </button>
                       </td>
                     </tr>
@@ -383,9 +444,37 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSer
                               <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
                                 Pesan Pengajuan / Scope Keterangan
                               </h4>
-                              <p className="text-xs text-slate-600 leading-relaxed font-normal bg-white p-3 border border-slate-200">
+                              <p className="text-xs text-slate-600 leading-relaxed font-normal bg-white p-3 border border-slate-200 rounded-xl">
                                 {inq.message || "(Tidak ada pesan tambahan dari pengirim)"}
                               </p>
+                              
+                              {/* Bottom action bar inside expanded card */}
+                              <div className="flex flex-wrap items-center justify-between pt-3 gap-2">
+                                <a
+                                  href={`https://wa.me/${inq.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                                    `Halo Bapak/Ibu ${inq.picName} dari ${inq.companyName}, kami dari Tim Layanan Sertifikasi PT Food Quality Certification terkait pengajuan sertifikasi HACCP (${inq.ticketNumber}).`
+                                  )}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-extrabold rounded-lg transition-colors"
+                                >
+                                  <span>💬 Hubungi PIC via WhatsApp</span>
+                                </a>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setDeleteModal({
+                                      isOpen: true,
+                                      id: inq.id,
+                                      ticket: inq.ticketNumber,
+                                      company: inq.companyName,
+                                    })
+                                  }
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-[10px] font-extrabold rounded-lg transition-colors cursor-pointer"
+                                >
+                                  <span>🗑️ Hapus Pengajuan</span>
+                                </button>
+                              </div>
                             </div>
 
                           </div>
@@ -472,6 +561,18 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus }: AdminSer
           </div>
         </>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title="Hapus Pengajuan Sertifikasi?"
+        message={`Apakah Anda yakin ingin menghapus data pengajuan sertifikasi ${deleteModal.ticket} dari perusahaan "${deleteModal.company}"? Tindakan ini tidak dapat dibatalkan.`}
+        confirmText="Ya, Hapus Pengajuan"
+        cancelText="Batal"
+        type="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteModal({ isOpen: false, id: "", ticket: "", company: "" })}
+      />
 
     </div>
   );
