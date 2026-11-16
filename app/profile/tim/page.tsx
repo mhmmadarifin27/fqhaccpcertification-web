@@ -329,7 +329,7 @@ export default function TimPage() {
                   <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-1.5 font-heading">
                     {t.teamUI.standardsTraining}
                   </h4>
-                  {selectedMember.standards[0] === "-" ? (
+                  {!selectedMember.standards || selectedMember.standards.length === 0 || selectedMember.standards[0] === "-" ? (
                     <p className="text-xs text-slate-400 italic">{t.teamUI.noTraining}</p>
                   ) : (
                     <ul className="space-y-1.5 text-xs text-slate-600 list-disc pl-4 font-normal leading-relaxed">
@@ -344,7 +344,7 @@ export default function TimPage() {
                   <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-1.5 font-heading">
                     {t.teamUI.haccpTraining}
                   </h4>
-                  {selectedMember.haccp[0] === "-" ? (
+                  {!selectedMember.haccp || selectedMember.haccp.length === 0 || selectedMember.haccp[0] === "-" ? (
                     <p className="text-xs text-slate-400 italic">{t.teamUI.noTraining}</p>
                   ) : (
                     <ul className="space-y-1.5 text-xs text-slate-600 list-disc pl-4 font-normal leading-relaxed">

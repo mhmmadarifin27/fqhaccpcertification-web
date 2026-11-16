@@ -47,7 +47,7 @@ function AdminSidebar({
   ];
 
   return (
-    <Sidebar className="border-r border-slate-200/80 bg-slate-950 text-white">
+    <Sidebar className="border-r border-slate-200/80 bg-slate-950 text-white print:hidden">
       {/* BRAND HEADER */}
       <SidebarHeader className="p-4 border-b border-white/10 flex flex-col justify-center">
         <div className="flex items-center gap-3 w-full justify-center">
@@ -163,7 +163,7 @@ export default function AdminLayout({
                 <h2 className="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight font-heading">
                   {activeTab === "dashboard" && "Dashboard Ringkasan Analytics"}
                   {activeTab === "sertifikasi" && "Pengajuan Sertifikasi HACCP"}
-                  {activeTab === "proyek" && "Kelola Proyek / Sektor Client"}
+                  {activeTab === "berkas-haccp" && "Kelola Berkas Audit HACCP"}
                   {activeTab === "pegawai" && "Kelola Pegawai & Tim Auditor"}
                   {activeTab === "galeri" && "Kelola Galeri Dokumentasi"}
                 </h2>

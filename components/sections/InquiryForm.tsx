@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { createInquiry } from "../../lib/db";
 import { useLanguage } from "../../context/LanguageContext";
 import { useToast } from "../../context/ToastContext";
@@ -22,6 +23,7 @@ export default function InquiryForm() {
   });
   const [formLoading, setFormLoading] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submittedTicket, setSubmittedTicket] = useState("");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -59,6 +61,7 @@ export default function InquiryForm() {
         ticketNumber: ticket,
       });
 
+      setSubmittedTicket(ticket);
       setFormLoading(false);
       setFormSubmitted(true);
 
@@ -89,6 +92,7 @@ export default function InquiryForm() {
       industry: "Produk Bakeri",
       message: "",
     });
+    setSubmittedTicket("");
     setFormSubmitted(false);
   };
 
@@ -141,7 +145,26 @@ export default function InquiryForm() {
                 </p>
               </div>
 
-              <div className="pt-4">
+              {submittedTicket && (
+                <div className="bg-slate-50 border border-slate-200 inline-block px-6 py-3 rounded-2xl">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                    {t.form.ticketNumberLabel}
+                  </span>
+                  <span className="text-lg font-black text-brand-navy font-mono tracking-wider">
+                    {submittedTicket}
+                  </span>
+                </div>
+              )}
+
+              <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+                {submittedTicket && (
+                  <Link
+                    href={`/info/berkas-haccp?ticket=${encodeURIComponent(submittedTicket)}`}
+                    className="bg-brand-blue hover:bg-brand-navy text-white text-xs font-extrabold uppercase tracking-widest py-3.5 px-7 transition-all duration-200 rounded-full shadow-md hover:shadow-lg active:scale-98"
+                  >
+                    {lang === "en" ? "Upload Pre-Audit Docs →" : "Unggah Berkas Audit →"}
+                  </Link>
+                )}
                 <button
                   onClick={resetForm}
                   className="bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-extrabold uppercase tracking-widest py-3.5 px-8 transition-all duration-200 cursor-pointer rounded-full shadow-md hover:shadow-lg active:scale-98"
@@ -262,10 +285,10 @@ export default function InquiryForm() {
                   onChange={handleInputChange}
                   className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-colors cursor-pointer rounded-lg"
                 >
-                  <option>{t.form.industryOptions.bakery}</option>
-                  <option>{t.form.industryOptions.meat}</option>
-                  <option>{t.form.industryOptions.specialDietary}</option>
-                  <option>{t.form.industryOptions.foodService}</option>
+                  <option value="Produk Bakeri">{t.form.industryOptions.bakery}</option>
+                  <option value="Daging dan Produk Daging">{t.form.industryOptions.meat}</option>
+                  <option value="Pangan Olahan untuk Keperluan Gizi Khusus">{t.form.industryOptions.specialDietary}</option>
+                  <option value="Jasa Boga / Pelayanan Pangan / SPPG">{t.form.industryOptions.foodService}</option>
                 </select>
               </div>
 

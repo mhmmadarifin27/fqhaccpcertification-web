@@ -6,7 +6,6 @@ import AdminSertifikasi from "../../components/AdminSertifikasi";
 import AdminBerkasHaccp from "../../components/AdminBerkasHaccp";
 import AdminGaleri from "../../components/AdminGaleri";
 import AdminTim from "../../components/AdminTim";
-import AdminProyek from "../../components/AdminProyek";
 import { useToast } from "../../context/ToastContext";
 import ConfirmModal from "../../components/ConfirmModal";
 import { supabase } from "../../lib/supabase";
@@ -15,12 +14,10 @@ import {
   HaccpDocSubmission,
   GalleryItem,
   TeamMember,
-  ProjectItem,
   getInquiries,
   getHaccpDocSubmissions,
   getGallery,
   getTeamMembers,
-  getProjects,
   updateInquiryStatus
 } from "../../lib/db";
 
@@ -38,7 +35,6 @@ export default function AdminPage() {
   const [haccpDocs, setHaccpDocs] = useState<HaccpDocSubmission[]>([]);
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-  const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Check sessionStorage for existing active session on mount
@@ -59,13 +55,11 @@ export default function AdminPage() {
       const docsData = await getHaccpDocSubmissions();
       const galData = await getGallery();
       const teamData = await getTeamMembers();
-      const projData = await getProjects();
 
       setInquiries(inqData);
       setHaccpDocs(docsData);
       setGallery(galData);
       setTeamMembers(teamData);
-      setProjects(projData);
     } catch (e) {
       console.error("Error loading dashboard data:", e);
     } finally {

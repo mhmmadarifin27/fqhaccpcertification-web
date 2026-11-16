@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import { useLanguage } from "../../../context/LanguageContext";
@@ -50,18 +51,18 @@ export default function StrukturPage() {
 
         {/* Bottom Adjacent Centered Action Buttons */}
         <div className="flex flex-wrap justify-center gap-4 pt-6">
-          <a
+          <Link
             href="/#form-inquiry"
             className="bg-brand-navy hover:bg-brand-navy-dark text-white text-xs font-extrabold uppercase tracking-widest py-4 px-8 transition-colors duration-200 active:scale-98 rounded-full shadow-md"
           >
             {t.nav.applyCertification}
-          </a>
-          <a
+          </Link>
+          <Link
             href="/profile/tim"
             className="border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-extrabold uppercase tracking-widest py-4 px-8 transition-colors duration-200 active:scale-98 rounded-full"
           >
             {t.nav.team} &rarr;
-          </a>
+          </Link>
         </div>
 
       </main>
@@ -72,7 +73,10 @@ export default function StrukturPage() {
           onClick={() => setModalOpen(false)}
           className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative max-w-6xl w-full bg-white p-4 rounded-3xl shadow-2xl overflow-hidden my-8">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-6xl w-full bg-white p-4 rounded-3xl shadow-2xl overflow-hidden my-8"
+          >
             <button
               onClick={() => setModalOpen(false)}
               className="absolute top-4 right-4 z-20 w-10 h-10 bg-slate-900 hover:bg-brand-blue text-white flex items-center justify-center rounded-full font-bold text-lg cursor-pointer transition-all border-none"
@@ -82,7 +86,7 @@ export default function StrukturPage() {
             </button>
             <div className="flex justify-center items-center">
               <img
-                src="/struktur-organisasi.jpg"
+                src="/struktur fqc.png"
                 alt="Struktur Organisasi PT Food Quality Certification"
                 className="w-full h-auto max-h-[85vh] object-contain"
               />

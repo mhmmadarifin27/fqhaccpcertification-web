@@ -50,7 +50,7 @@ export default function WhyUsSection() {
               <div className="relative z-10">
                 <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider block leading-none mb-1">{t.whyUs.card2Tag}</span>
                 <h4 className="text-sm sm:text-base font-extrabold text-white">{t.whyUs.card2Title}</h4>
-                <p className="text-[11px] text-slate-300 leading-normal hidden group-hover:block transition-all duration-300 mt-1">
+                <p className="text-[11px] text-slate-300 leading-normal block md:hidden md:group-hover:block transition-all duration-300 mt-1">
                   {t.whyUs.card2Desc}
                 </p>
               </div>
@@ -71,7 +71,7 @@ export default function WhyUsSection() {
               <div className="relative z-10">
                 <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider block leading-none mb-1">{t.whyUs.card3Tag}</span>
                 <h4 className="text-sm sm:text-base font-extrabold text-white">{t.whyUs.card3Title}</h4>
-                <p className="text-[11px] text-slate-300 leading-normal hidden group-hover:block transition-all duration-300 mt-1">
+                <p className="text-[11px] text-slate-300 leading-normal block md:hidden md:group-hover:block transition-all duration-300 mt-1">
                   {t.whyUs.card3Desc}
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function WhyUsSection() {
               <div className="relative z-10">
                 <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider block leading-none mb-1">{t.whyUs.card4Tag}</span>
                 <h4 className="text-sm sm:text-base font-extrabold text-white">{t.whyUs.card4Title}</h4>
-                <p className="text-[11px] text-slate-300 leading-normal hidden group-hover:block transition-all duration-300 mt-1">
+                <p className="text-[11px] text-slate-300 leading-normal block md:hidden md:group-hover:block transition-all duration-300 mt-1">
                   {t.whyUs.card4Desc}
                 </p>
               </div>

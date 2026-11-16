@@ -17,7 +17,7 @@ export async function GET() {
   try {
     // Perform a lightweight query to keep Supabase active and prevent 7-day inactivity pause
     const { data, error } = await supabase
-      .from("team")
+      .from("pegawai")
       .select("id")
       .limit(1);
 

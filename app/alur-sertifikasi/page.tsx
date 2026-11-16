@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useLanguage } from "../../context/LanguageContext";
@@ -17,9 +18,9 @@ export default function AlurSertifikasiPage() {
         {/* Breadcrumb & Navigation */}
         <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pt-6 pb-2">
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-            <a href="/" className="hover:text-brand-navy transition-colors">
+            <Link href="/" className="hover:text-brand-navy transition-colors">
               {lang === "en" ? "Home" : "Beranda"}
-            </a>
+            </Link>
             <span>/</span>
             <span className="text-brand-navy font-bold">
               {lang === "en" ? "Certification Flowchart" : "Alur Sertifikasi Lengkap"}
@@ -103,18 +104,18 @@ export default function AlurSertifikasiPage() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <a
+              <Link
                 href="/#form-inquiry"
                 className="px-8 py-4 bg-brand-blue hover:bg-brand-navy text-white text-xs font-extrabold uppercase tracking-widest rounded-full transition-all shadow-md active:scale-95 border-none cursor-pointer"
               >
                 {lang === "en" ? "Apply for HACCP Certification →" : "Ajukan Permohonan Sertifikasi Sekarang →"}
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/info/berkas-haccp"
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white text-xs font-extrabold uppercase tracking-widest rounded-full transition-all border border-white/20 active:scale-95"
               >
                 {lang === "en" ? "Upload Pre-Audit Documents" : "Unggah Berkas Pra-Audit"}
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -139,7 +140,7 @@ export default function AlurSertifikasiPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src="/alur-sertifikasi.jpeg"
+              src="/alur sertifikasi hccp.jpeg"
               alt="Diagram Alur Lengkap Sertifikasi HACCP HD"
               className="w-full h-auto object-contain rounded-xl"
             />

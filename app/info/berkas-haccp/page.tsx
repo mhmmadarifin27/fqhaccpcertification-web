@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import Link from "next/link";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import { useLanguage } from "../../../context/LanguageContext";
@@ -36,19 +37,7 @@ function BerkasHaccpContent() {
   const [submitting, setSubmitting] = useState(false);
   const [submittedTicket, setSubmittedTicket] = useState<string | null>(null);
 
-  // Auto lookup if query parameter is present in URL
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const queryParam = params.get("email") || params.get("phone") || params.get("ticket") || params.get("key");
-      if (queryParam) {
-        setLookupQuery(queryParam);
-        executeLookup(queryParam);
-      }
-    }
-  }, []);
-
-  const executeLookup = async (queryToSearch: string) => {
+  const executeLookup = useCallback(async (queryToSearch: string) => {
     const q = queryToSearch.trim().toLowerCase();
     if (!q) {
       showToast({
@@ -107,7 +96,21 @@ function BerkasHaccpContent() {
     } finally {
       setLookupLoading(false);
     }
-  };
+  }, [lang, showToast]);
+
+  // Auto lookup if query parameter is present in URL
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const queryParam = params.get("email") || params.get("phone") || params.get("ticket") || params.get("key");
+    if (queryParam) {
+      const timer = setTimeout(() => {
+        setLookupQuery(queryParam);
+        executeLookup(queryParam);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [executeLookup]);
 
   const handleLookupSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -455,9 +458,9 @@ function BerkasHaccpContent() {
                     <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 space-y-2">
                       <p className="font-medium">{t.haccpDocsPage.lookupNotFound}</p>
                       <div className="pt-1">
-                        <a href="/#daftar-online" className="font-extrabold text-brand-blue hover:underline">
+                        <Link href="/#form-inquiry" className="font-extrabold text-brand-blue hover:underline">
                           {t.haccpDocsPage.applyLink}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   )}

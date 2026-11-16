@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   HaccpDocSubmission,
   updateHaccpDocStatus,
@@ -26,27 +26,27 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
   const [selectedItem, setSelectedItem] = useState<HaccpDocSubmission | null>(null);
 
   // Document preview state
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [showInlinePreview, setShowInlinePreview] = useState<boolean>(true);
 
   // Generate and manage temporary Blob URL whenever selectedItem changes
-  useEffect(() => {
-    if (selectedItem) {
-      try {
-        const blob = getDocumentBlob(selectedItem);
-        const url = URL.createObjectURL(blob);
-        setPreviewUrl(url);
-        return () => {
-          URL.revokeObjectURL(url);
-        };
-      } catch (err) {
-        console.error("Failed to generate preview URL:", err);
-        setPreviewUrl(null);
-      }
-    } else {
-      setPreviewUrl(null);
+  const previewUrl = useMemo(() => {
+    if (!selectedItem || typeof window === "undefined") return null;
+    try {
+      const blob = getDocumentBlob(selectedItem);
+      return URL.createObjectURL(blob);
+    } catch (err) {
+      console.error("Failed to generate preview URL:", err);
+      return null;
     }
   }, [selectedItem]);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;

@@ -278,6 +278,11 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh,
         {[
           { id: "all", label: "Semua Status", count: inquiries.length },
           {
+            id: "Permohonan Baru",
+            label: "Permohonan Baru",
+            count: inquiries.filter((i) => i.haccpStatus === "Permohonan Baru").length
+          },
+          {
             id: "Belum Diterapkan",
             label: "Belum Diterapkan",
             count: inquiries.filter((i) => i.haccpStatus === "Belum Diterapkan").length
@@ -362,9 +367,12 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh,
                               ? "text-emerald-700 border-emerald-300 bg-emerald-50"
                               : inq.haccpStatus === "Sedang Persiapan"
                               ? "text-amber-700 border-amber-300 bg-amber-50"
+                              : inq.haccpStatus === "Permohonan Baru"
+                              ? "text-brand-blue border-blue-300 bg-blue-50"
                               : "text-slate-600 border-slate-300 bg-slate-100"
                           }`}
                         >
+                          <option value="Permohonan Baru">Permohonan Baru</option>
                           <option value="Belum Diterapkan">Belum Diterapkan</option>
                           <option value="Sedang Persiapan">Sedang Persiapan</option>
                           <option value="Sudah Diterapkan">Sudah Diterapkan</option>
