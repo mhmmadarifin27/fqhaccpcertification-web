@@ -55,12 +55,14 @@ function BerkasHaccpContent() {
 
     try {
       const inquiries = await getInquiries();
+      const qDigits = q.replace(/\D/g, "");
       const found = inquiries.find((inq) => {
-        const eMatch = inq.email && inq.email.toLowerCase().includes(q);
-        const pMatch = inq.phone && inq.phone.replace(/\D/g, "").includes(q.replace(/\D/g, ""));
-        const cMatch = inq.companyName && inq.companyName.toLowerCase().includes(q);
-        const tMatch = inq.ticketNumber && inq.ticketNumber.toLowerCase().includes(q);
-        return eMatch || tMatch || (q.length >= 4 && pMatch) || (q.length >= 3 && cMatch);
+        const eMatch = inq.email && inq.email.trim().toLowerCase() === q;
+        const tMatch = inq.ticketNumber && inq.ticketNumber.trim().toLowerCase() === q;
+        const pDigits = (inq.phone || "").replace(/\D/g, "");
+        const pMatch = qDigits.length >= 8 && pDigits.endsWith(qDigits.slice(-9));
+        const cMatch = inq.companyName && inq.companyName.trim().toLowerCase() === q;
+        return eMatch || tMatch || pMatch || cMatch;
       });
 
       if (found) {

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import AdminLayout from "../../components/AdminLayout";
 import AdminSertifikasi from "../../components/AdminSertifikasi";
 import AdminBerkasHaccp from "../../components/AdminBerkasHaccp";
@@ -24,6 +25,8 @@ import {
 export default function AdminPage() {
   const { showToast } = useToast();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authChecking, setAuthChecking] = useState(true);
+  const [submittingLogin, setSubmittingLogin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -37,18 +40,8 @@ export default function AdminPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Check sessionStorage for existing active session on mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const sessionActive = sessionStorage.getItem("fq_admin_session") === "true";
-      if (sessionActive) {
-        setIsLoggedIn(true);
-      }
-    }
-  }, []);
-
   // Fetch all state lists from the database helper
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const inqData = await getInquiries();
@@ -65,7 +58,39 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Verify signed HttpOnly admin session cookie with the server on mount
+  useEffect(() => {
+    let active = true;
+    const verifySession = async () => {
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("fq_admin_session");
+      }
+      try {
+        const res = await fetch("/api/admin/session", {
+          method: "GET",
+          cache: "no-store",
+          credentials: "same-origin",
+        });
+        if (!active) return;
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.authenticated) {
+            setIsLoggedIn(true);
+          }
+        }
+      } catch (err) {
+        console.warn("Session verification check failed:", err);
+      } finally {
+        if (active) setAuthChecking(false);
+      }
+    };
+    verifySession();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
@@ -89,11 +114,11 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetchData();
+      void fetchData();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, fetchData]);
 
-  // Handle Login Validation with Supabase Auth & fallback
+  // Handle Login Validation strictly via Server Route Handler (HttpOnly cookie)
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
@@ -106,53 +131,50 @@ export default function AdminPage() {
       return;
     }
 
-    // 1. Try Supabase Authentication
-    if (supabase) {
-      try {
-        const emailToAuth = cleanUser.includes("@") ? cleanUser : `${cleanUser}@fqhaccp.com`;
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: emailToAuth,
-          password: cleanPass,
-        });
-
-        if (!error && data?.user) {
-          setIsLoggedIn(true);
-          if (typeof window !== "undefined") {
-            sessionStorage.setItem("fq_admin_session", "true");
-          }
-          showToast({
-            title: "Login Berhasil",
-            message: `Selamat datang kembali, ${data.user.email}!`,
-            type: "success",
-          });
-          return;
-        }
-      } catch (err) {
-        console.warn("Supabase auth check:", err);
-      }
-    }
-
-    // 2. Direct validation support for Supabase user credentials & admin
-    if (
-      (cleanUser.toLowerCase() === "fqhaccpcertification@gmail.com" && cleanPass === "123456") ||
-      (cleanUser.toLowerCase() === "admin" && (cleanPass === "123456" || cleanPass === "haccp2026"))
-    ) {
-      setIsLoggedIn(true);
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem("fq_admin_session", "true");
-      }
-      showToast({
-        title: "Login Berhasil",
-        message: "Selamat datang di Dashboard Admin PT Food Quality Certification.",
-        type: "success",
+    setSubmittingLogin(true);
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ username: cleanUser, password: cleanPass }),
       });
-    } else {
-      setLoginError("Email / Username atau Password salah.");
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data?.authenticated) {
+        if (data.supabaseSession && supabase) {
+          await supabase.auth.setSession({
+            access_token: data.supabaseSession.access_token,
+            refresh_token: data.supabaseSession.refresh_token,
+          });
+        }
+        setIsLoggedIn(true);
+        setPassword("");
+        showToast({
+          title: "Login Berhasil",
+          message: `Selamat datang kembali, ${data.user || "Administrator"}!`,
+          type: "success",
+        });
+      } else {
+        const errorMsg = data?.error || "Email / Username atau Password salah.";
+        setLoginError(errorMsg);
+        showToast({
+          title: "Autentikasi Gagal",
+          message: errorMsg,
+          type: "error",
+        });
+      }
+    } catch (err) {
+      console.error("Login request error:", err);
+      setLoginError("Gagal terhubung ke server autentikasi.");
       showToast({
-        title: "Autentikasi Gagal",
-        message: "Email / Username atau Password yang Anda masukkan tidak valid.",
+        title: "Kendala Koneksi",
+        message: "Gagal terhubung ke server autentikasi.",
         type: "error",
       });
+    } finally {
+      setSubmittingLogin(false);
     }
   };
 
@@ -161,22 +183,47 @@ export default function AdminPage() {
     setIsLogoutModalOpen(true);
   };
 
-  const handleConfirmLogout = () => {
+  const handleConfirmLogout = async () => {
     setIsLogoutModalOpen(false);
-    setIsLoggedIn(false);
-    setUsername("");
-    setPassword("");
-    if (typeof window !== "undefined") {
-      sessionStorage.removeItem("fq_admin_session");
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "same-origin",
+      });
+      if (supabase) {
+        await supabase.auth.signOut();
+      }
+    } catch (err) {
+      console.warn("Logout cleanup warning:", err);
+    } finally {
+      setIsLoggedIn(false);
+      setUsername("");
+      setPassword("");
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("fq_admin_session");
+      }
+      showToast({
+        title: "Sesi Berakhir",
+        message: "Anda telah berhasil keluar dari panel admin.",
+        type: "info",
+      });
     }
-    showToast({
-      title: "Sesi Berakhir",
-      message: "Anda telah berhasil keluar dari panel admin.",
-      type: "info",
-    });
   };
 
   const [showPassword, setShowPassword] = useState(false);
+
+  if (authChecking) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 text-slate-600">
+        <div className="text-center space-y-3">
+          <div className="w-10 h-10 border-4 border-brand-navy/25 border-t-brand-navy rounded-full animate-spin mx-auto" />
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">
+            Memverifikasi Sesi Admin...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // --- RENDERING LOGIN PANEL (SPLIT SCREEN MATCHING USER REFERENCE IMAGE) ---
   if (!isLoggedIn) {
@@ -205,13 +252,13 @@ export default function AdminPage() {
             </div>
 
             {/* Mobile Beranda Link */}
-            <a
+            <Link
               href="/"
               className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-full border border-slate-200 transition-colors"
             >
               <span>🏠</span>
               <span>Beranda</span>
-            </a>
+            </Link>
           </div>
 
           {/* Form Container */}
@@ -296,9 +343,10 @@ export default function AdminPage() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-brand-blue hover:bg-brand-navy text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer border-none active:scale-98 text-center"
+                  disabled={submittingLogin}
+                  className="w-full py-3.5 bg-brand-blue hover:bg-brand-navy text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer border-none active:scale-98 text-center disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  LOGIN
+                  {submittingLogin ? "MEMVERIFIKASI..." : "LOGIN"}
                 </button>
               </div>
             </form>
@@ -325,13 +373,13 @@ export default function AdminPage() {
 
           {/* Top-Right Beranda Button */}
           <div className="relative z-20 flex justify-end">
-            <a
+            <Link
               href="/"
               className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs rounded-full border border-white/20 backdrop-blur-md transition-all duration-200 shadow-lg active:scale-95"
             >
               <span>🏠</span>
               <span>Beranda</span>
-            </a>
+            </Link>
           </div>
 
           {/* Showcase Quote Content */}

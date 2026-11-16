@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -17,7 +18,7 @@ export default function Footer() {
 
           {/* Column 1: Company Profile */}
           <div className="lg:col-span-2 space-y-4">
-            <a href="/admin" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3">
               <div className="h-10 w-auto flex items-center justify-center">
                 <Image
                   src="/logo2.png"
@@ -36,7 +37,7 @@ export default function Footer() {
                   CERTIFICATION
                 </span>
               </div>
-            </a>
+            </Link>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm font-normal">
               {t.footer.companyDesc}
             </p>
