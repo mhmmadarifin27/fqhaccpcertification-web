@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -8,13 +8,26 @@ export default function WhatsAppButton() {
   const pathname = usePathname();
   const { lang } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
+  const [autoVisible, setAutoVisible] = useState(true);
 
-  // Jangan tampilkan di halaman login admin maupun dashboard internal
-  if (
+  const isHiddenRoute =
     pathname?.startsWith("/admin") ||
     pathname?.startsWith("/login") ||
-    pathname?.startsWith("/dashboard")
-  ) {
+    pathname?.startsWith("/dashboard");
+
+  // Auto toggle tooltip label every 5 seconds (open 5s -> close 5s -> repeat)
+  useEffect(() => {
+    if (isHiddenRoute || isHovered) return;
+
+    const timer = setInterval(() => {
+      setAutoVisible((prev) => !prev);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [isHiddenRoute, isHovered]);
+
+  // Jangan tampilkan di halaman login admin maupun dashboard internal
+  if (isHiddenRoute) {
     return null;
   }
 
@@ -25,27 +38,36 @@ export default function WhatsAppButton() {
       : "Halo PT Food Quality Certification, saya ingin konsultasi mengenai sertifikasi HACCP.";
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const showLabel = autoVisible || isHovered;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-      {/* Interactive Tooltip / Label */}
+    <div
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Interactive Auto-Toggle Tooltip / Label */}
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="hidden sm:flex items-center gap-2.5 bg-white/95 backdrop-blur-md text-slate-800 px-4 py-2 rounded-full shadow-lg border border-slate-200/80 hover:border-emerald-300 transition-all duration-300 group cursor-pointer hover:shadow-xl hover:-translate-x-1"
+        aria-hidden={!showLabel}
+        tabIndex={showLabel ? 0 : -1}
+        className={`flex items-center gap-2.5 bg-white/95 backdrop-blur-md text-slate-800 px-3.5 sm:px-4 py-2 rounded-full shadow-lg border border-slate-200/80 hover:border-emerald-300 transition-all duration-500 ease-in-out group cursor-pointer hover:shadow-xl ${
+          showLabel
+            ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
+            : "opacity-0 translate-x-4 scale-95 pointer-events-none"
+        }`}
       >
-        <span className="relative flex h-2.5 w-2.5">
+        <span className="relative flex h-2.5 w-2.5 shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
         </span>
         <div className="flex flex-col text-left">
-          <span className="text-[11px] font-extrabold text-slate-800 group-hover:text-emerald-600 transition-colors">
+          <span className="text-[11px] font-extrabold text-slate-800 group-hover:text-emerald-600 transition-colors whitespace-nowrap">
             {lang === "en" ? "Chat on WhatsApp" : "Konsultasi WhatsApp"}
           </span>
-          <span className="text-[9px] font-semibold text-slate-500">
+          <span className="text-[9px] font-semibold text-slate-500 whitespace-nowrap">
             0813-9898-7655
           </span>
         </div>
@@ -57,9 +79,7 @@ export default function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Hubungi kami melalui WhatsApp di 0813-9898-7655"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="relative group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_28px_rgba(37,211,102,0.65)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+        className="relative group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_28px_rgba(37,211,102,0.65)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shrink-0"
       >
         {/* Pulsing Aura */}
         <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-30 group-hover:opacity-50 animate-ping pointer-events-none" />
