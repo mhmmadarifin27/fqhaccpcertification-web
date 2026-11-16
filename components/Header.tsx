@@ -39,7 +39,7 @@ export default function Header() {
       {/* Main Nav Bar */}
       <div className="flex justify-between items-center px-4 lg:px-12 py-3 md:py-4 transition-all duration-350">
         {/* Logo & Brand Title */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/admin" className="flex items-center gap-3 group">
           <div className="h-10 sm:h-12 w-auto flex items-center justify-center transition-transform group-hover:scale-105 duration-300">
             <Image
               src="/logo2.png"

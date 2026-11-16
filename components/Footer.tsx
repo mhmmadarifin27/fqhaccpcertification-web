@@ -18,7 +18,7 @@ export default function Footer() {
 
           {/* Column 1: Company Profile */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/admin" className="flex items-center gap-3">
               <div className="h-10 w-auto flex items-center justify-center">
                 <Image
                   src="/logo2.png"
