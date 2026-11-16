@@ -155,9 +155,14 @@ export const createInquiry = async (
   return newInq;
 };
 
-export const updateInquiryStatus = async (id: string, status: string): Promise<boolean> => {
+export const updateInquiryStatus = async (
+  id: string,
+  status: string,
+  ticketNumber?: string
+): Promise<boolean> => {
   // 1. LocalStorage
   const localList = getLocal<SertifikasiInquiry>("hacpp_inquiries", SEED_INQUIRIES);
+  const targetItem = localList.find((item) => item.id === id);
   const updatedList = localList.map((item) =>
     item.id === id ? { ...item, haccpStatus: status } : item
   );
@@ -166,32 +171,49 @@ export const updateInquiryStatus = async (id: string, status: string): Promise<b
   // 2. Supabase
   if (isSupabaseConfigured && supabase) {
     try {
-      const dbId = id.startsWith("inq-") ? -1 : parseInt(id, 10);
-      const targetItem = localList.find((item) => item.id === id);
-      if (targetItem) {
-        if (dbId !== -1 && !isNaN(dbId)) {
+      const isLocalOnlyId = id.startsWith("inq-");
+      const isNumericId = /^\d+$/.test(id);
+
+      if (!isLocalOnlyId) {
+        const queryId = isNumericId ? parseInt(id, 10) : id;
+        const { data, error } = await supabase
+          .from("sertifikasi")
+          .update({ haccp_status: status })
+          .eq("id", queryId)
+          .select("id");
+
+        if (error) {
+          console.error("Error updating status in Supabase:", error);
+          throw new Error(error.message);
+        }
+        if ((!data || data.length === 0) && ticketNumber) {
+          const fallback = await supabase
+            .from("sertifikasi")
+            .update({ haccp_status: status })
+            .eq("ticket_number", ticketNumber)
+            .select("id");
+          if (fallback.error) throw new Error(fallback.error.message);
+        }
+      } else {
+        const ticket = targetItem?.ticketNumber || ticketNumber;
+        if (ticket) {
           const { error } = await supabase
             .from("sertifikasi")
             .update({ haccp_status: status })
-            .eq("id", dbId);
-          if (error) console.error("Error updating status in Supabase:", error);
-        } else {
-          const { error } = await supabase
-            .from("sertifikasi")
-            .update({ haccp_status: status })
-            .eq("ticket_number", targetItem.ticketNumber);
+            .eq("ticket_number", ticket);
           if (error) console.error("Error updating status in Supabase:", error);
         }
       }
     } catch (e) {
       console.error("Connection failed during Supabase status update:", e);
+      throw e;
     }
   }
 
   return true;
 };
 
-export const deleteInquiry = async (id: string): Promise<boolean> => {
+export const deleteInquiry = async (id: string, ticketNumber?: string): Promise<boolean> => {
   // 1. LocalStorage
   const localList = getLocal<SertifikasiInquiry>("hacpp_inquiries", SEED_INQUIRIES);
   const targetItem = localList.find((item) => item.id === id);
@@ -199,18 +221,56 @@ export const deleteInquiry = async (id: string): Promise<boolean> => {
   setLocal("hacpp_inquiries", updatedList);
 
   // 2. Supabase
-  if (isSupabaseConfigured && supabase && targetItem) {
-    try {
-      const dbId = id.startsWith("inq-") ? -1 : parseInt(id, 10);
-      if (dbId !== -1 && !isNaN(dbId)) {
-        const { error } = await supabase.from("sertifikasi").delete().eq("id", dbId);
-        if (error) console.error("Error deleting inquiry from Supabase:", error);
-      } else {
-        const { error } = await supabase.from("sertifikasi").delete().eq("ticket_number", targetItem.ticketNumber);
-        if (error) console.error("Error deleting inquiry from Supabase:", error);
+  if (isSupabaseConfigured && supabase) {
+    const isLocalOnlyId = id.startsWith("inq-");
+    const isNumericId = /^\d+$/.test(id);
+
+    if (!isLocalOnlyId) {
+      const queryId = isNumericId ? parseInt(id, 10) : id;
+      const { data, error } = await supabase
+        .from("sertifikasi")
+        .delete()
+        .eq("id", queryId)
+        .select("id");
+
+      if (error) {
+        console.error("Error deleting inquiry from Supabase:", error);
+        throw new Error(`Supabase menolak penghapusan: ${error.message}`);
       }
-    } catch (e) {
-      console.error("Connection failed during Supabase inquiry deletion:", e);
+
+      if (!data || data.length === 0) {
+        if (ticketNumber) {
+          const fallback = await supabase
+            .from("sertifikasi")
+            .delete()
+            .eq("ticket_number", ticketNumber)
+            .select("id");
+          if (fallback.error) {
+            throw new Error(`Supabase menolak penghapusan: ${fallback.error.message}`);
+          }
+          if (!fallback.data || fallback.data.length === 0) {
+            throw new Error(
+              "Data gagal dihapus dari Supabase (periksa apakah policy RLS DELETE pada tabel 'sertifikasi' sudah diaktifkan)."
+            );
+          }
+        } else {
+          throw new Error(
+            "Data gagal dihapus dari Supabase (periksa apakah policy RLS DELETE pada tabel 'sertifikasi' sudah diaktifkan)."
+          );
+        }
+      }
+    } else {
+      const ticket = targetItem?.ticketNumber || ticketNumber;
+      if (ticket) {
+        const { error } = await supabase
+          .from("sertifikasi")
+          .delete()
+          .eq("ticket_number", ticket);
+        if (error) {
+          console.error("Error deleting inquiry by ticket from Supabase:", error);
+          throw new Error(`Supabase menolak penghapusan: ${error.message}`);
+        }
+      }
     }
   }
 

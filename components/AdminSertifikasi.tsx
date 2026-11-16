@@ -8,8 +8,8 @@ import ConfirmModal from "./ConfirmModal";
 interface AdminSertifikasiProps {
   inquiries: SertifikasiInquiry[];
   onUpdateStatus: (id: string, newStatus: string) => void;
-  onRefresh?: () => void;
-  onDelete?: (id: string) => void;
+  onRefresh?: () => Promise<void> | void;
+  onDelete?: (id: string) => Promise<void> | void;
 }
 
 export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh, onDelete }: AdminSertifikasiProps) {
@@ -34,15 +34,15 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh,
   const handleConfirmDelete = async () => {
     try {
       if (onDelete) {
-        onDelete(deleteModal.id);
+        await onDelete(deleteModal.id);
       } else {
-        await deleteInquiry(deleteModal.id);
+        await deleteInquiry(deleteModal.id, deleteModal.ticket);
         showToast({
           title: "Pengajuan Dihapus",
           message: `Data pengajuan ${deleteModal.ticket} dari "${deleteModal.company}" berhasil dihapus.`,
           type: "success",
         });
-        onRefresh?.();
+        await onRefresh?.();
       }
       setDeleteModal({ isOpen: false, id: "", ticket: "", company: "" });
       if (expandedId === deleteModal.id) {
@@ -50,11 +50,14 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh,
       }
     } catch (err) {
       console.error("Delete inquiry error:", err);
+      const errMsg = err instanceof Error ? err.message : "Terjadi kesalahan saat menghapus data permohonan.";
       showToast({
         title: "Gagal Menghapus",
-        message: "Terjadi kesalahan saat menghapus data permohonan.",
+        message: errMsg,
         type: "error",
+        duration: 7000,
       });
+      setDeleteModal({ isOpen: false, id: "", ticket: "", company: "" });
     }
   };
 

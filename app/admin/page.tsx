@@ -69,7 +69,8 @@ export default function AdminPage() {
 
   const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
-      await updateInquiryStatus(id, newStatus);
+      const target = inquiries.find((item) => item.id === id);
+      await updateInquiryStatus(id, newStatus, target?.ticketNumber);
       showToast({
         title: "Status Diperbarui",
         message: `Status permohonan berhasil diperbarui menjadi "${newStatus}".`,
@@ -80,7 +81,7 @@ export default function AdminPage() {
       console.error("Failed to update status:", err);
       showToast({
         title: "Gagal Update",
-        message: "Gagal memperbarui status pengajuan.",
+        message: err instanceof Error ? err.message : "Gagal memperbarui status pengajuan.",
         type: "error",
       });
     }
