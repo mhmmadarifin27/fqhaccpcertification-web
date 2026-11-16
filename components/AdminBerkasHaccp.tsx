@@ -203,11 +203,11 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
           <table className="min-w-full divide-y divide-slate-100 text-left border-collapse text-xs">
             <thead className="bg-slate-50/80 uppercase font-black text-slate-400 tracking-wider">
               <tr>
-                <th className="px-6 py-4">Tiket & Tanggal</th>
-                <th className="px-6 py-4">Perusahaan & PIC</th>
-                <th className="px-6 py-4">Kategori & Lampiran Berkas</th>
-                <th className="px-6 py-4">Status Review</th>
-                <th className="px-6 py-4 text-right">Aksi</th>
+                <th className="px-5 py-3.5">Tiket & Tanggal</th>
+                <th className="px-5 py-3.5">Perusahaan</th>
+                <th className="px-5 py-3.5">Lampiran Berkas</th>
+                <th className="px-5 py-3.5">Status</th>
+                <th className="px-5 py-3.5 text-right">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
@@ -222,50 +222,38 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
                   const typeInfo = getFileTypeInfo(item.fileName, item.fileData);
                   return (
                     <tr key={item.id} className="hover:bg-slate-50/70 transition-colors">
-                      <td className="px-6 py-4">
-                        <p className="font-extrabold text-brand-navy font-mono text-xs">{item.ticketNumber}</p>
-                        <p className="text-[10px] text-slate-400 mt-0.5">
+                      <td className="px-5 py-3.5 whitespace-nowrap">
+                        <span className="inline-block bg-blue-50/80 text-brand-navy border border-blue-200/50 px-2.5 py-0.5 rounded-lg font-extrabold font-mono text-[11px]">
+                          {item.ticketNumber}
+                        </span>
+                        <p className="text-[10px] text-slate-400 mt-1">
                           {new Date(item.createdAt).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
                         </p>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="font-extrabold text-slate-900 text-sm leading-snug">{item.companyName}</p>
-                        <p className="text-[11px] text-slate-500 font-normal">PIC: {item.picName} ({item.picPhone})</p>
-                        <p className="text-[10px] text-slate-400 mt-0.5">📦 Ruang Lingkup: {item.productScope}</p>
+                      <td className="px-5 py-3.5">
+                        <p className="font-extrabold text-slate-900 text-xs sm:text-sm leading-snug">{item.companyName}</p>
+                        <p className="text-[11px] text-slate-500 font-normal mt-0.5">PIC: {item.picName}</p>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="font-bold text-slate-800 text-xs">{item.documentCategoryLabel}</p>
-                        <div className="flex items-center gap-1.5 mt-1 text-[11px] text-brand-blue font-mono font-medium">
-                          <span>{typeInfo.icon}</span>
-                          <span className="truncate max-w-xs">{item.fileName}</span>
-                          {item.fileSize && <span className="text-slate-400 text-[10px]">({item.fileSize})</span>}
-                        </div>
-
-                        {/* Quick action buttons right inside the table row */}
-                        <div className="flex items-center gap-2 mt-2">
-                          <button
-                            type="button"
-                            onClick={() => openDocumentInNewTab(item)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200/80 rounded-md text-[10px] font-bold transition-colors cursor-pointer"
-                            title="Buka pratinjau dokumen di tab baru browser"
-                          >
-                            <span>👁️</span> Buka Berkas
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => downloadDocumentFile(item)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-md text-[10px] font-bold transition-colors cursor-pointer"
-                            title="Unduh file dokumen ke komputer"
-                          >
-                            <span>⬇️</span> Unduh
-                          </button>
-                        </div>
+                      <td className="px-5 py-3.5 max-w-[280px]">
+                        <button
+                          type="button"
+                          onClick={() => openDocumentInNewTab(item)}
+                          title={`Buka ${item.fileName}`}
+                          className="flex items-center gap-1.5 text-xs text-brand-blue hover:text-brand-navy font-mono font-semibold hover:underline cursor-pointer bg-transparent border-none p-0 text-left max-w-full"
+                        >
+                          <span className="shrink-0">{typeInfo.icon}</span>
+                          <span className="truncate">{item.fileName}</span>
+                          {item.fileSize && <span className="text-slate-400 text-[10px] shrink-0">({item.fileSize})</span>}
+                        </button>
+                        <p className="text-[10px] text-slate-400 truncate mt-0.5" title={item.documentCategoryLabel}>
+                          {item.documentCategoryLabel}
+                        </p>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-5 py-3.5 whitespace-nowrap">
                         <select
                           value={item.status}
                           onChange={(e) => handleStatusChange(item.id, e.target.value as HaccpDocSubmission["status"])}
-                          className="text-[11px] font-bold py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer focus:outline-brand-blue"
+                          className="text-[11px] font-bold py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer focus:outline-brand-blue"
                         >
                           <option value="submitted">📥 Diterima</option>
                           <option value="under_review">🔍 Ditinjau</option>
@@ -273,24 +261,35 @@ export default function AdminBerkasHaccp({ documents, onRefresh }: AdminBerkasHa
                           <option value="need_revision">⚠️ Revisi</option>
                         </select>
                       </td>
-                      <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedItem(item);
-                            setShowInlinePreview(true);
-                          }}
-                          className="px-3 py-1.5 bg-brand-navy text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs hover:bg-brand-navy-dark inline-flex items-center gap-1"
-                        >
-                          <span>👁️</span> Detail & Buka
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setDeleteModal({ isOpen: true, id: item.id, ticket: item.ticketNumber, company: item.companyName })}
-                          className="px-3 py-1.5 bg-rose-600 text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none shadow-2xs hover:bg-rose-700"
-                        >
-                          Hapus
-                        </button>
+                      <td className="px-5 py-3.5 text-right whitespace-nowrap">
+                        <div className="inline-flex items-center justify-end gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedItem(item);
+                              setShowInlinePreview(true);
+                            }}
+                            className="px-2.5 py-1.5 bg-brand-navy hover:bg-brand-navy-dark text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none transition-colors"
+                            title="Lihat detail & pratinjau berkas"
+                          >
+                            Detail
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => downloadDocumentFile(item)}
+                            className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border border-slate-200 transition-colors"
+                            title="Unduh file dokumen"
+                          >
+                            Unduh
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDeleteModal({ isOpen: true, id: item.id, ticket: item.ticketNumber, company: item.companyName })}
+                            className="px-2.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-[10px] uppercase tracking-wider rounded-lg cursor-pointer border-none transition-colors"
+                          >
+                            Hapus
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
