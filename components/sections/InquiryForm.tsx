@@ -5,8 +5,6 @@ import Link from "next/link";
 import { createInquiry } from "../../lib/db";
 import { useLanguage } from "../../context/LanguageContext";
 import { useToast } from "../../context/ToastContext";
-import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
-import { ShieldCheck } from "lucide-react";
 
 export default function InquiryForm() {
   const { lang, t } = useLanguage();
@@ -176,17 +174,6 @@ export default function InquiryForm() {
           ) : (
             // Inquiry Form
             <form onSubmit={handleFormSubmit} className="space-y-6">
-              <Alert variant="default" className="bg-slate-50/80 border-slate-200">
-                <ShieldCheck className="h-4 w-4 text-brand-blue" />
-                <AlertTitle className="text-slate-900 font-bold text-xs uppercase tracking-wider">
-                  {lang === "en" ? "Official Application Portal" : "Portal Pendaftaran Resmi"}
-                </AlertTitle>
-                <AlertDescription className="text-slate-500 text-[11px]">
-                  {lang === "en"
-                    ? "Direct application to official HACCP certification body."
-                    : "Pendaftaran langsung ke Lembaga Sertifikasi HACCP resmi."}
-                </AlertDescription>
-              </Alert>
               <div className="space-y-1">
                 <h3 className="text-lg font-bold text-slate-900 font-heading">{t.form.title}</h3>
                 <p className="text-slate-400 text-xs font-normal">{t.form.description}</p>
