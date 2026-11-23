@@ -42,6 +42,7 @@ function AdminSidebar({
     { id: "dashboard", label: "Dashboard Ringkasan", icon: "📊" },
     { id: "sertifikasi", label: "Permohonan Sertifikasi", icon: "📝" },
     { id: "berkas-haccp", label: "Berkas Audit HACCP", icon: "📁" },
+    { id: "keluhan-banding", label: "Keluhan & Banding", icon: "⚖️" },
     { id: "pegawai", label: "Kelola Pegawai / Tim", icon: "👥" },
     { id: "galeri", label: "Kelola Galeri Foto", icon: "🖼️" }
   ];
@@ -164,6 +165,7 @@ export default function AdminLayout({
                   {activeTab === "dashboard" && "Dashboard Ringkasan Analytics"}
                   {activeTab === "sertifikasi" && "Pengajuan Sertifikasi HACCP"}
                   {activeTab === "berkas-haccp" && "Kelola Berkas Audit HACCP"}
+                  {activeTab === "keluhan-banding" && "Kelola Keluhan & Banding"}
                   {activeTab === "pegawai" && "Kelola Pegawai & Tim Auditor"}
                   {activeTab === "galeri" && "Kelola Galeri Dokumentasi"}
                 </h2>

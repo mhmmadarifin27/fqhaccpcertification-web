@@ -21,9 +21,9 @@ export const SEED_PROJECTS: ProjectItem[] = [
   },
   {
     id: "proj-2",
-    name: "PT Daging Sejahtera Utama",
-    category: "DAGING DAN PRODUK DAGING",
-    desc: "Audit sertifikasi fasilitas pemotongan dan pengolahan daging sapi, daging unggas, sosis, bakso, dan produk olahan daging beku.",
+    name: "PT Rempah Nusantara Sejahtera",
+    category: "REMPAH DAN PRODUK REMPAH",
+    desc: "Audit sertifikasi fasilitas pengeringan, penggilingan, pencampuran, dan pengemasan aneka rempah-rempah serta bumbu kering.",
     image: "/hero2.jpg",
     year: "2025"
   },

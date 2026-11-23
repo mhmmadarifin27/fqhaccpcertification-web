@@ -31,14 +31,14 @@ export const SEED_INQUIRIES: SertifikasiInquiry[] = [
   },
   {
     id: "inq-2",
-    companyName: "PT Daging Segar Nusantara",
+    companyName: "PT Rempah Nusantara Sejahtera",
     companyAddress: "Kawasan Industri Boyolali Blok B5, Jawa Tengah",
     picName: "Anita Wijaya",
     phone: "+62 822-3344-5566",
-    email: "anita@dagingsegar.co.id",
-    industry: "Daging dan Produk Daging",
+    email: "anita@rempahnusantara.co.id",
+    industry: "Rempah dan Produk Rempah",
     haccpStatus: "Belum Diterapkan",
-    message: "Fasilitas pemotongan dan pengolahan sosis/bakso beku memerlukan audit kesesuaian sistem HACCP.",
+    message: "Fasilitas pengolahan, pengeringan, dan pengemasan rempah bubuk serta bumbu kering memerlukan audit kesesuaian sistem HACCP.",
     ticketNumber: "HACCP-2026-3029",
     createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
   },

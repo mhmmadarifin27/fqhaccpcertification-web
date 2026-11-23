@@ -19,6 +19,7 @@ export interface TranslationDictionary {
     visitorInfo: string;
     trainingList: string;
     haccpDocs: string;
+    complaintsAppeals: string;
     adminPortal: string;
     applyCertification: string;
     accreditationTag: string;

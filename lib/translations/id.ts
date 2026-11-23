@@ -17,7 +17,8 @@ export const id: TranslationDictionary = {
       contact: "Kontak",
       visitorInfo: "Info Pengunjung",
       trainingList: "Daftar Pelatihan",
-      haccpDocs: "Berkas HACCP",
+      haccpDocs: "Pendaftaran HACCP",
+      complaintsAppeals: "Keluhan dan Banding",
       adminPortal: "Portal Admin",
       applyCertification: "Ajukan Sertifikasi",
       accreditationTag: "Standar SNI CXC 1:1969 • Keamanan Pangan",
@@ -124,11 +125,11 @@ export const id: TranslationDictionary = {
           icon: "🍞",
         },
         {
-          name: "Daging dan Produk Daging",
+          name: "Rempah dan Produk Rempah",
           category: "RUANG LINGKUP 2",
-          desc: "Fasilitas pemotongan, penanganan, dan pengolahan daging sapi, unggas, sosis, bakso, nugget, serta aneka olahan daging beku.",
+          desc: "Pengolahan, pengeringan, penggilingan, pencampuran, dan pengemasan aneka rempah-rempah, bumbu kering, ekstrak rempah, serta produk olahan rempah.",
           image: "/hero2.jpg",
-          icon: "🥩",
+          icon: "🌿",
         },
         {
           name: "Pangan Olahan untuk Keperluan Gizi Khusus",
@@ -236,7 +237,7 @@ export const id: TranslationDictionary = {
       },
       industryOptions: {
         bakery: "Produk Bakeri",
-        meat: "Daging dan Produk Daging",
+        meat: "Rempah dan Produk Rempah",
         specialDietary: "Pangan Olahan untuk Keperluan Gizi Khusus",
         foodService: "Jasa Boga / Pelayanan Pangan / SPPG",
       },
@@ -474,7 +475,7 @@ export const id: TranslationDictionary = {
     },
     haccpDocsPage: {
       tagline: "PORTAL PRA-AUDIT SERTIFIKASI HACCP",
-      title: "Unggah Dokumen Persiapan Audit HACCP",
+      title: "Pendaftaran HACCP",
       subtitle:
         "Portal resmi bagi pemohon sertifikasi untuk mengunggah dokumen sistem keamanan pangan SNI CXC 1:1969 (2024) sebelum pelaksanaan audit tahap 1.",
       guideTitle: "Panduan Berkas Persiapan Audit — Standar SNI CXC 1:1969 (2024)",

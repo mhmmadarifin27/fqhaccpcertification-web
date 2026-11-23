@@ -345,7 +345,7 @@ export default function AdminProyek({ projects, onRefresh }: AdminProyekProps) {
                   className="w-full px-4 py-2.5 border border-slate-200/80 bg-slate-50 text-xs focus:bg-white focus:outline-brand-blue rounded-xl font-medium cursor-pointer"
                 >
                   <option>PRODUK BAKERI</option>
-                  <option>DAGING DAN PRODUK DAGING</option>
+                  <option>REMPAH DAN PRODUK REMPAH</option>
                   <option>PANGAN OLAHAN GIZI KHUSUS</option>
                   <option>JASA BOGA / PELAYANAN PANGAN / SPPG</option>
                 </select>

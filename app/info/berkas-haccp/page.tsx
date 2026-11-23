@@ -390,6 +390,7 @@ function BerkasHaccpContent() {
                   </div>
 
                   {!matchedInquiry ? (
+                    <div className="space-y-3.5">
                     <form onSubmit={handleLookupSubmit} className="flex flex-col sm:flex-row gap-2.5">
                       <input
                         type="text"
@@ -413,6 +414,32 @@ function BerkasHaccpContent() {
                         )}
                       </button>
                     </form>
+
+                    {/* Register CTA for applicants who haven't submitted a certification request yet */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-blue-50/70 border border-blue-200/80 rounded-2xl px-4 py-3.5">
+                      <div className="flex items-start sm:items-center gap-2.5 text-xs text-slate-700">
+                        <span className="text-base shrink-0">📝</span>
+                        <div>
+                          <p className="font-bold text-brand-navy">
+                            {lang === "en"
+                              ? "Haven't registered for HACCP certification yet?"
+                              : "Belum mendaftar permohonan sertifikasi HACCP?"}
+                          </p>
+                          <p className="text-[11px] text-slate-600 mt-0.5">
+                            {lang === "en"
+                              ? "Complete the online registration form first so your company email is registered before uploading documents."
+                              : "Isi formulir pendaftaran terlebih dahulu agar email perusahaan Anda terdaftar sebelum mengunggah berkas."}
+                          </p>
+                        </div>
+                      </div>
+                      <Link
+                        href="/#form-inquiry"
+                        className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-brand-blue hover:bg-brand-blue-dark text-white font-extrabold text-[11px] uppercase tracking-wider rounded-xl transition-all shadow-xs shrink-0 no-underline whitespace-nowrap"
+                      >
+                        {lang === "en" ? "Register Now" : "Daftar Sekarang"} &rarr;
+                      </Link>
+                    </div>
+                    </div>
                   ) : (
                     /* VERIFIED DATA CARD */
                     <div className="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 sm:p-5 space-y-3 animate-fade-in">

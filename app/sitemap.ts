@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1.0, changeFrequency: "weekly" as const },
     { path: "/alur-sertifikasi", priority: 0.9, changeFrequency: "monthly" as const },
     { path: "/info/berkas-haccp", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/info/keluhan-banding", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/profile/tentang-kami", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/profile/tim", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/profile/visi-misi", priority: 0.7, changeFrequency: "yearly" as const },

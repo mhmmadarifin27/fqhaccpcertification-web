@@ -17,7 +17,8 @@ export const en: TranslationDictionary = {
       contact: "Contact",
       visitorInfo: "Visitor Info",
       trainingList: "Training Programs",
-      haccpDocs: "HACCP Documents",
+      haccpDocs: "HACCP Registration",
+      complaintsAppeals: "Complaints & Appeals",
       adminPortal: "Admin Portal",
       applyCertification: "Apply for Certification",
       accreditationTag: "SNI CXC 1:1969 Standard • Food Safety",
@@ -124,11 +125,11 @@ export const en: TranslationDictionary = {
           icon: "🍞",
         },
         {
-          name: "Meat and Meat Products",
+          name: "Spices and Spice Products",
           category: "AUDIT SCOPE 2",
-          desc: "Slaughtering, handling, and processing facilities for beef, poultry, sausages, meatballs, nuggets, and frozen processed meats.",
+          desc: "Processing, drying, grinding, blending, and packaging of herbs, spices, dried seasonings, spice extracts, and spice-based products.",
           image: "/hero2.jpg",
-          icon: "🥩",
+          icon: "🌿",
         },
         {
           name: "Processed Food for Special Dietary Needs",
@@ -236,7 +237,7 @@ export const en: TranslationDictionary = {
       },
       industryOptions: {
         bakery: "Bakery Products",
-        meat: "Meat and Meat Products",
+        meat: "Spices and Spice Products",
         specialDietary: "Processed Food for Special Dietary Needs",
         foodService: "Food Services / Catering / SPPG",
       },
@@ -474,7 +475,7 @@ export const en: TranslationDictionary = {
     },
     haccpDocsPage: {
       tagline: "HACCP CERTIFICATION PRE-AUDIT PORTAL",
-      title: "Upload Pre-Audit HACCP Preparation Documents",
+      title: "HACCP Registration",
       subtitle:
         "Official portal for certification applicants to submit food safety documentation compliance under the SNI CXC 1:1969 (2024) standard prior to stage 1 audit.",
       guideTitle: "Audit Document Guidelines — SNI CXC 1:1969 (2024) Standard",

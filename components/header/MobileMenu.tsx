@@ -111,6 +111,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             >
               {t.nav.haccpDocs}
             </a>
+            <a
+              href="/info/keluhan-banding"
+              onClick={onClose}
+              className="block py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors"
+            >
+              {t.nav.complaintsAppeals}
+            </a>
           </div>
         )}
       </div>

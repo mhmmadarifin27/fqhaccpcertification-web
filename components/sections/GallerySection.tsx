@@ -82,9 +82,11 @@ export default function GallerySection() {
     };
   }, [lang, galleryList]);
 
-  const filteredGallery = displayGallery.filter((item) =>
-    galleryCategory === "all" ? true : item.category.toLowerCase().includes(galleryCategory.toLowerCase())
-  );
+  const filteredGallery = displayGallery
+    .filter((item) => item.category.toLowerCase() !== "pelatihan")
+    .filter((item) =>
+      galleryCategory === "all" ? true : item.category.toLowerCase().includes(galleryCategory.toLowerCase())
+    );
 
   return (
     <section ref={sectionRef} id="galeri" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-950 text-white relative overflow-hidden">
@@ -106,7 +108,6 @@ export default function GallerySection() {
               { id: "all", label: t.gallery.filterAll },
               { id: "Audit", label: t.gallery.filterAudit },
               { id: "Event", label: t.gallery.filterCertificate },
-              { id: "Pelatihan", label: t.gallery.filterTraining },
               { id: "Penghargaan", label: t.gallery.filterKan },
             ].map((tab) => (
               <button

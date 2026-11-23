@@ -34,7 +34,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
 
   const sampleImages = [
     { label: "Pabrik Susu", url: "/hero1.jpg" },
-    { label: "Auditor Training", url: "/hero2.jpg" },
+    { label: "Audit Lapangan", url: "/hero2.jpg" },
     { label: "Serah Terima", url: "/iso.jpg" },
     { label: "Piagam/Sertifikat", url: "/iso.jpg" }
   ];
@@ -139,7 +139,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
 
   return (
     <div className="space-y-6">
-      
+
       {/* Upload trigger bar - DRIBBBLE ROUNDED CARD */}
       <div className="bg-white border border-slate-200/80 p-6 md:p-8 rounded-3xl shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -212,7 +212,7 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
       {/* CREATE NEW PHOTO MODAL FORM - ROUNDED DRIBBBLE MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
-          
+
           <div className="bg-white border border-slate-200/80 w-full max-w-xl relative z-10 shadow-2xl overflow-hidden my-8 rounded-3xl">
             {/* Modal Header */}
             <div className="bg-brand-navy text-white py-5 px-6 flex items-center justify-between border-b border-white/10">
@@ -252,7 +252,6 @@ export default function AdminGaleri({ gallery, onRefresh }: AdminGaleriProps) {
                 >
                   <option value="Audit">Audit Lapangan</option>
                   <option value="Event">Seremonial / Event</option>
-                  <option value="Pelatihan">Edukasi / Pelatihan</option>
                   <option value="Penghargaan">Penghargaan / Akreditasi</option>
                   <option value="Lainnya">Lain-lain</option>
                 </select>

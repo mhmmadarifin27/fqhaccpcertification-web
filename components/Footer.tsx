@@ -58,6 +58,7 @@ export default function Footer() {
               <a href="/" className="hover:text-white transition-colors">{t.nav.home}</a>
               <a href="/profile/tentang-kami" className="hover:text-white transition-colors">{t.nav.profile}</a>
               <a href="/info/berkas-haccp" className="hover:text-white transition-colors">{t.nav.haccpDocs}</a>
+              <a href="/info/keluhan-banding" className="hover:text-white transition-colors">{t.nav.complaintsAppeals}</a>
               <a href="/alur-sertifikasi" className="hover:text-white transition-colors">{t.nav.timeline}</a>
               <a href="/#faq" className="hover:text-white transition-colors">{t.nav.faq}</a>
             </nav>

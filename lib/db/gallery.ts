@@ -28,14 +28,6 @@ export const SEED_GALLERY: GalleryItem[] = [
     date: "07 Jul 2026"
   },
   {
-    id: "gal-3",
-    title: "Pelatihan Internal Calon Auditor Angkatan IV",
-    description: "Kegiatan peningkatan kompetensi teknis bagi para auditor internal keamanan pangan.",
-    category: "Pelatihan",
-    imageUrl: "/iso.jpg",
-    date: "04 Jul 2026"
-  },
-  {
     id: "gal-4",
     title: "Sertifikat Sistem Manajemen Keamanan Pangan SNI CXC 1:1969",
     description: "Dokumentasi standar sistem manajemen keamanan pangan dan penerapan pedoman Codex Alimentarius.",

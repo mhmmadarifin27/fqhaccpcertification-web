@@ -11,3 +11,4 @@ export * from "./db/projects";
 export * from "./db/team";
 export * from "./db/training";
 export * from "./db/berkas";
+export * from "./db/keluhan";
