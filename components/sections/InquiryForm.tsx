@@ -273,7 +273,7 @@ export default function InquiryForm() {
                   className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-colors cursor-pointer rounded-lg"
                 >
                   <option value="Produk Bakeri">{t.form.industryOptions.bakery}</option>
-                  <option value="Rempah dan Produk Rempah">{t.form.industryOptions.meat}</option>
+                  <option value="Garam, rempah, sup, saus, salad, produk protein">{t.form.industryOptions.meat}</option>
                   <option value="Pangan Olahan untuk Keperluan Gizi Khusus">{t.form.industryOptions.specialDietary}</option>
                   <option value="Jasa Boga / Pelayanan Pangan / SPPG">{t.form.industryOptions.foodService}</option>
                 </select>

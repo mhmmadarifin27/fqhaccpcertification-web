@@ -269,7 +269,7 @@ export default function AdminSertifikasi({ inquiries, onUpdateStatus, onRefresh,
           >
             <option value="all">Semua Sektor Industri</option>
             <option value="Produk Bakeri">Produk Bakeri</option>
-            <option value="Rempah dan Produk Rempah">Rempah dan Produk Rempah</option>
+            <option value="Garam, rempah, sup, saus, salad, produk protein">Garam, rempah, sup, saus, salad, produk protein</option>
             <option value="Pangan Olahan untuk Keperluan Gizi Khusus">Pangan Olahan untuk Keperluan Gizi Khusus</option>
             <option value="Jasa Boga / Pelayanan Pangan / SPPG">Jasa Boga / Pelayanan Pangan / SPPG</option>
           </select>

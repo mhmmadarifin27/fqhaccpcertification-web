@@ -16,6 +16,36 @@ export interface TeamMember {
   motto: string;
 }
 
+const PLACEHOLDER_TEAM_IMAGES = new Set(["", "/hero1.jpg", "/hero2.jpg", "/iso.jpg"]);
+
+const TEAM_CANVA_PHOTOS: Array<{ match: string; photo: string }> = [
+  { match: "bobby", photo: "/team/muhammad-bobby.png" },
+  { match: "diky", photo: "/team/diky-faqih.png" },
+  { match: "bambang", photo: "/team/bambang-dwi.png" },
+  { match: "galuh", photo: "/team/galuh-tri.png" },
+  { match: "atika", photo: "/team/atika-yahdiyani.png" },
+  { match: "fayza", photo: "/team/fayza-allya.png" },
+  { match: "agessty", photo: "/team/agessty-ika.png" },
+  { match: "diah", photo: "/team/diah-puspitasari.png" },
+  { match: "ihshan", photo: "/team/ihshan-habi.png" },
+  { match: "inshan", photo: "/team/ihshan-habi.png" },
+  { match: "dhifan", photo: "/team/muhammad-dhifan.png" },
+  { match: "laili", photo: "/team/laili-nailul.png" },
+  { match: "anin", photo: "/team/anin-luthfi.png" },
+  { match: "rafida", photo: "/team/rafida-cahya.png" },
+  { match: "argawi", photo: "/team/argawi-kandito.png" },
+];
+
+export function resolveTeamPhoto(name: string, currentImage?: string | null): string {
+  const trimmed = (currentImage || "").trim();
+  if (trimmed && !PLACEHOLDER_TEAM_IMAGES.has(trimmed)) {
+    return trimmed;
+  }
+  const lower = (name || "").toLowerCase();
+  const found = TEAM_CANVA_PHOTOS.find((entry) => lower.includes(entry.match));
+  return found ? found.photo : trimmed || "/hero1.jpg";
+}
+
 export const SEED_TEAM: TeamMember[] = [
   {
     id: "bambang-dwi",
@@ -23,7 +53,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Lead Auditor & Ahli Teknologi Pangan",
     category: "tphp-ugm",
     isLead: true,
-    image: "/hero1.jpg",
+    image: "/team/bambang-dwi.png",
     education: [
       "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Gadjah Mada (UGM)",
       "S2 Ilmu dan Teknologi Pangan, UGM & Kyoto University",
@@ -44,7 +74,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Spesialis Manajemen Keamanan Pangan & Peneliti",
     category: "tphp-ugm",
     isLead: false,
-    image: "/hero2.jpg",
+    image: "/team/rafida-cahya.png",
     education: [
       "S1 Teknologi Pangan, Universitas Jenderal Soedirman (UNSOED)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -61,7 +91,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Auditor Halal & Akademisi Biologi",
     category: "uin-suka",
     isLead: true,
-    image: "/hero1.jpg",
+    image: "/team/agessty-ika.png",
     education: [
       "S1 Biologi, IPB University",
       "S2 Mikrobiologi, IPB University"
@@ -78,7 +108,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Ahli HACCP & GMP",
     category: "tphp-ugm",
     isLead: false,
-    image: "/hero2.jpg",
+    image: "/team/muhammad-dhifan.png",
     education: [
       "S1 Teknologi Pangan, Universitas Pasundan (UNPAS)",
       "S2 Ilmu Teknologi Pangan, UGM"
@@ -95,7 +125,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Auditor Halal & Dosen Biomedis",
     category: "uin-suka",
     isLead: true,
-    image: "/iso.jpg",
+    image: "/team/laili-nailul.png",
     education: [
       "S1 Farmasi & Profesi Apoteker UAD",
       "S2 Farmasi, UGM"
@@ -112,7 +142,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Spesialis Pengolahan & Pengendalian Mutu Perikanan",
     category: "tphp-ugm",
     isLead: false,
-    image: "/hero1.jpg",
+    image: "/team/fayza-allya.png",
     education: [
       "S1 Teknologi Hasil Perikanan UGM",
       "S2 Ilmu dan Teknologi Pangan UGM"
@@ -129,7 +159,7 @@ export const SEED_TEAM: TeamMember[] = [
     role: "Auditor Halal & Spesialis ISO 22000 / 17065",
     category: "uin-suka",
     isLead: true,
-    image: "/hero2.jpg",
+    image: "/team/atika-yahdiyani.png",
     education: [
       "S1 Teknologi Pangan UB",
       "S2 Ilmu Pangan UGM",
@@ -152,26 +182,43 @@ export const getTeamMembers = async (): Promise<TeamMember[]> => {
         .order("id", { ascending: true });
 
       if (!error && data && data.length > 0) {
-        return data.map((item) => ({
-          id: item.id.toString(),
-          name: item.name,
-          role: item.role,
-          category: item.category || "tphp-ugm",
-          isLead: item.is_lead || false,
-          image: item.image_url || item.image || "/hero1.jpg",
-          education: Array.isArray(item.education) ? item.education : [item.experience || "S1 Teknologi Pangan"],
-          experience: item.experience || "-",
-          standards: Array.isArray(item.standards) ? item.standards : ["-"],
-          haccp: Array.isArray(item.haccp) ? item.haccp : ["-"],
-          auditorExp: item.auditor_exp || item.experience || "-",
-          motto: item.motto || "Komitmen terhadap keamanan dan mutu pangan nasional."
-        }));
+        return data.map((item) => {
+          const rawImage = item.image_url || item.image || "";
+          const resolvedImage = resolveTeamPhoto(item.name, rawImage);
+          return {
+            id: item.id.toString(),
+            name: item.name,
+            role: item.role,
+            category: item.category || "tphp-ugm",
+            isLead: item.is_lead || false,
+            image: resolvedImage,
+            education: Array.isArray(item.education) ? item.education : [item.experience || "S1 Teknologi Pangan"],
+            experience: item.experience || "-",
+            standards: Array.isArray(item.standards) ? item.standards : ["-"],
+            haccp: Array.isArray(item.haccp) ? item.haccp : ["-"],
+            auditorExp: item.auditor_exp || item.experience || "-",
+            motto: item.motto || "Komitmen terhadap keamanan dan mutu pangan nasional."
+          };
+        });
       }
     } catch (e) {
       console.warn("Supabase team fetch error, falling back to LocalStorage:", e);
     }
   }
-  return getLocal<TeamMember>("hacpp_team", SEED_TEAM);
+  const localMembers = getLocal<TeamMember>("hacpp_team", SEED_TEAM);
+  let changed = false;
+  const upgraded = localMembers.map((member) => {
+    const resolved = resolveTeamPhoto(member.name, member.image);
+    if (resolved !== member.image) {
+      changed = true;
+      return { ...member, image: resolved };
+    }
+    return member;
+  });
+  if (changed) {
+    setLocal("hacpp_team", upgraded);
+  }
+  return upgraded;
 };
 
 export const createTeamMember = async (

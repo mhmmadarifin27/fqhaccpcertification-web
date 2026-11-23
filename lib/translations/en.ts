@@ -125,9 +125,9 @@ export const en: TranslationDictionary = {
           icon: "🍞",
         },
         {
-          name: "Spices and Spice Products",
+          name: "Salt, spices, soups, sauces, salads, protein products",
           category: "AUDIT SCOPE 2",
-          desc: "Processing, drying, grinding, blending, and packaging of herbs, spices, dried seasonings, spice extracts, and spice-based products.",
+          desc: "Processing, blending, drying, and packaging of food-grade salt, herbs and spices, dried seasonings, soups, sauces, prepared salads, and protein-based food products.",
           image: "/hero2.jpg",
           icon: "🌿",
         },
@@ -237,7 +237,7 @@ export const en: TranslationDictionary = {
       },
       industryOptions: {
         bakery: "Bakery Products",
-        meat: "Spices and Spice Products",
+        meat: "Salt, spices, soups, sauces, salads, protein products",
         specialDietary: "Processed Food for Special Dietary Needs",
         foodService: "Food Services / Catering / SPPG",
       },

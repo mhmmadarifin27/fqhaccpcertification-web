@@ -27,7 +27,7 @@ export const SEED_HACCP_DOCS: HaccpDocSubmission[] = [
     picName: "Anita Wijaya",
     picPhone: "+62 822-3344-5566",
     picEmail: "anita@rempahnusantara.co.id",
-    productScope: "Rempah dan Produk Rempah",
+    productScope: "Garam, rempah, sup, saus, salad, produk protein",
     documentCategory: "bundle-sni-cxc-1",
     documentCategoryLabel: "Bundel Lengkap Seluruh Dokumen SNI CXC 1:1969 (GHP/GMP + Rencana HACCP + Legalitas)",
     fileName: "Dokumen_Lengkap_SNI_CXC_1_1969_Rempah_Nusantara_2026.pdf",

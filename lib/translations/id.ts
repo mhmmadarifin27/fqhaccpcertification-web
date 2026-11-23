@@ -125,9 +125,9 @@ export const id: TranslationDictionary = {
           icon: "🍞",
         },
         {
-          name: "Rempah dan Produk Rempah",
+          name: "Garam, rempah, sup, saus, salad, produk protein",
           category: "RUANG LINGKUP 2",
-          desc: "Pengolahan, pengeringan, penggilingan, pencampuran, dan pengemasan aneka rempah-rempah, bumbu kering, ekstrak rempah, serta produk olahan rempah.",
+          desc: "Pengolahan, pencampuran, pengeringan, dan pengemasan garam konsumsi, rempah-rempah, bumbu kering, sup instan, aneka saus, salad olahan, serta produk berbasis protein.",
           image: "/hero2.jpg",
           icon: "🌿",
         },
@@ -237,7 +237,7 @@ export const id: TranslationDictionary = {
       },
       industryOptions: {
         bakery: "Produk Bakeri",
-        meat: "Rempah dan Produk Rempah",
+        meat: "Garam, rempah, sup, saus, salad, produk protein",
         specialDietary: "Pangan Olahan untuk Keperluan Gizi Khusus",
         foodService: "Jasa Boga / Pelayanan Pangan / SPPG",
       },

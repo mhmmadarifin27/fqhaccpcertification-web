@@ -22,7 +22,7 @@ export const SEED_PROJECTS: ProjectItem[] = [
   {
     id: "proj-2",
     name: "PT Rempah Nusantara Sejahtera",
-    category: "REMPAH DAN PRODUK REMPAH",
+    category: "GARAM, REMPAH, SUP, SAUS, SALAD, PRODUK PROTEIN",
     desc: "Audit sertifikasi fasilitas pengeringan, penggilingan, pencampuran, dan pengemasan aneka rempah-rempah serta bumbu kering.",
     image: "/hero2.jpg",
     year: "2025"

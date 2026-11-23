@@ -36,7 +36,7 @@ export const SEED_INQUIRIES: SertifikasiInquiry[] = [
     picName: "Anita Wijaya",
     phone: "+62 822-3344-5566",
     email: "anita@rempahnusantara.co.id",
-    industry: "Rempah dan Produk Rempah",
+    industry: "Garam, rempah, sup, saus, salad, produk protein",
     haccpStatus: "Belum Diterapkan",
     message: "Fasilitas pengolahan, pengeringan, dan pengemasan rempah bubuk serta bumbu kering memerlukan audit kesesuaian sistem HACCP.",
     ticketNumber: "HACCP-2026-3029",

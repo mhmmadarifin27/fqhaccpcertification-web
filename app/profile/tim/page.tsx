@@ -14,7 +14,7 @@ const TEAM_MEMBERS = [
     role: "Lead Auditor & Ahli Teknologi Pangan",
     category: "tphp-ugm",
     isLead: true,
-    image: "/hero1.jpg",
+    image: "/team/bambang-dwi.png",
     education: [
       "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Gadjah Mada (UGM)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM) & Kyoto University",
@@ -37,7 +37,7 @@ const TEAM_MEMBERS = [
     role: "Spesialis Manajemen Keamanan Pangan & Peneliti",
     category: "tphp-ugm",
     isLead: false,
-    image: "/hero2.jpg",
+    image: "/team/rafida-cahya.png",
     education: [
       "S1 Teknologi Pangan, Universitas Jenderal Soedirman (UNSOED)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -59,7 +59,7 @@ const TEAM_MEMBERS = [
     role: "Auditor Halal & Akademisi Biologi",
     category: "uin-suka",
     isLead: true,
-    image: "/hero1.jpg",
+    image: "/team/agessty-ika.png",
     education: [
       "S1 Biologi, Institut Pertanian Bogor (IPB University)",
       "S2 Mikrobiologi, Institut Pertanian Bogor (IPB University)"
@@ -80,7 +80,7 @@ const TEAM_MEMBERS = [
     role: "Ahli HACCP & GMP",
     category: "tphp-ugm",
     isLead: false,
-    image: "/hero2.jpg",
+    image: "/team/muhammad-dhifan.png",
     education: [
       "S1 Teknologi Pangan, Universitas Pasundan (UNPAS)",
       "S2 Ilmu Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -102,7 +102,7 @@ const TEAM_MEMBERS = [
     role: "Auditor Halal & Dosen Biomedis",
     category: "uin-suka",
     isLead: true,
-    image: "/iso.jpg",
+    image: "/team/laili-nailul.png",
     education: [
       "S1 Farmasi, Universitas Ahmad Dahlan (UAD) Yogyakarta",
       "Pendidikan Profesi Apoteker, Universitas Ahmad Dahlan (UAD) Yogyakarta",
@@ -125,7 +125,7 @@ const TEAM_MEMBERS = [
     role: "Spesialis Pengolahan & Pengendalian Mutu Perikanan",
     category: "tphp-ugm",
     isLead: false,
-    image: "/hero1.jpg",
+    image: "/team/fayza-allya.png",
     education: [
       "S1 Teknologi Hasil Perikanan, Universitas Gadjah Mada (UGM)",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
@@ -147,7 +147,7 @@ const TEAM_MEMBERS = [
     role: "Auditor Halal & Spesialis ISO 22000 / 17065",
     category: "uin-suka",
     isLead: true,
-    image: "/hero2.jpg",
+    image: "/team/atika-yahdiyani.png",
     education: [
       "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Brawijaya (UB) Malang",
       "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)",
