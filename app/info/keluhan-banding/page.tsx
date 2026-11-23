@@ -131,21 +131,6 @@ export default function KeluhanBandingPage() {
     }
   };
 
-  const steps =
-    lang === "en"
-      ? [
-          { num: "01", title: "Receipt & Registration", desc: "Automatic ticket logging and acknowledgement within 1-2 business days." },
-          { num: "02", title: "Verification & Triage", desc: "Administrative validation and assignment to an independent reviewer." },
-          { num: "03", title: "Impartial Investigation", desc: "Objective evaluation by personnel not involved in the original audit activity." },
-          { num: "04", title: "Formal Decision Notice", desc: "Written resolution and corrective follow-up sent directly to the applicant." },
-        ]
-      : [
-          { num: "01", title: "Penerimaan & Tiket", desc: "Pencatatan otomatis nomor tiket dan konfirmasi penerimaan maksimal 1–2 hari kerja." },
-          { num: "02", title: "Verifikasi Administrasi", desc: "Validasi kelengkapan informasi, kronologi, serta bukti pendukung terkait." },
-          { num: "03", title: "Kajian Imparsialitas", desc: "Evaluasi objektif oleh tim/komite independen yang tidak terlibat dalam audit tersebut." },
-          { num: "04", title: "Keputusan Resmi", desc: "Penyampaian hasil keputusan tertulis beserta tindak lanjut perbaikan kepada pelapor." },
-        ];
-
   return (
     <div className="relative min-h-screen bg-slate-50 text-slate-800 font-sans">
       <Header />
@@ -213,43 +198,6 @@ export default function KeluhanBandingPage() {
                 ? "Formal request by an applicant or certified client for reconsideration of an adverse certification decision (denial, suspension, withdrawal, or audit finding classification)."
                 : "Permohonan resmi dari organisasi pemohon atau klien tersertifikasi untuk meninjau ulang keputusan penetapan hasil audit, penolakan, pembekuan, atau pencabutan sertifikat HACCP."}
             </p>
-          </div>
-        </section>
-
-        {/* Resolution Procedure Timeline */}
-        <section className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
-            <div>
-              <h2 className="text-lg sm:text-xl font-extrabold text-brand-navy font-heading">
-                {lang === "en" ? "Handling Procedure & SLA" : "Alur Penanganan & Standar Waktu"}
-              </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {lang === "en"
-                  ? "Handled by an independent team free from conflicts of interest."
-                  : "Ditangani secara independen tanpa benturan kepentingan dengan pihak yang diaudit maupun auditor pelaksana."}
-              </p>
-            </div>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full w-fit">
-              <span>✓</span>
-              <span>{lang === "en" ? "Confidentiality Guaranteed" : "Kerahasiaan Terjamin"}</span>
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {steps.map((step) => (
-              <div
-                key={step.num}
-                className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4 space-y-2"
-              >
-                <span className="inline-block text-xs font-black text-brand-blue bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-lg">
-                  {step.num}
-                </span>
-                <h3 className="text-sm font-extrabold text-brand-navy font-heading">
-                  {step.title}
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
           </div>
         </section>
 
