@@ -151,8 +151,8 @@ export default function KeluhanBandingPage() {
           </h1>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
             {lang === "en"
-              ? "PT Food Quality Certification guarantees a transparent, objective, and non-discriminatory mechanism for handling all client complaints and certification appeals in compliance with SNI ISO/IEC 17065."
-              : "PT Food Quality Certification menyediakan saluran resmi yang objektif, rahasia, dan bebas diskriminasi untuk menangani keluhan layanan maupun pengajuan banding atas keputusan sertifikasi HACCP sesuai prinsip SNI ISO/IEC 17065."}
+              ? "PT Food Quality Certification guarantees a transparent, objective, and non-discriminatory mechanism for handling all client complaints and certification appeals based on the official SNI CXC 1:1969 standard."
+              : "PT Food Quality Certification menyediakan saluran resmi yang objektif, rahasia, dan bebas diskriminasi untuk menangani keluhan layanan maupun pengajuan banding atas keputusan sertifikasi HACCP sesuai standar resmi SNI CXC 1:1969."}
           </p>
         </section>
 
