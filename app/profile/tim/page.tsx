@@ -6,168 +6,6 @@ import Footer from "../../../components/Footer";
 import { getTeamMembers, TeamMember } from "../../../lib/db";
 import { useLanguage } from "../../../context/LanguageContext";
 
-// Extracted team data from Google Sheet with high-fidelity profiles
-const TEAM_MEMBERS = [
-  {
-    id: "bambang-dwi",
-    name: "Bambang Dwi Wijatniko, S.T.P., M.Agr.Sc., M.Sc., Ph.D.",
-    role: "Lead Auditor & Ahli Teknologi Pangan",
-    category: "tphp-ugm",
-    isLead: true,
-    image: "/team/bambang-dwi.png",
-    education: [
-      "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Gadjah Mada (UGM)",
-      "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM) & Kyoto University",
-      "S3 Food Chemistry, Hiroshima University, Jepang"
-    ],
-    experience: "2018 s.d sekarang: Dosen di Departemen Teknologi Pangan dan Hasil Pertanian, Universitas Gadjah Mada (UGM).",
-    standards: [
-      "Pelatihan Refreshment AMI (FTP UGM, 2019)"
-    ],
-    haccp: [
-      "Pelatihan & Uji Kompetensi Cara Produksi Pangan Olahan yang Baik / CPPOB (JMKP, November 2024)",
-      "Pelatihan & Uji Kompetensi Sensory Analyst (SEAFAST IPB, Oktober 2025)"
-    ],
-    auditorExp: "Auditor AMI (Audit Mutu Internal) Fakultas Teknologi Pertanian UGM tahun 2019-2020.",
-    motto: "Inovasi teknologi pangan harus berjalan beriringan dengan jaminan keamanan dan mutu konsumsi publik."
-  },
-  {
-    id: "rafida-cahya",
-    name: "Rafida Cahyaningrum, S.T.P., M. Sc.",
-    role: "Spesialis Manajemen Keamanan Pangan & Peneliti",
-    category: "tphp-ugm",
-    isLead: false,
-    image: "/team/rafida-cahya.png",
-    education: [
-      "S1 Teknologi Pangan, Universitas Jenderal Soedirman (UNSOED)",
-      "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
-    ],
-    experience: "Februari 2026 s.d. sekarang: Asisten Peneliti Dosen Teknologi Pangan dan Hasil Pertanian (TPHP), Universitas Gadjah Mada (UGM).",
-    standards: [
-      "Training and Workshop of Implementing Food Safety Management System ISO 22000:2018 (Catalyst Consulting, September 2021)"
-    ],
-    haccp: [
-      "Training and Workshop of Implementing Food Safety Management System FSSC 22000 Version 5.1 (Catalyst Consulting, September 2021)",
-      "Training and Workshop of Food Safety, Food Defense, and Food Fraud Prevention Control / HACCP, TACCP, VACCP (Catalyst Consulting, September 2021)"
-    ],
-    auditorExp: "Belum terdaftar sebagai auditor eksternal.",
-    motto: "Keamanan pangan dicapai melalui penerapan standar sistem manajemen yang konsisten dan terukur."
-  },
-  {
-    id: "agessty-ika",
-    name: "Agessty Ika Nurlita, S.Si., M.Si.",
-    role: "Auditor Halal & Akademisi Biologi",
-    category: "uin-suka",
-    isLead: true,
-    image: "/team/agessty-ika.png",
-    education: [
-      "S1 Biologi, Institut Pertanian Bogor (IPB University)",
-      "S2 Mikrobiologi, Institut Pertanian Bogor (IPB University)"
-    ],
-    experience: "2019 s.d. sekarang: Dosen Biologi UIN Sunan Kalijaga Yogyakarta; 2023 s.d. sekarang: Auditor Halal LPH UIN Sunan Kalijaga Yogyakarta.",
-    standards: [
-      "Pelatihan Regulasi Audit Jaminan Produk Halal"
-    ],
-    haccp: [
-      "Pelatihan Teknis Higienitas Pangan & Mikrobiologi Dasar"
-    ],
-    auditorExp: "Auditor Halal terakreditasi di LPH (Lembaga Pemeriksa Halal) UIN Sunan Kalijaga Yogyakarta sejak tahun 2023.",
-    motto: "Mikrobiologi memberikan kunci dasar untuk memahami dan mengendalikan bahaya kontaminasi produk pangan."
-  },
-  {
-    id: "muhammad-dhifan",
-    name: "Muhammad Dhifan Rafiuddin, S.T., M.Sc.",
-    role: "Ahli HACCP & GMP",
-    category: "tphp-ugm",
-    isLead: false,
-    image: "/team/muhammad-dhifan.png",
-    education: [
-      "S1 Teknologi Pangan, Universitas Pasundan (UNPAS)",
-      "S2 Ilmu Teknologi Pangan, Universitas Gadjah Mada (UGM)"
-    ],
-    experience: "Februari 2026 s.d. sekarang: Asisten Peneliti Dosen Teknologi Pangan dan Hasil Pertanian (TPHP), Universitas Gadjah Mada (UGM).",
-    standards: [
-      "Sertifikasi FSSC 22000 V. 5.1 including ISO 22000:2018 (Premysis Consulting, 2021)"
-    ],
-    haccp: [
-      "Pelatihan HACCP & GMP Based on ISO 22002-1 (Premysis Consulting, 2021)",
-      "Pelatihan Halal Assurance System Based on HAS 23000 (Premysis Consulting, 2021)"
-    ],
-    auditorExp: "Belum terdaftar sebagai auditor eksternal.",
-    motto: "Perancangan program prasyarat (GMP) yang kuat adalah fondasi utama keberhasilan sistem HACCP."
-  },
-  {
-    id: "laili-nailul",
-    name: "apt. Laili Nailul Muna, S.Farm., M.Sc.",
-    role: "Auditor Halal & Dosen Biomedis",
-    category: "uin-suka",
-    isLead: true,
-    image: "/team/laili-nailul.png",
-    education: [
-      "S1 Farmasi, Universitas Ahmad Dahlan (UAD) Yogyakarta",
-      "Pendidikan Profesi Apoteker, Universitas Ahmad Dahlan (UAD) Yogyakarta",
-      "S2 Farmasi, Universitas Gadjah Mada (UGM)"
-    ],
-    experience: "2017 s.d. sekarang: Apoteker Praktisi; 2019 s.d. sekarang: Dosen Biomedis UIN Sunan Kalijaga Yogyakarta; 2023 s.d. sekarang: Auditor Halal LPH UIN Sunan Kalijaga Yogyakarta.",
-    standards: [
-      "Sertifikasi Apoteker Penanggung Jawab Fasilitas",
-      "Pelatihan Regulasi Audit Jaminan Produk Halal (2023)"
-    ],
-    haccp: [
-      "Pelatihan Mutu Farmasi & Toksikologi Bahan Pangan"
-    ],
-    auditorExp: "Auditor Halal terdaftar di LPH (Lembaga Pemeriksa Halal) UIN Sunan Kalijaga Yogyakarta sejak tahun 2023.",
-    motto: "Aspek halal dan thoyyib (mutu & keamanan) adalah dua pilar yang saling melengkapi dalam rantai pangan."
-  },
-  {
-    id: "fayza-allya",
-    name: "Fayza Allya Kallista, S.Pi., M.Sc.",
-    role: "Spesialis Pengolahan & Pengendalian Mutu Perikanan",
-    category: "tphp-ugm",
-    isLead: false,
-    image: "/team/fayza-allya.png",
-    education: [
-      "S1 Teknologi Hasil Perikanan, Universitas Gadjah Mada (UGM)",
-      "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)"
-    ],
-    experience: "April 2024 s.d. Sekarang: Asisten Dosen Teknologi Pangan dan Hasil Pertanian UGM; September-Desember 2020: Asisten Laboratorium Sosial Ekonomi Perikanan UGM; Januari 2020: Magang QC di PT. Surya Alam Tunggal; Juli 2019: Magang di LPPMHP Dinas Kelautan dan Perikanan DIY.",
-    standards: [
-      "Pelatihan Penilaian Mutu Produk Perikanan Ekspor"
-    ],
-    haccp: [
-      "Quality Control Training (PT Mindo Education, 2019)",
-      "Quality Assurance Training (PT Mindo Education, 2019)"
-    ],
-    auditorExp: "Belum terdaftar sebagai auditor eksternal.",
-    motto: "Pengendalian suhu dan kecepatan rantai logistik menentukan kesegaran serta keamanan komoditas perikanan."
-  },
-  {
-    id: "atika-yahdiyani",
-    name: "Atika Yahdiyani Ikhsani, S.TP., M.Sc.",
-    role: "Auditor Halal & Spesialis ISO 22000 / 17065",
-    category: "uin-suka",
-    isLead: true,
-    image: "/team/atika-yahdiyani.png",
-    education: [
-      "S1 Teknologi Pangan dan Hasil Pertanian, Universitas Brawijaya (UB) Malang",
-      "S2 Ilmu dan Teknologi Pangan, Universitas Gadjah Mada (UGM)",
-      "Sedang Menempuh Pendidikan S3 Ilmu Pangan, Universitas Gadjah Mada (UGM)"
-    ],
-    experience: "2014-2020: Dosen dan Staf LPPM Universitas Muhammadiyah Surakarta (UMS); 2019 s.d. sekarang: Dosen Kimia UIN Sunan Kalijaga Yogyakarta; 2022 s.d. sekarang: Auditor Halal LPH UIN Sunan Kalijaga Yogyakarta.",
-    standards: [
-      "Pelatihan Keamanan Pangan & Sistem ISO 22000 (2015)",
-      "Pelatihan ISO/IEC 17065:2012 Persyaratan Lembaga Sertifikasi Produk, Proses, Jasa (2022)"
-    ],
-    haccp: [
-      "Sertifikasi Internal Auditor Keamanan Pangan BNSP (JMKP, 2015)",
-      "Sertifikasi Kompetensi BNSP Auditor Halal (2022, Diperpanjang 2024)",
-      "Sertifikasi Kompetensi Penerapan CPPOB (JMKP, 2025)"
-    ],
-    auditorExp: "Tim Konsolidasi Pembentukan LPH dan Auditor Halal LPH UIN Sunan Kalijaga Yogyakarta.",
-    motto: "Tinjauan kesesuaian dokumen regulasi menjamin obyektivitas dan validitas sertifikasi secara hukum."
-  }
-];
-
 export default function TimPage() {
   const { t } = useLanguage();
   const [members, setMembers] = useState<TeamMember[]>([]);
@@ -296,11 +134,15 @@ export default function TimPage() {
                   <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-widest">
                     {t.teamUI.educationHistory}
                   </h4>
-                  <ul className="space-y-1 text-xs text-slate-600 list-disc pl-5 font-normal leading-relaxed">
-                    {selectedMember.education.map((edu, idx) => (
-                      <li key={idx}>{edu}</li>
-                    ))}
-                  </ul>
+                  {selectedMember.education && selectedMember.education.length > 0 ? (
+                    <ul className="space-y-1 text-xs text-slate-600 list-disc pl-5 font-normal leading-relaxed">
+                      {selectedMember.education.map((edu, idx) => (
+                        <li key={idx}>{edu}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-xs text-slate-400 italic">-</p>
+                  )}
                 </div>
               </div>
             </div>

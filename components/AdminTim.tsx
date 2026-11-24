@@ -77,11 +77,11 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
       role: "",
       category: "auditor",
       isLead: false,
-      image: "/hero1.jpg",
-      educationText: "S1 Teknologi Pangan\nS2 Ilmu & Teknologi Pangan",
-      experience: "Auditor & Tenaga Ahli Keamanan Pangan",
-      auditorExp: "Auditor Mutu & Konsultan HACCP Terakreditasi",
-      motto: "Inovasi teknologi pangan harus berjalan beriringan dengan jaminan keamanan dan mutu."
+      image: "",
+      educationText: "",
+      experience: "",
+      auditorExp: "",
+      motto: ""
     });
     setIsModalOpen(true);
   };
@@ -120,18 +120,22 @@ export default function AdminTim({ teamMembers, onRefresh }: AdminTimProps) {
         .map((s) => s.trim())
         .filter((s) => s.length > 0);
 
+      const existingMember = editingId
+        ? teamMembers.find((m) => m.id === editingId)
+        : undefined;
+
       const payload = {
-        name: formData.name,
-        role: formData.role,
+        name: formData.name.trim(),
+        role: formData.role.trim(),
         category: formData.category,
         isLead: formData.isLead,
-        image: formData.image || "/hero1.jpg",
-        education: eduArray.length > 0 ? eduArray : ["S1 Teknologi Pangan"],
-        experience: formData.experience,
-        standards: ["Pelatihan Refreshment Standar Mutu"],
-        haccp: ["Pelatihan Teknis HACCP & CPPOB"],
-        auditorExp: formData.auditorExp,
-        motto: formData.motto
+        image: formData.image || "",
+        education: eduArray,
+        experience: formData.experience.trim(),
+        standards: existingMember?.standards ?? [],
+        haccp: existingMember?.haccp ?? [],
+        auditorExp: formData.auditorExp.trim(),
+        motto: formData.motto.trim()
       };
 
       if (editingId) {
