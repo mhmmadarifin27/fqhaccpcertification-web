@@ -314,6 +314,38 @@ function BerkasHaccpContent() {
                 </div>
               </div>
             </div>
+
+            {/* Official Application Template Download Bar */}
+            <div className="bg-blue-50/60 border border-blue-200/80 rounded-2xl p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-blue block">
+                  {lang === "en" ? "OFFICIAL APPLICATION TEMPLATES" : "TEMPLATE DOKUMEN RESMI PERMOHONAN"}
+                </span>
+                <p className="text-xs sm:text-sm font-bold text-brand-navy">
+                  {lang === "en"
+                    ? "Need the official application letter & HACCP application form?"
+                    : "Unduh format resmi Surat & Formulir Permohonan Sertifikasi Sistem HACCP:"}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2.5 shrink-0">
+                <a
+                  href="/dokumen/Surat_Permohonan_Sertifikasi_HACCP.docx"
+                  download="Surat_Permohonan_Sertifikasi_HACCP.docx"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-50 border border-blue-200 rounded-xl text-xs font-bold text-brand-navy no-underline shadow-xs transition-colors"
+                >
+                  <span>📄</span>
+                  <span>Surat Permohonan (.docx)</span>
+                </a>
+                <a
+                  href="/dokumen/Formulir_Permohonan_Sertifikasi_HACCP.docx"
+                  download="Formulir_Permohonan_Sertifikasi_HACCP.docx"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-50 border border-blue-200 rounded-xl text-xs font-bold text-brand-navy no-underline shadow-xs transition-colors"
+                >
+                  <span>📋</span>
+                  <span>Formulir Permohonan (.docx)</span>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 

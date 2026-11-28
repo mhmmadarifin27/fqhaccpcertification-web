@@ -121,6 +121,57 @@ export default function InquiryForm() {
               </div>
             ))}
           </div>
+
+          {/* Official Application Document Templates */}
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-3 mt-4">
+            <div className="space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-blue block">
+                {lang === "en" ? "OFFICIAL APPLICATION TEMPLATES" : "TEMPLATE DOKUMEN RESMI PERMOHONAN"}
+              </span>
+              <h3 className="text-sm font-extrabold text-brand-navy font-heading">
+                {lang === "en"
+                  ? "Download Official Letter & Application Form"
+                  : "Unduh Surat & Formulir Permohonan Sertifikasi"}
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                {lang === "en"
+                  ? "Download, complete with your company letterhead & signature, then upload via the HACCP Registration menu."
+                  : "Unduh, lengkapi dengan kop surat & tanda tangan perusahaan, lalu unggah pada menu Pendaftaran HACCP."}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 pt-1">
+              <a
+                href="/dokumen/Surat_Permohonan_Sertifikasi_HACCP.docx"
+                download="Surat_Permohonan_Sertifikasi_HACCP.docx"
+                className="flex items-center justify-between gap-3 px-4 py-2.5 bg-slate-50 hover:bg-blue-50/70 border border-slate-200 hover:border-brand-blue/40 rounded-xl text-xs font-bold text-brand-navy transition-all no-underline"
+              >
+                <span className="flex items-center gap-2 truncate">
+                  <span>📄</span>
+                  <span className="truncate">
+                    {lang === "en"
+                      ? "HACCP Application Letter (.docx)"
+                      : "Surat Permohonan Sertifikasi Sistem HACCP (.docx)"}
+                  </span>
+                </span>
+                <span className="text-[11px] font-extrabold text-brand-blue shrink-0">⬇ Unduh</span>
+              </a>
+              <a
+                href="/dokumen/Formulir_Permohonan_Sertifikasi_HACCP.docx"
+                download="Formulir_Permohonan_Sertifikasi_HACCP.docx"
+                className="flex items-center justify-between gap-3 px-4 py-2.5 bg-slate-50 hover:bg-blue-50/70 border border-slate-200 hover:border-brand-blue/40 rounded-xl text-xs font-bold text-brand-navy transition-all no-underline"
+              >
+                <span className="flex items-center gap-2 truncate">
+                  <span>📋</span>
+                  <span className="truncate">
+                    {lang === "en"
+                      ? "HACCP Application Form (.docx)"
+                      : "Formulir Permohonan Sertifikasi Sistem HACCP (.docx)"}
+                  </span>
+                </span>
+                <span className="text-[11px] font-extrabold text-brand-blue shrink-0">⬇ Unduh</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Right Block: Interactive Submission Form */}
@@ -153,6 +204,32 @@ export default function InquiryForm() {
                   </span>
                 </div>
               )}
+
+              <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 max-w-lg mx-auto space-y-2.5 text-left">
+                <p className="text-xs font-extrabold text-brand-navy text-center">
+                  {lang === "en"
+                    ? "Next Step: Download & Complete Both Official Templates"
+                    : "Langkah Selanjutnya: Unduh & Lengkapi 2 Dokumen Resmi Berikut"}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <a
+                    href="/dokumen/Surat_Permohonan_Sertifikasi_HACCP.docx"
+                    download="Surat_Permohonan_Sertifikasi_HACCP.docx"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-50 border border-blue-200 rounded-xl text-[11px] font-bold text-brand-navy no-underline transition-colors"
+                  >
+                    <span>📄</span>
+                    <span>Surat Permohonan</span>
+                  </a>
+                  <a
+                    href="/dokumen/Formulir_Permohonan_Sertifikasi_HACCP.docx"
+                    download="Formulir_Permohonan_Sertifikasi_HACCP.docx"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-50 border border-blue-200 rounded-xl text-[11px] font-bold text-brand-navy no-underline transition-colors"
+                  >
+                    <span>📋</span>
+                    <span>Formulir Permohonan</span>
+                  </a>
+                </div>
+              </div>
 
               <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
                 {submittedTicket && (
